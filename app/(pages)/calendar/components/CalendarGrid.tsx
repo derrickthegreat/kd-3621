@@ -13,9 +13,9 @@ type Props = {
 
 export default function CalendarGrid({ days, eventsByDate, expandedDay, setExpandedDay, currentMonth }: Props) {
     return (
-        <div className="grid grid-cols-7 gap-px bg-gray-800 rounded-lg overflow-hidden">
+        <div className="grid grid-cols-7 gap-px rounded-xl overflow-hidden bg-blue-200/10 backdrop-blur-lg border border-blue-300/10 shadow-xl">
             {days.map((date) => {
-                const dateStr = date.format('YYYY-MM-DD'); // Format for map lookup
+                const dateStr = date.format('YYYY-MM-DD');
                 const dayEvents = eventsByDate[dateStr] || [];
                 const isToday = date.isSame(dayjs(), 'day');
                 const isCurrentMonth = date.month() === currentMonth.month();
@@ -26,17 +26,19 @@ export default function CalendarGrid({ days, eventsByDate, expandedDay, setExpan
                         onClick={() =>
                             setExpandedDay(dateStr === expandedDay ? null : dateStr)
                         }
-                        className={`min-h-[100px] p-2 text-xs cursor-pointer transition-all group 
-                            ${isCurrentMonth ? 'bg-gray-900 hover:bg-gray-800' : 'bg-gray-950 text-gray-600'} 
+                        className={`min-h-[100px] p-2 text-xs cursor-pointer transition-all group
+                            ${isCurrentMonth
+                                ? 'bg-blue-300/5 hover:bg-blue-300/10'
+                                : 'bg-blue-850'}
                             ${isToday ? 'border-2 border-orange-400 shadow-md z-10 relative rounded-md' : ''}`}
                     >
-                        {/* Day header: weekday + day number */}
                         <div className="flex justify-between items-center text-xs font-semibold">
                             <span>{date.format('ddd')}</span>
-                            <span className={isToday ? 'text-orange-400' : ''}>{date.date()}</span>
+                            <span className={isToday ? 'text-orange-400' : ''}>
+                                {date.date()}
+                            </span>
                         </div>
 
-                        {/* Event tags for the day */}
                         {dayEvents.map((e, i) => (
                             <div
                                 key={i}

@@ -32,21 +32,30 @@ export default function DataTable<T>({
     getRowKey,
 }: Props<T>) {
     return (
-        <div className="bg-gray-800 border border-gray-700 rounded-lg overflow-x-auto whitespace-nowrap">
-            <table className="min-w-full text-sm">
+        <div className="rounded-xl overflow-x-auto backdrop-blur-lg bg-blue-200/5 border border-blue-300/10 shadow-xl whitespace-nowrap">
+            <table className="min-w-full text-sm text-white">
                 {/* Table header */}
-                <thead className="uppercase text-[#e19513] text-xs bg-gray-900 border-b border-gray-700">
+                <thead className="uppercase text-orange-400 text-xs bg-blue-200/10 backdrop-blur-sm border-b border-blue-300/10 sticky top-0 z-10">
                     <tr>
                         {columns.map(({ key, label, icon, sortable }) => (
                             <th
                                 key={String(key)}
                                 onClick={() => sortable && onSort(String(key))}
-                                className={`p-3 text-left border border-gray-800 cursor-pointer ${key === '#' ? 'w-10' : ''}`}
+                                className={`p-3 text-left cursor-pointer ${key === '#' ? 'w-10' : ''}`}
                             >
                                 <div className="flex items-center gap-2">
-                                    {icon && <Image src={icon} alt={`${label} icon`} width={16} height={16} />}
+                                    {icon && (
+                                        <Image
+                                            src={icon}
+                                            alt={`${label} icon`}
+                                            width={16}
+                                            height={16}
+                                        />
+                                    )}
                                     {label}
-                                    {sortable && <SortIcon active={sortKey === key} asc={sortAsc} />}
+                                    {sortable && (
+                                        <SortIcon active={sortKey === key} asc={sortAsc} />
+                                    )}
                                 </div>
                             </th>
                         ))}
@@ -54,14 +63,14 @@ export default function DataTable<T>({
                 </thead>
 
                 {/* Table body */}
-                <tbody className="bg-gray-950">
+                <tbody>
                     {data.map((row) => (
                         <tr
                             key={getRowKey(row)}
-                            className="border-b border-gray-800 hover:bg-gray-700/30 transition-colors"
+                            className="border-b border-blue-300/10 hover:bg-blue-300/10 transition-colors"
                         >
                             {columns.map(({ key, render }) => (
-                                <td key={String(key)} className="p-3 border border-gray-800">
+                                <td key={String(key)} className="p-3">
                                     {render ? render(row) : String(row[key as keyof T])}
                                 </td>
                             ))}

@@ -1,5 +1,6 @@
 'use client';
 
+import NavButton from '@/app/components/NavButton';
 import dayjs from 'dayjs';
 
 type Props = {
@@ -10,26 +11,24 @@ type Props = {
 export default function CalendarHeader({ currentMonth, setCurrentMonth }: Props) {
     return (
         <div className="flex items-center justify-between mb-4">
-            {/* Button to go to the previous month */}
-            <button
+            {/* Previous button */}
+            <NavButton
                 onClick={() => setCurrentMonth((d) => d.subtract(1, 'month'))}
-                className="px-3 py-1 rounded bg-gray-800 hover:bg-orange-500 text-sm transition-colors"
-            >
-                &lt; Previous
-            </button>
+                label="Previous"
+                iconLeft="←"
+            />
 
-            {/* Display current month and year */}
-            <h2 className="text-xl font-semibold tracking-wide">
+            {/* Month display */}
+            <h2 className="text-xl font-semibold tracking-wide text-white drop-shadow">
                 {currentMonth.format('MMMM YYYY')}
             </h2>
 
-            {/* Button to go to the next month */}
-            <button
+            {/* Next button */}
+            <NavButton
                 onClick={() => setCurrentMonth((d) => d.add(1, 'month'))}
-                className="px-3 py-1 rounded bg-gray-800 hover:bg-orange-500 text-sm transition-colors"
-            >
-                Next &gt;
-            </button>
+                label="Next"
+                iconRight="→"
+            />
         </div>
     );
 }

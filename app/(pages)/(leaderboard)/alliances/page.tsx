@@ -6,9 +6,8 @@ import { sortArray } from '@/app/utils/sort';
 import PageHeader from '@/app/components/PageHeader';
 import DataTable from '@/app/(pages)/(leaderboard)/components/DataTable';
 import type { DataTableColumn } from '@/app/(pages)/(leaderboard)/components/DataTable';
-import Pagination from '../components/Pagination';
-
-const ALLIANCES_PER_PAGE = 20;
+import PaginationFooter from '../components/PaginationFooter';
+import { ENTRIES_PER_PAGE } from '@/app/(pages)/(leaderboard)/constants/pagination';
 
 // Alliance data structure
 type Alliance = {
@@ -110,17 +109,13 @@ export default function AlliancesPage() {
                     />
 
                     {/* Pagination footer */}
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between px-4 py-3 bg-gray-900/50 mt-6 border border-gray-800 rounded-lg text-sm">
-                        <span className="text-gray-400">
-                            Showing {(sorted.length === 0 ? 0 : (page - 1) * ALLIANCES_PER_PAGE + 1)} to {Math.min(page * ALLIANCES_PER_PAGE, sorted.length)} of {sorted.length} entries
-                        </span>
-
-                        <Pagination
-                            currentPage={page}
-                            total={totalPages}
-                            onPageChange={(p) => setPage(p)}
-                        />
-                    </div>
+                    <PaginationFooter
+                        currentPage={page}
+                        totalPages={totalPages}
+                        totalEntries={sorted.length}
+                        entriesPerPage={ENTRIES_PER_PAGE}
+                        onPageChange={setPage}
+                    />
                 </div>
             </main>
         </>

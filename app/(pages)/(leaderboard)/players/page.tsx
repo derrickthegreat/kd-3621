@@ -2,13 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import PageHeader from '@/app/components/PageHeader';
-import Pagination from '@/app/(pages)/(leaderboard)/components/Pagination';
 import DataTable, { DataTableColumn } from '@/app/(pages)/(leaderboard)/components/DataTable';
 import { formatNumber } from '@/app/utils/format';
 import { getDKPPercentage } from '@/app/utils/dkp';
 import { getInitials, getRandomColor } from '@/app/utils/colors';
-
-const PLAYERS_PER_PAGE = 20;
+import { ENTRIES_PER_PAGE } from '@/app/(pages)/(leaderboard)/constants/pagination';
+import PaginationFooter from '../components/PaginationFooter';
 
 export default function PlayersPage() {
     // State management for data, search, pagination, and sorting
@@ -42,8 +41,8 @@ export default function PlayersPage() {
         return sortAsc ? valA - valB : valB - valA;
     });
 
-    const totalPages = Math.ceil(sorted.length / PLAYERS_PER_PAGE);
-    const current = sorted.slice((page - 1) * PLAYERS_PER_PAGE, page * PLAYERS_PER_PAGE);
+    const totalPages = Math.ceil(sorted.length / ENTRIES_PER_PAGE);
+    const current = sorted.slice((page - 1) * ENTRIES_PER_PAGE, page * ENTRIES_PER_PAGE);
 
     // Table columns definition
     const columns: DataTableColumn<any>[] = [
@@ -56,6 +55,7 @@ export default function PlayersPage() {
             key: 'Name',
             label: 'Player',
             sortable: false,
+            icon: '/icons/player.png',
             render: (player) => (
                 <div className="flex items-center gap-3">
                     <div className={`w-8 h-8 rounded-full ${getRandomColor(player.Name)} flex items-center justify-center text-white font-medium text-xs`}>
@@ -77,6 +77,7 @@ export default function PlayersPage() {
             key: 'DKP',
             label: 'DKP',
             sortable: true,
+            icon: '/icons/dkp.png',
             render: (p) => {
                 const dkp = 0;
                 const percent = getDKPPercentage(dkp, p.Power);
@@ -100,30 +101,35 @@ export default function PlayersPage() {
             key: 'Power',
             label: 'Power',
             sortable: true,
+            icon: '/icons/power.png',
             render: (p) => <span className="font-medium text-sm">{formatNumber(p.Power)}</span>,
         },
         {
             key: 'T4 Kills',
             label: 'T4 Kills',
             sortable: true,
+            icon: '/icons/t4.png',
             render: () => 0,
         },
         {
             key: 'T5 Kills',
             label: 'T5 Kills',
             sortable: true,
+            icon: '/icons/t5.png',
             render: () => 0,
         },
         {
             key: 'T45 Kills',
             label: 'T4 + T5',
             sortable: true,
+            icon: '/icons/t4t5.png',
             render: () => 0,
         },
         {
             key: 'deaths',
             label: 'Deaths',
             sortable: true,
+            icon: '/icons/deaths.png',
             render: () => 0,
         },
     ];
@@ -167,17 +173,13 @@ export default function PlayersPage() {
                     />
 
                     {/* Pagination footer */}
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between px-4 py-3 bg-gray-900/50 mt-6 border border-gray-800 rounded-lg text-sm">
-                        <span className="text-gray-400">
-                            Showing {(sorted.length === 0 ? 0 : (page - 1) * PLAYERS_PER_PAGE + 1)} to {Math.min(page * PLAYERS_PER_PAGE, sorted.length)} of {sorted.length} entries
-                        </span>
-
-                        <Pagination
-                            currentPage={page}
-                            total={totalPages}
-                            onPageChange={(p) => setPage(p)}
-                        />
-                    </div>
+                    <PaginationFooter
+                        currentPage={page}
+                        totalPages={totalPages}
+                        totalEntries={sorted.length}
+                        entriesPerPage={ENTRIES_PER_PAGE}
+                        onPageChange={setPage}
+                    />
                 </div>
             </main>
         </>

@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import HomeCard from './components/HomeCard';
+import DiscordButton from './components/DiscordButton';
 
 export default function Home() {
   const bgRef = useRef<HTMLDivElement>(null);
@@ -74,9 +76,9 @@ export default function Home() {
         <h1 className="text-4xl sm:text-6xl font-bold mb-4">Kingdom of Okros</h1>
 
         <div className="flex items-center gap-4 mb-4">
-          <div className="h-px w-24 sm:w-40 bg-[#FFD700]" />
-          <span className="text-[#FFD700] text-xl sm:text-4xl font-medium">3621</span>
-          <div className="h-px w-24 sm:w-40 bg-[#FFD700]" />
+          <div className="h-px w-24 sm:w-40 bg-gradient-to-r from-orange-500 to-orange-300 text-transparent" />
+          <span className="bg-gradient-to-r from-orange-500 to-orange-300 text-transparent bg-clip-text text-xl sm:text-4xl font-medium">3621</span>
+          <div className="h-px w-24 sm:w-40 bg-gradient-to-r from-orange-500 to-orange-300 text-transparent" />
         </div>
 
         <p className="text-lg sm:text-2xl mb-10">We're building something epic. Stay tuned!</p>
@@ -86,37 +88,13 @@ export default function Home() {
             { href: '/players', icon: '/icons/player.png', label: 'Players' },
             { href: '/alliances', icon: '/icons/alliance.png', label: 'Alliances' },
             { href: '/calendar', icon: '/icons/events.png', label: 'Calendar' }
-          ].map(({ href, icon, label }) => (
-            <Link
-              key={href}
-              href={href}
-              className="bg-gray-800/80 hover:bg-orange-500 transition-colors border border-gray-700 rounded-lg px-6 py-4 flex flex-col items-center justify-center text-white shadow-lg"
-            >
-              <Image src={icon} alt={label} width={40} height={40} className="mb-2" />
-              <span className="text-lg font-medium">{label}</span>
-            </Link>
+          ].map((card) => (
+            <HomeCard key={card.href} {...card} />
           ))}
         </div>
       </div>
 
-      <a
-        href="https://discord.gg/YZ2AAnkN"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-40 bg-white rounded-full h-14 flex flex-row-reverse items-center shadow-lg overflow-hidden transition-all duration-500 group hover:w-56 w-14"
-        aria-label="Join us on Discord"
-      >
-        <Image
-          src="/icons/discord-icon.svg"
-          alt="Discord logo"
-          width={28}
-          height={28}
-          className="object-contain shrink-0 mr-[14px]"
-        />
-        <span className="text-md font-medium text-[#5865F2] whitespace-nowrap pr-4 opacity-0 max-w-0 group-hover:opacity-100 group-hover:max-w-[200px] transition-all duration-500">
-          Join 3621&apos;s Discord
-        </span>
-      </a>
+      <DiscordButton />
     </div>
   )
 }

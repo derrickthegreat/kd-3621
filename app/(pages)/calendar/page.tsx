@@ -60,7 +60,7 @@ export default function CalendarPage() {
                 <CalendarHeader currentMonth={currentMonth} setCurrentMonth={setCurrentMonth} />
 
                 {/* Weekday names row */}
-                <div className="grid grid-cols-7 text-center text-xs uppercase text-orange-300 bg-gray-900 font-semibold">
+                <div className="grid grid-cols-7 text-center text-xs uppercase text-orange-400 bg-blue-200/10 backdrop-blur-md border border-blue-300/10 shadow-sm font-semibold mb-2 rounded-xl">
                     {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((d) => (
                         <div key={d} className="py-2">
                             {d}

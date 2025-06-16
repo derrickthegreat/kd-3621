@@ -1,12 +1,19 @@
 'use client';
 
-import Link from 'next/link';
+import { usePathname } from 'next/navigation'
+import NavButton from './NavButton';
 
 type PageHeaderProps = {
     title: string;
 };
 
 export default function PageHeader({ title }: PageHeaderProps) {
+    const pathname = usePathname()
+    const isPlayerProfile = /^\/players\/[^/]+$/.test(pathname)
+
+    const backLabel = isPlayerProfile ? 'Back to Players' : 'Back to Home'
+    const backHref = isPlayerProfile ? '/players' : '/'
+
     return (
         // Flex container for title and "Back to Home" link
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-2 sm:gap-0">
@@ -17,12 +24,12 @@ export default function PageHeader({ title }: PageHeaderProps) {
 
             {/* Right-aligned back link */}
             <div className="flex justify-end">
-                <Link
-                    href="/"
-                    className="text-sm sm:text-base px-4 py-2 rounded bg-gray-800 text-white hover:bg-gray-700 border border-gray-600 transition-colors"
-                >
-                    &lt; Back to Home
-                </Link>
+                <NavButton
+                    href={backHref}
+                    label={backLabel}
+                    iconLeft="←"
+                    className="text-sm sm:text-base"
+                />
             </div>
         </div>
     );

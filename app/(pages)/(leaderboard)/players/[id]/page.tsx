@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { formatNumber } from '@/app/utils/format';
 import { getInitials, getRandomColor } from '@/app/utils/colors';
-import Link from 'next/link';
+import PageHeader from '@/app/components/PageHeader';
 
 export default function PlayerProfilePage() {
-    const { id } = useParams(); // Get player ID from route parameters
+    const { id } = useParams();                      // Get player ID from route parameters
     const [player, setPlayer] = useState<any>(null); // Store the fetched player data
 
     // Load players from JSON and find the matching ID
@@ -35,7 +35,10 @@ export default function PlayerProfilePage() {
         ['T4 + T5', player['T45 Kills']],
         ['Total Kills', player['Total Kills']],
         ['T45 Kills', player['T45 Kills']],
-        ['Ranged', player['Ranged']],
+        ['Ranged', player['Ranged']]
+    ];
+
+    const farmStats = [
         ['Rss Gathered', player['Rss Gathered']],
         ['Rss Assistance', player['Rss Assistance']],
         ['Helps', player.Helps],
@@ -44,20 +47,10 @@ export default function PlayerProfilePage() {
 
     return (
         <>
-            <main className="min-h-screen bg-gray-950 text-white font-sans p-6">
-                <div className="max-w-3xl mx-auto">
+            <main className="min-h-screen bg-gray-950 text-white font-sans">
+                <div className="container mx-auto px-4 py-6">
                     {/* Header and back button */}
-                    <div className="flex items-center justify-between mb-6">
-                        <h1 className="text-3xl font-bold bg-gradient-to-r from-orange-500 to-orange-300 text-transparent bg-clip-text">
-                            Player Profile
-                        </h1>
-                        <Link
-                            href="/players"
-                            className="text-sm px-4 py-2 rounded bg-gray-800 text-white hover:bg-gray-700 border border-gray-600 transition-colors"
-                        >
-                            ⬅ Back to Players
-                        </Link>
-                    </div>
+                    <PageHeader title="Player profile" />
 
                     {/* Avatar and player info */}
                     <div className="flex items-center gap-4 mb-4">
@@ -70,25 +63,41 @@ export default function PlayerProfilePage() {
                         </div>
                     </div>
 
-                    {/* KvK section — only shows 0s for now */}
-                    <div className="mb-6">
-                        <h2 className="text-lg font-semibold mb-2">KvK Stats</h2>
-                        <ul className="bg-gray-800 rounded-lg p-4 border border-gray-700 space-y-1 text-sm">
-                            {careerStats.slice(0, 11).map(([label]) => (
-                                <li key={`kvk-${label}`} className="flex justify-between border-b border-gray-700 py-1">
-                                    <span className="text-gray-400">{label}</span>
-                                    <span>0</span>
-                                </li>
-                            ))}
-                        </ul>
+                    {/* KvK and Career side by side */}
+                    <div className="flex flex-col sm:flex-row gap-6 mb-6 items-start">
+                        {/* KvK section */}
+                        <div className="flex-1">
+                            <h2 className="text-lg font-semibold mb-2">KvK Stats</h2>
+                            <ul className="bg-gray-800 rounded-lg p-4 border border-gray-700 space-y-1 text-sm h-full">
+                                {careerStats.slice(0, 11).map(([label]) => (
+                                    <li key={`kvk-${label}`} className="flex justify-between border-b border-gray-700 py-1">
+                                        <span className="text-gray-400">{label}</span>
+                                        <span>0</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        {/* Career section */}
+                        <div className="flex-1">
+                            <h2 className="text-lg font-semibold mb-2">Career Stats</h2>
+                            <ul className="bg-gray-800 rounded-lg p-4 border border-gray-700 space-y-1 text-sm h-full">
+                                {careerStats.map(([label, value]) => (
+                                    <li key={`career-${label}`} className="flex justify-between border-b border-gray-700 py-1">
+                                        <span className="text-gray-400">{label}</span>
+                                        <span>{label === 'Alliance' ? value : formatNumber(value)}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
                     </div>
 
-                    {/* Career section with real values */}
-                    <div>
-                        <h2 className="text-lg font-semibold mb-2">Career Stats</h2>
+                    {/* Farm stats below */}
+                    <div className="mb-4">
+                        <h2 className="text-lg font-semibold mb-2">Farm Stats</h2>
                         <ul className="bg-gray-800 rounded-lg p-4 border border-gray-700 space-y-1 text-sm">
-                            {careerStats.map(([label, value]) => (
-                                <li key={`career-${label}`} className="flex justify-between border-b border-gray-700 py-1">
+                            {farmStats.map(([label, value]) => (
+                                <li key={`farm-${label}`} className="flex justify-between border-b border-gray-700 py-1">
                                     <span className="text-gray-400">{label}</span>
                                     <span>{label === 'Alliance' ? value : formatNumber(value)}</span>
                                 </li>
