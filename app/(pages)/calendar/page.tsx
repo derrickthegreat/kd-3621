@@ -8,7 +8,7 @@ import PageHeader from '@/app/components/PageHeader';
 import CalendarGrid from './components/CalendarGrid';
 import CalendarHeader from './components/CalendarHeader';
 import EventDetails from './components/EventDetails';
-import { expandEvents, CalendarEvent, EventInstance } from './utils';
+import { expandEvents, CalendarEvent, EventInstance } from './utils/expandEvents';
 
 // Extend dayjs with isBetween plugin
 dayjs.extend(isBetween);

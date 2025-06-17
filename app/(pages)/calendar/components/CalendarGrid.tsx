@@ -1,7 +1,7 @@
 'use client';
 
 import dayjs from 'dayjs';
-import { EventInstance } from '../utils';
+import { EventInstance } from '../utils/expandEvents';
 
 type Props = {
     days: dayjs.Dayjs[];                            // Array of days to display in the grid

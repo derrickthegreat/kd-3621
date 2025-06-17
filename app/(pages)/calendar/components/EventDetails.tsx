@@ -1,7 +1,7 @@
 'use client';
 
 import dayjs from 'dayjs';
-import { EventInstance } from '../utils';
+import { EventInstance } from '../utils/expandEvents';
 
 type Props = {
     expandedDay: string;     // The selected day to show detailed events for
