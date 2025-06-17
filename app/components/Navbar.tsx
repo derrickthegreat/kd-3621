@@ -4,13 +4,13 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import clsx from 'clsx';
-import Image from 'next/image';
 
 // Navigation links displayed in the navbar
 const navLinks = [
     { href: '/players', label: 'Players' },
     { href: '/alliances', label: 'Alliances' },
     { href: '/calendar', label: 'Calendar' },
+    { href: '/equipments', label: 'Equipments' },
 ];
 
 export default function Navbar() {

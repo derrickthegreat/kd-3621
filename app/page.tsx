@@ -83,11 +83,13 @@ export default function Home() {
 
         <p className="text-lg sm:text-2xl mb-10">We're building something epic. Stay tuned!</p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-4 gap-6 max-w-4xl w-full">
           {[
             { href: '/players', icon: '/icons/player.png', label: 'Players' },
             { href: '/alliances', icon: '/icons/alliance.png', label: 'Alliances' },
-            { href: '/calendar', icon: '/icons/events.png', label: 'Calendar' }
+            { href: '/calendar', icon: '/icons/events.png', label: 'Calendar' },
+            { href: '/equipments', icon: '/icons/equipment/revival_helmet.png', label: 'Equipments' },
+
           ].map((card) => (
             <HomeCard key={card.href} {...card} />
           ))}

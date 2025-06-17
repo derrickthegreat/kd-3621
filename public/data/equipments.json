@@ -1,6 +1,6 @@
 [
     {
-        "src": "/assets/equipment/sharplongsword.png",
+        "src": "/icons/equipment/sharplongsword.png",
         "alt": "Sharp Longsword",
         "name": "Sharp Longsword",
         "slot": "Weapon",
@@ -28,7 +28,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/blessedblade.png",
+        "src": "/icons/equipment/blessedblade.png",
         "alt": "Blessed Blade",
         "name": "Blessed Blade",
         "slot": "Weapon",
@@ -64,7 +64,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/staffofthelost.png",
+        "src": "/icons/equipment/staffofthelost.png",
         "alt": "Staff of the Lost",
         "name": "Staff of the Lost",
         "slot": "Weapon",
@@ -104,7 +104,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/gatekeepers.png",
+        "src": "/icons/equipment/gatekeepers.png",
         "alt": "Gatekeepers Shield",
         "name": "Gatekeepers Shield",
         "slot": "Weapon",
@@ -144,7 +144,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/blazingaxe.png",
+        "src": "/icons/equipment/blazingaxe.png",
         "alt": "Blazing Axe",
         "name": "Blazing Axe",
         "slot": "Weapon",
@@ -184,7 +184,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/oathsworn.png",
+        "src": "/icons/equipment/oathsworn.png",
         "alt": "Knight's Oathsworn Bow",
         "name": "Knight's Oathsworn Bow",
         "slot": "Weapon",
@@ -220,7 +220,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/heartsaint.png",
+        "src": "/icons/equipment/heartsaint.png",
         "alt": "Heart of the Saint",
         "name": "Heart of the Saint",
         "slot": "Weapon",
@@ -260,7 +260,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/sakura.png",
+        "src": "/icons/equipment/sakura.png",
         "alt": "Sakura Fubuki",
         "name": "Sakura Fubuki",
         "slot": "Weapon",
@@ -300,7 +300,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/goldenage.png",
+        "src": "/icons/equipment/goldenage.png",
         "alt": "Golden Age",
         "name": "Golden Age",
         "slot": "Weapon",
@@ -340,7 +340,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/twilightepiphany.png",
+        "src": "/icons/equipment/twilightepiphany.png",
         "alt": "Twilight Epiphany",
         "name": "Twilight Epiphany",
         "slot": "Weapon",
@@ -403,7 +403,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/trial.png",
+        "src": "/icons/equipment/trial.png",
         "alt": "Trial of the Lost Kingdom",
         "name": "Trial of the Lost Kingdom",
         "slot": "Weapon",
@@ -439,7 +439,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/hydrablast.png",
+        "src": "/icons/equipment/hydrablast.png",
         "alt": "The Hydra's Blast",
         "name": "The Hydra's Blast",
         "slot": "Weapon",
@@ -502,7 +502,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/sunandmoon.png",
+        "src": "/icons/equipment/sunandmoon.png",
         "alt": "Hammer of the Sun and Moon",
         "name": "Hammer of the Sun and Moon",
         "slot": "Weapon",
@@ -565,7 +565,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/dominion.png",
+        "src": "/icons/equipment/dominion.png",
         "alt": "Sacred Dominion",
         "name": "Sacred Dominion",
         "slot": "Weapon",
@@ -628,7 +628,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/khan.png",
+        "src": "/icons/equipment/khan.png",
         "alt": "Pride of the Khan",
         "name": "Pride of the Khan",
         "slot": "Helmet",
@@ -687,7 +687,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/conqueror.png",
+        "src": "/icons/equipment/conqueror.png",
         "alt": "Helm of the Conqueror",
         "name": "Helm of the Conqueror",
         "slot": "Helmet",
@@ -746,7 +746,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/night.png",
+        "src": "/icons/equipment/night.png",
         "alt": "Ancestral Mask of Night",
         "name": "Ancestral Mask of Night",
         "slot": "Helmet",
@@ -805,7 +805,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/visage.png",
+        "src": "/icons/equipment/visage.png",
         "alt": "Abyssal Visage",
         "name": "Abyssal Visage",
         "slot": "Helmet",
@@ -845,7 +845,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/lineage.png",
+        "src": "/icons/equipment/lineage.png",
         "alt": "Witch's Lineage",
         "name": "Witch's Lineage",
         "slot": "Helmet",
@@ -885,7 +885,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/diadem.png",
+        "src": "/icons/equipment/diadem.png",
         "alt": "Knight's Steel Diadem",
         "name": "Knight's Steel Diadem",
         "slot": "Helmet",
@@ -921,7 +921,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/expedition.png",
+        "src": "/icons/equipment/expedition.png",
         "alt": "Expedition War Helm",
         "name": "Expedition War Helm",
         "slot": "Helmet",
@@ -957,7 +957,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/fear.png",
+        "src": "/icons/equipment/fear.png",
         "alt": "Helm of Fear",
         "name": "Helm of Fear",
         "slot": "Helmet",
@@ -993,7 +993,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/phoenix.png",
+        "src": "/icons/equipment/phoenix.png",
         "alt": "Helm of Phoenix",
         "name": "Helm of Phoenix",
         "slot": "Helmet",
@@ -1029,7 +1029,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/iron.png",
+        "src": "/icons/equipment/iron.png",
         "alt": "Iron Helm",
         "name": "Iron Helm",
         "slot": "Helmet",
@@ -1053,7 +1053,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/retribution.png",
+        "src": "/icons/equipment/retribution.png",
         "alt": "Shadow Legion's Retribution",
         "name": "Shadow Legion's Retribution",
         "slot": "Chest",
@@ -1120,7 +1120,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/milky.png",
+        "src": "/icons/equipment/milky.png",
         "alt": "The Milky Way",
         "name": "The Milky Way",
         "slot": "Chest",
@@ -1187,7 +1187,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/hope.png",
+        "src": "/icons/equipment/hope.png",
         "alt": "Hope Cloak",
         "name": "Hope Cloak",
         "slot": "Chest",
@@ -1254,7 +1254,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/quinn.png",
+        "src": "/icons/equipment/quinn.png",
         "alt": "Quinn's Soul",
         "name": "Quinn's Soul",
         "slot": "Chest",
@@ -1290,7 +1290,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/blessing.png",
+        "src": "/icons/equipment/blessing.png",
         "alt": "Dark Lord's Blessing",
         "name": "Dark Lord's Blessing",
         "slot": "Chest",
@@ -1322,7 +1322,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/heavy.png",
+        "src": "/icons/equipment/heavy.png",
         "alt": "Commander's Heavy Armor",
         "name": "Commander's Heavy Armor",
         "slot": "Chest",
@@ -1358,7 +1358,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/milanese.png",
+        "src": "/icons/equipment/milanese.png",
         "alt": "Milanese Plate",
         "name": "Milanese Plate",
         "slot": "Chest",
@@ -1390,7 +1390,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/infantry_breastplate.png",
+        "src": "/icons/equipment/infantry_breastplate.png",
         "alt": "Infantry Breastplate",
         "name": "Infantry Breastplate",
         "slot": "Chest",
@@ -1426,7 +1426,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/chainmail.png",
+        "src": "/icons/equipment/chainmail.png",
         "alt": "Chain Mail",
         "name": "Chain Mail",
         "slot": "Chest",
@@ -1450,7 +1450,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/valorous.png",
+        "src": "/icons/equipment/valorous.png",
         "alt": "Knight's Valorous Cloak",
         "name": "Knight's Valorous Cloak",
         "slot": "Chest",
@@ -1486,7 +1486,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/navar.png",
+        "src": "/icons/equipment/navar.png",
         "alt": "Navar's Control",
         "name": "Navar's Control",
         "slot": "Gloves",
@@ -1545,7 +1545,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/grips.png",
+        "src": "/icons/equipment/grips.png",
         "alt": "Sacred Grips",
         "name": "Sacred Grips",
         "slot": "Gloves",
@@ -1604,7 +1604,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/ian.png",
+        "src": "/icons/equipment/ian.png",
         "alt": "Ian's Choice",
         "name": "Ian's Choice",
         "slot": "Gloves",
@@ -1663,7 +1663,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/sufferance.png",
+        "src": "/icons/equipment/sufferance.png",
         "alt": "Iset's Sufferance",
         "name": "Iset's Sufferance",
         "slot": "Gloves",
@@ -1691,7 +1691,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/brutality.png",
+        "src": "/icons/equipment/brutality.png",
         "alt": "Seth's Brutality",
         "name": "Seth's Brutality",
         "slot": "Gloves",
@@ -1727,7 +1727,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/calvin.png",
+        "src": "/icons/equipment/calvin.png",
         "alt": "Calvin's Hand",
         "name": "Calvin's Hand",
         "slot": "Gloves",
@@ -1767,7 +1767,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/saintsong.png",
+        "src": "/icons/equipment/saintsong.png",
         "alt": "Saint's Song",
         "name": "Saint's Song",
         "slot": "Gloves",
@@ -1803,7 +1803,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/leathergloves.png",
+        "src": "/icons/equipment/leathergloves.png",
         "alt": "Leather Gloves",
         "name": "Leather Gloves",
         "slot": "Gloves",
@@ -1835,7 +1835,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/clothgloves.png",
+        "src": "/icons/equipment/clothgloves.png",
         "alt": "Cloth Gloves",
         "name": "Cloth Gloves",
         "slot": "Gloves",
@@ -1859,7 +1859,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/battleworn.png",
+        "src": "/icons/equipment/battleworn.png",
         "alt": "Knight's Battleworn Gauntlets",
         "name": "Knight's Battleworn Gauntlets",
         "slot": "Gloves",
@@ -1895,7 +1895,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/bronzebracers.png",
+        "src": "/icons/equipment/bronzebracers.png",
         "alt": "Bronze Bracers",
         "name": "Bronze Bracers",
         "slot": "Gloves",
@@ -1931,7 +1931,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/tassetswargod.png",
+        "src": "/icons/equipment/tassetswargod.png",
         "alt": "Tassets of the War God",
         "name": "Tassets of the War God",
         "type": "Archer",
@@ -1998,7 +1998,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/eternalnight.png",
+        "src": "/icons/equipment/eternalnight.png",
         "alt": "Eternal Night",
         "name": "Eternal Night",
         "type": "Infantry",
@@ -2065,7 +2065,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/ashdawn.png",
+        "src": "/icons/equipment/ashdawn.png",
         "alt": "Ash of the Dawn",
         "name": "Ash of the Dawn",
         "slot": "Legs",
@@ -2132,7 +2132,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/humility.png",
+        "src": "/icons/equipment/humility.png",
         "alt": "Karuak's Humility",
         "name": "Karuak's Humility",
         "slot": "Legs",
@@ -2164,7 +2164,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/gladiator.png",
+        "src": "/icons/equipment/gladiator.png",
         "alt": "Gladiator",
         "name": "Gladiator",
         "slot": "Legs",
@@ -2200,7 +2200,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/fanatic.png",
+        "src": "/icons/equipment/fanatic.png",
         "alt": "Fanatic's Tassets",
         "name": "Fanatic's Tassets",
         "slot": "Legs",
@@ -2232,7 +2232,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/greaves.png",
+        "src": "/icons/equipment/greaves.png",
         "alt": "Greaves of the Exile",
         "name": "Greaves of the Exile",
         "slot": "Legs",
@@ -2268,7 +2268,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/sentry.png",
+        "src": "/icons/equipment/sentry.png",
         "alt": "Sentry Breeches",
         "name": "Sentry Breeches",
         "slot": "Legs",
@@ -2308,7 +2308,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/coarse.png",
+        "src": "/icons/equipment/coarse.png",
         "alt": "Coarse Breeches",
         "name": "Coarse Breeches",
         "slot": "Legs",
@@ -2336,7 +2336,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/ranger.png",
+        "src": "/icons/equipment/ranger.png",
         "alt": "Ranger Trousers",
         "name": "Ranger Trousers",
         "slot": "Legs",
@@ -2372,7 +2372,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/triumphant.png",
+        "src": "/icons/equipment/triumphant.png",
         "alt": "Knight's Triumphant Tassets",
         "name": "Knight's Triumphant Tassets",
         "slot": "Legs",
@@ -2408,7 +2408,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/mountain.png",
+        "src": "/icons/equipment/mountain.png",
         "alt": "Mountain Crushers",
         "name": "Mountain Crushers",
         "slot": "Boots",
@@ -2467,7 +2467,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/shio.png",
+        "src": "/icons/equipment/shio.png",
         "alt": "Shio's Return",
         "name": "Shio's Return",
         "slot": "Boots",
@@ -2526,7 +2526,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/commanderboots.png",
+        "src": "/icons/equipment/commanderboots.png",
         "alt": "Commander's Boots",
         "name": "Commander's Boots",
         "type": "Archer",
@@ -2585,7 +2585,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/cloud.png",
+        "src": "/icons/equipment/cloud.png",
         "alt": "Cloud Racers",
         "name": "Cloud Racers",
         "slot": "Boots",
@@ -2621,7 +2621,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/frost.png",
+        "src": "/icons/equipment/frost.png",
         "alt": "Frost Treads",
         "name": "Frost Treads",
         "slot": "Boots",
@@ -2653,7 +2653,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/flame.png",
+        "src": "/icons/equipment/flame.png",
         "alt": "Flame Treads",
         "name": "Flame Treads",
         "slot": "Boots",
@@ -2685,7 +2685,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/scarlethounds.png",
+        "src": "/icons/equipment/scarlethounds.png",
         "alt": "The Scarlet Hounds",
         "name": "The Scarlet Hounds",
         "slot": "Boots",
@@ -2713,7 +2713,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/edged.png",
+        "src": "/icons/equipment/edged.png",
         "alt": "Edged Boots",
         "name": "Edged Boots",
         "slot": "Boots",
@@ -2749,7 +2749,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/reverence.png",
+        "src": "/icons/equipment/reverence.png",
         "alt": "Boots of Reverence",
         "name": "Boots of Reverence",
         "slot": "Boots",
@@ -2781,7 +2781,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/sturdy.png",
+        "src": "/icons/equipment/sturdy.png",
         "alt": "Sturdy Boots",
         "name": "Sturdy Boots",
         "slot": "Boots",
@@ -2809,7 +2809,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/sabatons.png",
+        "src": "/icons/equipment/sabatons.png",
         "alt": "Knight's Winter Sabatons",
         "name": "Knight's Winter Sabatons",
         "slot": "Boots",
@@ -2845,7 +2845,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/db_helmet.png",
+        "src": "/icons/equipment/db_helmet.png",
         "alt": "db_helmet",
         "name": "Dragon's Breath Helm",
         "slot": "Helmet",
@@ -2913,7 +2913,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/db_chest.png",
+        "src": "/icons/equipment/db_chest.png",
         "alt": "db_chest",
         "name": "Dragon's Breath Plate",
         "slot": "Chest",
@@ -2977,7 +2977,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/db_weapon.png",
+        "src": "/icons/equipment/db_weapon.png",
         "alt": "db_weapon",
         "name": "Dragon's Breath Bow",
         "slot": "Weapon",
@@ -3045,7 +3045,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/db_gloves.png",
+        "src": "/icons/equipment/db_gloves.png",
         "alt": "db_gloves",
         "name": "Dragon's Breath Vambraces",
         "slot": "Gloves",
@@ -3105,7 +3105,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/db_pants.png",
+        "src": "/icons/equipment/db_pants.png",
         "alt": "db_pants",
         "name": "Dragon's Breath Tassets",
         "slot": "Legs",
@@ -3169,7 +3169,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/db_boots.png",
+        "src": "/icons/equipment/db_boots.png",
         "alt": "db_boots",
         "name": "Dragon's Breath Boots",
         "slot": "Boots",
@@ -3229,7 +3229,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/ee_helmet.png",
+        "src": "/icons/equipment/ee_helmet.png",
         "alt": "ee_helmet",
         "name": "Gold Helm of the Eternal Empire",
         "slot": "Helmet",
@@ -3297,7 +3297,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/ee_chest.png",
+        "src": "/icons/equipment/ee_chest.png",
         "alt": "ee_chest",
         "name": "Plate of the Eternal Empire",
         "slot": "Chest",
@@ -3361,7 +3361,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/ee_weapon.png",
+        "src": "/icons/equipment/ee_weapon.png",
         "alt": "ee_weapon",
         "name": "Shield of the Eternal Empire",
         "slot": "Weapon",
@@ -3429,7 +3429,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/ee_gloves.png",
+        "src": "/icons/equipment/ee_gloves.png",
         "alt": "ee_gloves",
         "name": "Vambraces of the Eternal Empire",
         "slot": "Gloves",
@@ -3489,7 +3489,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/ee_pants.png",
+        "src": "/icons/equipment/ee_pants.png",
         "alt": "ee_pants",
         "name": "Greaves of the Eternal Empire",
         "slot": "Legs",
@@ -3553,7 +3553,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/ee_boots.png",
+        "src": "/icons/equipment/ee_boots.png",
         "alt": "ee_boots",
         "name": "Sturdy Boots of the Eternal Empire",
         "slot": "Boots",
@@ -3613,7 +3613,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/fg_helmet.png",
+        "src": "/icons/equipment/fg_helmet.png",
         "alt": "fg_helmet",
         "name": "Mask of the Forest Guardian",
         "slot": "Helmet",
@@ -3646,7 +3646,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/fg_chest.png",
+        "src": "/icons/equipment/fg_chest.png",
         "alt": "fg_chest",
         "name": "Robe of the Forest Guardian",
         "slot": "Chest",
@@ -3679,7 +3679,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/fg_weapon.png",
+        "src": "/icons/equipment/fg_weapon.png",
         "alt": "fg_weapon",
         "name": "Scepter of the Forest Guardian",
         "slot": "Weapon",
@@ -3712,7 +3712,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/fg_gloves.png",
+        "src": "/icons/equipment/fg_gloves.png",
         "alt": "fg_gloves",
         "name": "Claws of the Forest Guardian",
         "slot": "Gloves",
@@ -3745,7 +3745,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/gg_helmet.png",
+        "src": "/icons/equipment/gg_helmet.png",
         "alt": "gg_helmet",
         "name": "Diadem of the Glorious Goddess",
         "slot": "Helmet",
@@ -3809,7 +3809,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/gg_chest.png",
+        "src": "/icons/equipment/gg_chest.png",
         "alt": "gg_chest",
         "name": "Plate of the Glorious Goddess",
         "slot": "Chest",
@@ -3873,7 +3873,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/gg_weapon.png",
+        "src": "/icons/equipment/gg_weapon.png",
         "alt": "gg_weapon",
         "name": "Scepter of the Glorious Goddess",
         "slot": "Weapon",
@@ -3937,7 +3937,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/gg_gloves.png",
+        "src": "/icons/equipment/gg_gloves.png",
         "alt": "gg_gloves",
         "name": "Gauntlets of the Glorious Goddess",
         "slot": "Gloves",
@@ -4001,7 +4001,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/gg_pants.png",
+        "src": "/icons/equipment/gg_pants.png",
         "alt": "gg_pants",
         "name": "Chausses of the Glorious Goddess",
         "slot": "Legs",
@@ -4065,7 +4065,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/gg_boots.png",
+        "src": "/icons/equipment/gg_boots.png",
         "alt": "gg_boots",
         "name": "Greaves of the Glorious Goddess",
         "slot": "Boots",
@@ -4129,7 +4129,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/harvester_helmet.png",
+        "src": "/icons/equipment/harvester_helmet.png",
         "alt": "harvester_helmet",
         "name": "Harvester's Headscarf",
         "slot": "Helmet",
@@ -4162,7 +4162,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/harvester_chest.png",
+        "src": "/icons/equipment/harvester_chest.png",
         "alt": "harvester_chest",
         "name": "Harvester Robes",
         "slot": "Chest",
@@ -4195,7 +4195,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/harvester_pants.png",
+        "src": "/icons/equipment/harvester_pants.png",
         "alt": "harvester_pants",
         "name": "Harvester Breeches",
         "slot": "Legs",
@@ -4228,7 +4228,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/harvester_boots.png",
+        "src": "/icons/equipment/harvester_boots.png",
         "alt": "harvester_boots",
         "name": "Harvester Boots",
         "slot": "Boots",
@@ -4261,7 +4261,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/hw_helmet.png",
+        "src": "/icons/equipment/hw_helmet.png",
         "alt": "hw_helmet",
         "name": "War Helm of the Hellish Wasteland",
         "slot": "Helmet",
@@ -4329,7 +4329,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/hw_chest.png",
+        "src": "/icons/equipment/hw_chest.png",
         "alt": "hw_chest",
         "name": "Heavy Armor of the Hellish Wasteland",
         "slot": "Chest",
@@ -4393,7 +4393,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/hw_weapon.png",
+        "src": "/icons/equipment/hw_weapon.png",
         "alt": "hw_weapon",
         "name": "Lance of the Hellish Wasteland",
         "slot": "Weapon",
@@ -4461,7 +4461,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/hw_gloves.png",
+        "src": "/icons/equipment/hw_gloves.png",
         "alt": "hw_gloves",
         "name": "Armband of the Hellish Wasteland",
         "slot": "Gloves",
@@ -4521,7 +4521,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/hw_pants.png",
+        "src": "/icons/equipment/hw_pants.png",
         "alt": "hw_pants",
         "name": "Tassets of the Hellish Wasteland",
         "slot": "Legs",
@@ -4585,7 +4585,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/hw_boots.png",
+        "src": "/icons/equipment/hw_boots.png",
         "alt": "hw_boots",
         "name": "Boots of the Hellish Wasteland",
         "slot": "Boots",
@@ -4645,7 +4645,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/revival_helmet.png",
+        "src": "/icons/equipment/revival_helmet.png",
         "alt": "revival_helmet",
         "name": "Revival Helm",
         "slot": "Helmet",
@@ -4678,7 +4678,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/revival_chest.png",
+        "src": "/icons/equipment/revival_chest.png",
         "alt": "revival_chest",
         "name": "Revival Plate",
         "slot": "Chest",
@@ -4711,7 +4711,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/revival_gloves.png",
+        "src": "/icons/equipment/revival_gloves.png",
         "alt": "revival_gloves",
         "name": "Revival Gauntlets",
         "slot": "Gloves",
@@ -4748,7 +4748,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/revival_pants.png",
+        "src": "/icons/equipment/revival_pants.png",
         "alt": "revival_pants",
         "name": "Revival Greaves",
         "slot": "Legs",
@@ -4781,7 +4781,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/vanguard_weapon.png",
+        "src": "/icons/equipment/vanguard_weapon.png",
         "alt": "vanguard_weapon",
         "name": "Vanguard Halberd",
         "slot": "Weapon",
@@ -4810,7 +4810,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/vanguard_pants.png",
+        "src": "/icons/equipment/vanguard_pants.png",
         "alt": "vanguard_pants",
         "name": "Vanguard Greaves",
         "slot": "Legs",
@@ -4839,7 +4839,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/windswept_helmet.png",
+        "src": "/icons/equipment/windswept_helmet.png",
         "alt": "windswept_helmet",
         "name": "Windswept War Helm",
         "slot": "Helmet",
@@ -4876,7 +4876,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/windswept_chest.png",
+        "src": "/icons/equipment/windswept_chest.png",
         "alt": "windswept_chest",
         "name": "Windswept Breastplate",
         "slot": "Chest",
@@ -4913,7 +4913,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/windswept_gloves.png",
+        "src": "/icons/equipment/windswept_gloves.png",
         "alt": "windswept_gloves",
         "name": "Windswept Bracers",
         "slot": "Gloves",
@@ -4950,7 +4950,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/windswept_boots.png",
+        "src": "/icons/equipment/windswept_boots.png",
         "alt": "windswept_boots",
         "name": "Windswept Boots",
         "slot": "Boots",
@@ -4987,7 +4987,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/wolf_helmet.png",
+        "src": "/icons/equipment/wolf_helmet.png",
         "alt": "wolf_helmet",
         "name": "Fierce Wolf's Helmet",
         "slot": "Helmet",
@@ -5051,7 +5051,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/wolf_chest.png",
+        "src": "/icons/equipment/wolf_chest.png",
         "alt": "wolf_chest",
         "name": "Vigilant Wolf's Leather Armor",
         "slot": "Chest",
@@ -5115,7 +5115,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/wolf_gloves.png",
+        "src": "/icons/equipment/wolf_gloves.png",
         "alt": "wolf_gloves",
         "name": "Wailing Wolf's Gauntlets",
         "slot": "Gloves",
@@ -5179,7 +5179,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/wolf_pants.png",
+        "src": "/icons/equipment/wolf_pants.png",
         "alt": "wolf_pants",
         "name": "Lone Wolf's Leather Tassets",
         "slot": "Legs",
@@ -5243,7 +5243,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/wolf_boots.png",
+        "src": "/icons/equipment/wolf_boots.png",
         "alt": "wolf_boots",
         "name": "Roaring Wolf's Claws",
         "slot": "Boots",
@@ -5307,7 +5307,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/ww_helmet.png",
+        "src": "/icons/equipment/ww_helmet.png",
         "alt": "ww_helmet",
         "name": "Witch's Deadwood Crown",
         "slot": "Helmet",
@@ -5347,7 +5347,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/ww_chest.png",
+        "src": "/icons/equipment/ww_chest.png",
         "alt": "ww_chest",
         "name": "Witch's Hexed Cloak",
         "slot": "Chest",
@@ -5387,7 +5387,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/ww_weapon.png",
+        "src": "/icons/equipment/ww_weapon.png",
         "alt": "ww_weapon",
         "name": "Witch's Feathered Staff",
         "slot": "Weapon",
@@ -5426,7 +5426,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/ww_gloves.png",
+        "src": "/icons/equipment/ww_gloves.png",
         "alt": "ww_gloves",
         "name": "Witch's Crimson Bracers",
         "slot": "Gloves",
@@ -5466,7 +5466,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/ww_pants.png",
+        "src": "/icons/equipment/ww_pants.png",
         "alt": "ww_pants",
         "name": "Witch's Ornamented Pants",
         "slot": "Legs",
@@ -5506,7 +5506,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/ww_boots.png",
+        "src": "/icons/equipment/ww_boots.png",
         "alt": "ww_boots",
         "name": "Witch's Mire-Waders",
         "slot": "Boots",
@@ -5546,7 +5546,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/accessory_bards.png",
+        "src": "/icons/equipment/accessory_bards.png",
         "alt": "bards_accessory",
         "name": "The Bard's Pendant",
         "slot": "Accessory",
@@ -5569,7 +5569,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/accessory_call.png",
+        "src": "/icons/equipment/accessory_call.png",
         "alt": "call_accessory",
         "name": "Call of the Loyal",
         "slot": "Accessory",
@@ -5596,7 +5596,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/accessory_concealed.png",
+        "src": "/icons/equipment/accessory_concealed.png",
         "alt": "concealed_accessory",
         "name": "Concealed Dagger",
         "slot": "Accessory",
@@ -5654,7 +5654,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/accessory_crimson.png",
+        "src": "/icons/equipment/accessory_crimson.png",
         "alt": "crimson_accessory",
         "name": "Crimson Ring",
         "slot": "Accessory",
@@ -5677,7 +5677,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/accessory_delanes.png",
+        "src": "/icons/equipment/accessory_delanes.png",
         "alt": "delane_accessory",
         "name": "Delane's Amulet",
         "slot": "Accessory",
@@ -5708,7 +5708,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/accessory_eternal.png",
+        "src": "/icons/equipment/accessory_eternal.png",
         "alt": "eternal_accessory",
         "name": "Pendant of Eternal Night",
         "slot": "Accessory",
@@ -5766,7 +5766,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/accessory_greatest.png",
+        "src": "/icons/equipment/accessory_greatest.png",
         "alt": "greatest_accessory",
         "name": "Greatest Glory",
         "slot": "Accessory",
@@ -5824,7 +5824,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/accessory_horn.png",
+        "src": "/icons/equipment/accessory_horn.png",
         "alt": "horn_accessory",
         "name": "Horn of Fury",
         "slot": "Accessory",
@@ -5882,7 +5882,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/accessory_immo.png",
+        "src": "/icons/equipment/accessory_immo.png",
         "alt": "immo_accessory",
         "name": "Immolating Plume",
         "slot": "Accessory",
@@ -5940,7 +5940,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/accessory_lohar.png",
+        "src": "/icons/equipment/accessory_lohar.png",
         "alt": "lohar_accessory",
         "name": "Lohar's Bone Necklace",
         "slot": "Accessory",
@@ -5963,7 +5963,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/accessory_lucky.png",
+        "src": "/icons/equipment/accessory_lucky.png",
         "alt": "lucky_accessory",
         "name": "Scola's Lucky Coin",
         "slot": "Accessory",
@@ -6021,7 +6021,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/accessory_moras.png",
+        "src": "/icons/equipment/accessory_moras.png",
         "alt": "moras_accessory",
         "name": "Mora's Web",
         "slot": "Accessory",
@@ -6079,7 +6079,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/accessory_peters.png",
+        "src": "/icons/equipment/accessory_peters.png",
         "alt": "peter_accessory",
         "name": "Peter's Sickle",
         "slot": "Accessory",
@@ -6102,7 +6102,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/accessory_ring.png",
+        "src": "/icons/equipment/accessory_ring.png",
         "alt": "ring_accessory",
         "name": "Ring of Doom",
         "slot": "Accessory",
@@ -6160,7 +6160,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/accessory_scars.png",
+        "src": "/icons/equipment/accessory_scars.png",
         "alt": "scars_accessory",
         "name": "Wind Scars",
         "slot": "Accessory",
@@ -6191,7 +6191,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/accessory_seths.png",
+        "src": "/icons/equipment/accessory_seths.png",
         "alt": "seths_accessory",
         "name": "Seth's Call",
         "slot": "Accessory",
@@ -6249,7 +6249,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/accessory_silent.png",
+        "src": "/icons/equipment/accessory_silent.png",
         "alt": "silent_accessory",
         "name": "Silent Trial",
         "slot": "Accessory",
@@ -6280,7 +6280,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/accessory_strategems.png",
+        "src": "/icons/equipment/accessory_strategems.png",
         "alt": "strategems_accessory",
         "name": "Ancient Strategems",
         "slot": "Accessory",
@@ -6311,7 +6311,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/accessory_totem.png",
+        "src": "/icons/equipment/accessory_totem.png",
         "alt": "totem_accessory",
         "name": "Savage Totem",
         "slot": "Accessory",
@@ -6334,7 +6334,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/accessory_vengeance.png",
+        "src": "/icons/equipment/accessory_vengeance.png",
         "alt": "vengeance_accessory",
         "name": "Vengeance",
         "slot": "Accessory",
@@ -6392,7 +6392,7 @@
         ]
     },
     {
-        "src": "/assets/equipment/accessory_wardrum.png",
+        "src": "/icons/equipment/accessory_wardrum.png",
         "alt": "wardrum_accessory",
         "name": "Karuak's War Drums",
         "slot": "Accessory",
