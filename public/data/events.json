@@ -183,138 +183,188 @@
             {
                 "startDate": "2025-06-07",
                 "frequency": "once",
-                "duration": 1
+                "duration": 1,
+                "startTime": "22:01",
+                "endTime": "23:01"
             },
             {
                 "startDate": "2025-06-09",
                 "frequency": "once",
-                "duration": 1
+                "duration": 1,
+                "startTime": "14:01",
+                "endTime": "15:01"
             },
             {
                 "startDate": "2025-06-11",
                 "frequency": "once",
-                "duration": 1
+                "duration": 1,
+                "startTime": "06:01",
+                "endTime": "07:01"
             },
             {
                 "startDate": "2025-06-12",
                 "frequency": "once",
-                "duration": 1
+                "duration": 1,
+                "startTime": "22:01",
+                "endTime": "23:01"
             },
             {
                 "startDate": "2025-06-14",
                 "frequency": "once",
-                "duration": 1
+                "duration": 1,
+                "startTime": "14:01",
+                "endTime": "15:01"
             },
             {
                 "startDate": "2025-06-16",
                 "frequency": "once",
-                "duration": 1
+                "duration": 1,
+                "startTime": "06:01",
+                "endTime": "07:01"
             },
             {
                 "startDate": "2025-06-17",
                 "frequency": "once",
-                "duration": 1
+                "duration": 1,
+                "startTime": "22:01",
+                "endTime": "23:01"
             },
             {
                 "startDate": "2025-06-19",
                 "frequency": "once",
-                "duration": 1
+                "duration": 1,
+                "startTime": "14:01",
+                "endTime": "15:01"
             },
             {
                 "startDate": "2025-06-21",
                 "frequency": "once",
-                "duration": 1
+                "duration": 1,
+                "startTime": "06:01",
+                "endTime": "07:01"
             },
             {
                 "startDate": "2025-06-22",
                 "frequency": "once",
-                "duration": 1
+                "duration": 1,
+                "startTime": "22:01",
+                "endTime": "23:01"
             },
             {
                 "startDate": "2025-06-24",
                 "frequency": "once",
-                "duration": 1
+                "duration": 1,
+                "startTime": "14:01",
+                "endTime": "15:01"
             },
             {
                 "startDate": "2025-06-26",
                 "frequency": "once",
-                "duration": 1
+                "duration": 1,
+                "startTime": "06:01",
+                "endTime": "07:01"
             },
             {
                 "startDate": "2025-06-27",
                 "frequency": "once",
-                "duration": 1
+                "duration": 1,
+                "startTime": "22:01",
+                "endTime": "23:01"
             },
             {
                 "startDate": "2025-06-29",
                 "frequency": "once",
-                "duration": 1
+                "duration": 1,
+                "startTime": "14:01",
+                "endTime": "15:01"
             },
             {
                 "startDate": "2025-07-01",
                 "frequency": "once",
-                "duration": 1
+                "duration": 1,
+                "startTime": "06:01",
+                "endTime": "07:01"
             },
             {
                 "startDate": "2025-07-02",
                 "frequency": "once",
-                "duration": 1
+                "duration": 1,
+                "startTime": "22:01",
+                "endTime": "23:01"
             },
             {
                 "startDate": "2025-07-04",
                 "frequency": "once",
-                "duration": 1
+                "duration": 1,
+                "startTime": "14:01",
+                "endTime": "15:01"
             },
             {
                 "startDate": "2025-07-06",
                 "frequency": "once",
-                "duration": 1
+                "duration": 1,
+                "startTime": "06:01",
+                "endTime": "07:01"
             },
             {
                 "startDate": "2025-07-07",
                 "frequency": "once",
-                "duration": 1
+                "duration": 1,
+                "startTime": "22:01",
+                "endTime": "23:01"
             }
         ],
         "title": "Ruins",
-        "description": "Ruins capture window (KvK)",
-        "color": "#8d8202"
+        "description": "Ruins capture window (Kvk)",
+        "color": "#ffcc00"
     },
     {
         "pattern": [
             {
                 "startDate": "2025-06-17",
                 "frequency": "once",
-                "duration": 1
+                "duration": 1,
+                "startTime": "00:01",
+                "endTime": "02:01"
             },
             {
                 "startDate": "2025-06-21",
                 "frequency": "once",
-                "duration": 1
+                "duration": 1,
+                "startTime": "14:01",
+                "endTime": "16:01"
             },
             {
                 "startDate": "2025-06-25",
                 "frequency": "once",
-                "duration": 1
+                "duration": 1,
+                "startTime": "04:01",
+                "endTime": "06:01"
             },
             {
                 "startDate": "2025-06-28",
                 "frequency": "once",
-                "duration": 1
+                "duration": 1,
+                "startTime": "18:01",
+                "endTime": "20:01"
             },
             {
                 "startDate": "2025-07-02",
                 "frequency": "once",
-                "duration": 1
+                "duration": 1,
+                "startTime": "08:01",
+                "endTime": "10:01"
             },
             {
                 "startDate": "2025-07-05",
                 "frequency": "once",
-                "duration": 1
+                "duration": 1,
+                "startTime": "22:01",
+                "endTime": "00:01"
             }
         ],
         "title": "Altars",
-        "description": "Altar capture window (KvK)",
-        "color": "#7b5bda"
+        "description": "Altar capture window (Kvk)",
+        "color": "#00ccff"
     }
 ]

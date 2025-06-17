@@ -46,9 +46,9 @@ export default function CalendarPage() {
     // Group event instances by date
     const eventsByDate = instances.reduce((map, inst) => {
         if (!map[inst.date]) map[inst.date] = [];
-        map[inst.date].push(inst.event);
+        map[inst.date].push(inst);
         return map;
-    }, {} as Record<string, CalendarEvent[]>);
+    }, {} as Record<string, EventInstance[]>);
 
     return (
         <main className="min-h-screen bg-gray-950 text-white font-sans">

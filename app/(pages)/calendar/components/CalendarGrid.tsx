@@ -1,11 +1,11 @@
 'use client';
 
 import dayjs from 'dayjs';
-import { CalendarEvent } from '../utils';
+import { EventInstance } from '../utils';
 
 type Props = {
     days: dayjs.Dayjs[];                            // Array of days to display in the grid
-    eventsByDate: Record<string, CalendarEvent[]>;  // Events grouped by date (YYYY-MM-DD)
+    eventsByDate: Record<string, EventInstance[]>;  // Events grouped by date (YYYY-MM-DD)
     expandedDay: string | null;                     // Currently expanded day (for details below calendar)
     setExpandedDay: (d: string | null) => void;     // Function to toggle expanded day
     currentMonth: dayjs.Dayjs;                      // Current selected month for calendar
@@ -43,9 +43,9 @@ export default function CalendarGrid({ days, eventsByDate, expandedDay, setExpan
                             <div
                                 key={i}
                                 className="mt-1 truncate rounded px-1 py-[2px] text-white text-[12px] group-hover:scale-[1.02] transition-transform"
-                                style={{ backgroundColor: e.color }}
+                                style={{ backgroundColor: e.event.color }}
                             >
-                                {e.title}
+                                {e.event.title}
                             </div>
                         ))}
                     </div>

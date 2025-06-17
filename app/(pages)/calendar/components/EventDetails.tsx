@@ -1,11 +1,13 @@
 'use client';
 
 import dayjs from 'dayjs';
-import { CalendarEvent } from '../utils';
+import { EventInstance } from '../utils';
 
 type Props = {
     expandedDay: string;     // The selected day to show detailed events for
-    events: CalendarEvent[]; // List of events occurring on that day
+    events: EventInstance[]; // List of events occurring on that day
+    startTime?: string;
+    endTime?: string
 };
 
 export default function EventDetails({ expandedDay, events }: Props) {
@@ -29,11 +31,18 @@ export default function EventDetails({ expandedDay, events }: Props) {
                         >
                             <span
                                 className="inline-block px-2 py-1 text-xs font-semibold rounded text-white mb-2"
-                                style={{ backgroundColor: e.color }}
+                                style={{ backgroundColor: e.event.color }}
                             >
-                                {e.title}
+                                {e.event.title}
                             </span>
-                            <p className="text-sm text-blue-100">{e.description}</p>
+                            <p className="text-sm text-blue-100">
+                                {e.event.description}
+                                {e.startTime && e.endTime && (
+                                    <span className="block mt-1 text-xs text-blue-300">
+                                        {e.startTime} – {e.endTime} UTC
+                                    </span>
+                                )}
+                            </p>
                         </div>
                     ))}
                 </div>

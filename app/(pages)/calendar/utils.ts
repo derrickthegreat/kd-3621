@@ -7,6 +7,8 @@ export type EventPattern = {
     startDate: string; // Date the pattern starts (e.g., "2024-01-01")
     frequency: 'four-weeks' | 'eight-weeks' | string; // Recurrence frequency
     duration: number; // Duration in days the event lasts
+    startTime?: string; // "HH:mm"
+    endTime?: string;   // "HH:mm"
 };
 
 /**
@@ -25,6 +27,8 @@ export type CalendarEvent = {
 export type EventInstance = {
     date: string; // ISO string like "2024-01-29"
     event: CalendarEvent; // The event this instance belongs to
+    startTime?: string;
+    endTime?: string
 };
 
 /**
@@ -70,6 +74,8 @@ export function expandEvents(
                         result.push({
                             date: eventDate.format('YYYY-MM-DD'),
                             event,
+                            startTime: pat.startTime,
+                            endTime: pat.endTime
                         });
                     }
                 }
