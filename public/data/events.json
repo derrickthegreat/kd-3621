@@ -177,5 +177,144 @@
         "title": "Champions of Olympia",
         "description": "Champions of Olympia Event",
         "color": "#5b33ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-07",
+                "frequency": "once",
+                "duration": 1
+            },
+            {
+                "startDate": "2025-06-09",
+                "frequency": "once",
+                "duration": 1
+            },
+            {
+                "startDate": "2025-06-11",
+                "frequency": "once",
+                "duration": 1
+            },
+            {
+                "startDate": "2025-06-12",
+                "frequency": "once",
+                "duration": 1
+            },
+            {
+                "startDate": "2025-06-14",
+                "frequency": "once",
+                "duration": 1
+            },
+            {
+                "startDate": "2025-06-16",
+                "frequency": "once",
+                "duration": 1
+            },
+            {
+                "startDate": "2025-06-17",
+                "frequency": "once",
+                "duration": 1
+            },
+            {
+                "startDate": "2025-06-19",
+                "frequency": "once",
+                "duration": 1
+            },
+            {
+                "startDate": "2025-06-21",
+                "frequency": "once",
+                "duration": 1
+            },
+            {
+                "startDate": "2025-06-22",
+                "frequency": "once",
+                "duration": 1
+            },
+            {
+                "startDate": "2025-06-24",
+                "frequency": "once",
+                "duration": 1
+            },
+            {
+                "startDate": "2025-06-26",
+                "frequency": "once",
+                "duration": 1
+            },
+            {
+                "startDate": "2025-06-27",
+                "frequency": "once",
+                "duration": 1
+            },
+            {
+                "startDate": "2025-06-29",
+                "frequency": "once",
+                "duration": 1
+            },
+            {
+                "startDate": "2025-07-01",
+                "frequency": "once",
+                "duration": 1
+            },
+            {
+                "startDate": "2025-07-02",
+                "frequency": "once",
+                "duration": 1
+            },
+            {
+                "startDate": "2025-07-04",
+                "frequency": "once",
+                "duration": 1
+            },
+            {
+                "startDate": "2025-07-06",
+                "frequency": "once",
+                "duration": 1
+            },
+            {
+                "startDate": "2025-07-07",
+                "frequency": "once",
+                "duration": 1
+            }
+        ],
+        "title": "Ruins",
+        "description": "Ruins capture window (KvK)",
+        "color": "#8d8202"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-17",
+                "frequency": "once",
+                "duration": 1
+            },
+            {
+                "startDate": "2025-06-21",
+                "frequency": "once",
+                "duration": 1
+            },
+            {
+                "startDate": "2025-06-25",
+                "frequency": "once",
+                "duration": 1
+            },
+            {
+                "startDate": "2025-06-28",
+                "frequency": "once",
+                "duration": 1
+            },
+            {
+                "startDate": "2025-07-02",
+                "frequency": "once",
+                "duration": 1
+            },
+            {
+                "startDate": "2025-07-05",
+                "frequency": "once",
+                "duration": 1
+            }
+        ],
+        "title": "Altars",
+        "description": "Altar capture window (KvK)",
+        "color": "#7b5bda"
     }
 ]

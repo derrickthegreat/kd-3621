@@ -33,6 +33,10 @@ export type EventInstance = {
 const frequencyToDays = {
     'four-weeks': 28,
     'eight-weeks': 56,
+    'five-weeks': 35,
+    'one-week': 7,
+    'two-weeks': 14,
+    'once': 0
 };
 
 /**
