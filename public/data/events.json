@@ -1,0 +1,370 @@
+[
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-07",
+                "frequency": "four-weeks",
+                "duration": 2
+            }
+        ],
+        "title": "More Than Gems",
+        "description": "More Than Gems Event",
+        "color": "#FF5733"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2024-01-12",
+                "frequency": "four-weeks",
+                "duration": 2
+            }
+        ],
+        "title": "Egg / Hammer Event",
+        "description": "Holy Knight’s Treasure or Hunt for History Event, depends on Kingdom Age",
+        "color": "#634ca6"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2024-01-26",
+                "frequency": "four-weeks",
+                "duration": 2
+            }
+        ],
+        "title": "Egg / Hammer Event",
+        "description": "Holy Knight’s Treasure or Hunt for History Event, depends on Kingdom Age",
+        "color": "#8e7cc3"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2024-01-12",
+                "frequency": "four-weeks",
+                "duration": 2
+            },
+            {
+                "startDate": "2024-01-26",
+                "frequency": "four-weeks",
+                "duration": 2
+            }
+        ],
+        "title": "20 GH Event",
+        "description": "Holy Knight’s Treasure or Hunt for History Event, depends on Kingdom Age",
+        "color": "#F93827"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2024-01-01",
+                "frequency": "eight-weeks",
+                "duration": 6
+            },
+            {
+                "startDate": "2024-01-15",
+                "frequency": "eight-weeks",
+                "duration": 6
+            },
+            {
+                "startDate": "2024-01-29",
+                "frequency": "eight-weeks",
+                "duration": 6
+            },
+            {
+                "startDate": "2024-02-12",
+                "frequency": "eight-weeks",
+                "duration": 6
+            }
+        ],
+        "title": "MGE",
+        "description": "Mightiest Governor Event",
+        "color": "#3a94ee"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2024-01-02",
+                "frequency": "eight-weeks",
+                "duration": 3
+            },
+            {
+                "startDate": "2024-01-16",
+                "frequency": "eight-weeks",
+                "duration": 3
+            },
+            {
+                "startDate": "2024-01-30",
+                "frequency": "eight-weeks",
+                "duration": 3
+            },
+            {
+                "startDate": "2024-02-13",
+                "frequency": "eight-weeks",
+                "duration": 3
+            }
+        ],
+        "title": "Wheel",
+        "description": "Wheel of Fortune",
+        "color": "#f99806"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-03-17",
+                "frequency": "eight-weeks",
+                "duration": 2
+            }
+        ],
+        "title": "Esmeralda",
+        "description": "Esmeralda’s House Event",
+        "color": "#33FF57"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-05-05",
+                "frequency": "five-weeks",
+                "duration": 2
+            }
+        ],
+        "title": "Realm of Mystique",
+        "description": "Realm of Mystique event",
+        "color": "#e033ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-02-17",
+                "frequency": "eight-weeks",
+                "duration": 2
+            }
+        ],
+        "title": "Dhalruk's Puzzle Box",
+        "description": "Dhalruk's Puzzle Box Event",
+        "color": "#e035ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-02-04",
+                "frequency": "eight-weeks",
+                "duration": 2
+            }
+        ],
+        "title": "King of the Tribes",
+        "description": "King of Tribes Event",
+        "color": "#ff0066"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-02-05",
+                "frequency": "two-weeks",
+                "duration": 5
+            }
+        ],
+        "title": "Ark of Osiris",
+        "description": "Ark of Osiris Event",
+        "color": "#339933"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-02-01",
+                "frequency": "one-week",
+                "duration": 2
+            }
+        ],
+        "title": "Champions of Olympia",
+        "description": "Champions of Olympia Event",
+        "color": "#5b33ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-07",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "22:01",
+                "endTime": "23:01"
+            },
+            {
+                "startDate": "2025-06-09",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "14:01",
+                "endTime": "15:01"
+            },
+            {
+                "startDate": "2025-06-11",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "06:01",
+                "endTime": "07:01"
+            },
+            {
+                "startDate": "2025-06-12",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "22:01",
+                "endTime": "23:01"
+            },
+            {
+                "startDate": "2025-06-14",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "14:01",
+                "endTime": "15:01"
+            },
+            {
+                "startDate": "2025-06-16",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "06:01",
+                "endTime": "07:01"
+            },
+            {
+                "startDate": "2025-06-17",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "22:01",
+                "endTime": "23:01"
+            },
+            {
+                "startDate": "2025-06-19",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "14:01",
+                "endTime": "15:01"
+            },
+            {
+                "startDate": "2025-06-21",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "06:01",
+                "endTime": "07:01"
+            },
+            {
+                "startDate": "2025-06-22",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "22:01",
+                "endTime": "23:01"
+            },
+            {
+                "startDate": "2025-06-24",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "14:01",
+                "endTime": "15:01"
+            },
+            {
+                "startDate": "2025-06-26",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "06:01",
+                "endTime": "07:01"
+            },
+            {
+                "startDate": "2025-06-27",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "22:01",
+                "endTime": "23:01"
+            },
+            {
+                "startDate": "2025-06-29",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "14:01",
+                "endTime": "15:01"
+            },
+            {
+                "startDate": "2025-07-01",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "06:01",
+                "endTime": "07:01"
+            },
+            {
+                "startDate": "2025-07-02",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "22:01",
+                "endTime": "23:01"
+            },
+            {
+                "startDate": "2025-07-04",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "14:01",
+                "endTime": "15:01"
+            },
+            {
+                "startDate": "2025-07-06",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "06:01",
+                "endTime": "07:01"
+            },
+            {
+                "startDate": "2025-07-07",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "22:01",
+                "endTime": "23:01"
+            }
+        ],
+        "title": "Ruins",
+        "description": "Ruins capture window (Kvk)",
+        "color": "#ffcc00"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-17",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "00:01",
+                "endTime": "02:01"
+            },
+            {
+                "startDate": "2025-06-21",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "14:01",
+                "endTime": "16:01"
+            },
+            {
+                "startDate": "2025-06-25",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "04:01",
+                "endTime": "06:01"
+            },
+            {
+                "startDate": "2025-06-28",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "18:01",
+                "endTime": "20:01"
+            },
+            {
+                "startDate": "2025-07-02",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "08:01",
+                "endTime": "10:01"
+            },
+            {
+                "startDate": "2025-07-05",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "22:01",
+                "endTime": "00:01"
+            }
+        ],
+        "title": "Altars",
+        "description": "Altar capture window (Kvk)",
+        "color": "#00ccff"
+    }
+]
