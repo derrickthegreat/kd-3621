@@ -6,7 +6,7 @@ import Image from 'next/image'
 export default function DiscordButton() {
     return (
         <a
-            href="https://discord.gg/YZ2AAnkN"
+            href="https://discord.gg/GHDPSUmb"
             target="_blank"
             rel="noopener noreferrer"
             className="fixed bottom-6 right-6 z-40 bg-white rounded-full h-14 flex flex-row-reverse items-center shadow-lg overflow-hidden transition-all duration-500 group hover:w-56 w-14"

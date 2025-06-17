@@ -33,3 +33,26 @@ body {
   align-items: center;
   justify-content: center;
 }
+
+/* Scroll personalizado (Chrome, Edge, Safari) */
+.scrollbar-custom::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: #1f2937;
+  /* cinza escuro */
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background-color: #4f46e5;
+  /* azul violeta */
+  border-radius: 6px;
+}
+
+/* Scrollbar no Firefox */
+.scrollbar-custom {
+  scrollbar-color: #868595 #1f2937;
+  scrollbar-width: thin;
+}
