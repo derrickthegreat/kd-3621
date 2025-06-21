@@ -6,7 +6,7 @@ const Papa = require("papaparse");
 const baseDir = path.resolve(__dirname, "..");
 const publicDataDir = path.join(baseDir, "public", "data");
 
-const playersCsvPath = path.join(baseDir, "data", "KvK3621 - kvk_june_15.csv");
+const playersCsvPath = path.join(baseDir, "data", "KvK3621 - kvk_june_21.csv");
 const alliancesCsvPath = path.join(baseDir, "data", "KvK3621 - alliances_june_14.csv");
 
 // Helpers
@@ -66,7 +66,7 @@ function main() {
     const players = processPlayers(parseCsv(playersCsvPath));
     const alliances = processAlliances(parseCsv(alliancesCsvPath));
 
-    fs.writeFileSync(path.join(publicDataDir, "players.json"), JSON.stringify(players, null, 2));
+    fs.writeFileSync(path.join(publicDataDir, "playersFinal.json"), JSON.stringify(players, null, 2));
     fs.writeFileSync(path.join(publicDataDir, "alliances.json"), JSON.stringify(alliances, null, 2));
 
     console.log("✅ Converted CSVs to JSON in /public/data/");
