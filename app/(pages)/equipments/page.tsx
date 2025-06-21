@@ -53,7 +53,7 @@ export default function EquipmentPage() {
             return eq.materials.map(mat => {
                 const key = mat.material.toLowerCase() === 'gold'
                     ? 'gold'
-                    : `${mat.material.toLowerCase()}_${rarity}`;
+                    : `${mat.material.toLowerCase().replace(/\s+/g, "_")}_${rarity}`;
                 return { key, value: mat.value };
             });
         }).reduce((acc, cur) => {
