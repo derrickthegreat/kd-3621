@@ -67,7 +67,7 @@ export default function EquipmentPage() {
     return (
         <div className="p-6 text-white flex flex-col lg:flex-row">
             {/* LEFT: Slots (1/4) */}
-            <GearSlots selectedGear={selectedGear} />
+            <GearSlots selectedGear={selectedGear} setSelectedGear={setSelectedGear} />
 
             {/* CENTER: Stats + Materials (1/4 stacked) */}
             <div className="w-full lg:w-1/4 flex flex-col gap-6 mb-4 lg:mb-0 justify-center">
