@@ -79,7 +79,13 @@ export default function CalendarPage() {
 
                 {/* Detailed events view for selected day */}
                 {expandedDay && eventsByDate[expandedDay] && (
-                    <EventDetails expandedDay={expandedDay} events={eventsByDate[expandedDay]} />
+                    <EventDetails
+                        expandedDay={expandedDay}
+                        events={[...eventsByDate[expandedDay]].sort((a, b) =>
+                            (a.startTime ?? '00:00').localeCompare(b.startTime ?? '00:00')
+                        )}
+                        onClose={() => setExpandedDay(null)}
+                    />
                 )}
             </div>
         </main>
