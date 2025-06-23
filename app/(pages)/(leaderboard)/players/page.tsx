@@ -15,8 +15,9 @@ export default function PlayersPage() {
     const [players, setPlayers] = useState<any[]>([]);
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState('');
-    const [sortKey, setSortKey] = useState<string>('');
-    const [sortAsc, setSortAsc] = useState(true);
+    const [sortKey, setSortKey] = useState<string>('DKP');
+    const [sortAsc, setSortAsc] = useState(false);
+
 
     useEffect(() => {
         Promise.all([
@@ -67,7 +68,15 @@ export default function PlayersPage() {
                 };
             });
 
-            setPlayers(merged);
+            const sortedByDKP = [...merged].sort((a, b) => b.DKP - a.DKP);
+
+            // Atribui Rank baseado na posição global
+            const ranked = sortedByDKP.map((p, index) => ({
+                ...p,
+                Rank: index + 1,
+            }));
+
+            setPlayers(ranked);
         });
     }, []);
 
@@ -94,7 +103,8 @@ export default function PlayersPage() {
         {
             key: '#',
             label: '#',
-            sortable: true,
+            sortable: false,
+            render: (p) => <span className="font-medium text-sm">{p.Rank}</span>,
         },
         {
             key: 'Name',
