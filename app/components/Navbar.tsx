@@ -11,6 +11,7 @@ const navLinks = [
     { href: '/alliances', label: 'Alliances' },
     { href: '/calendar', label: 'Calendar' },
     { href: '/equipments', label: 'Equipments' },
+    { href: '/builds', label: 'Builds' },
 ];
 
 export default function Navbar() {
@@ -47,8 +48,8 @@ export default function Navbar() {
                             key={link.href}
                             href={link.href}
                             className={clsx(
-                                'text-sm px-3 py-1 rounded transition-colors',
-                                pathname === link.href
+                                'block text-sm px-3 py-2 rounded transition-colors',
+                                pathname.startsWith(link.href)
                                     ? 'bg-orange-500 text-white'
                                     : 'hover:bg-gray-800 text-gray-300'
                             )}
