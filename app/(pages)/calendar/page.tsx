@@ -10,30 +10,43 @@ import CalendarHeader from './components/CalendarHeader';
 import EventDetails from './components/EventDetails';
 import { expandEvents, CalendarEvent, EventInstance } from './utils/expandEvents';
 
-// Extend dayjs with isBetween plugin
 dayjs.extend(isBetween);
 
 export default function CalendarPage() {
-    const [currentMonth, setCurrentMonth] = useState(dayjs()); // Tracks the currently visible month
-    const [events, setEvents] = useState<CalendarEvent[]>([]); // Loaded events from the JSON file
-    const [expandedDay, setExpandedDay] = useState<string | null>(null); // Selected day for detailed view
-    const [instances, setInstances] = useState<EventInstance[]>([]); // Expanded/flattened list of event occurrences
+    const [currentMonth, setCurrentMonth] = useState(dayjs());
+    const [events, setEvents] = useState<CalendarEvent[]>([]);
+    const [expandedDay, setExpandedDay] = useState<string | null>(null);
+    const [instances, setInstances] = useState<EventInstance[]>([]);
+    const [includeKvK, setIncludeKvK] = useState(false);
+    const [hasKvKEvents, setHasKvKEvents] = useState(false);
 
-    // Load the base event patterns from JSON on mount
     useEffect(() => {
         fetch('/data/events.json')
             .then((res) => res.json())
             .then(setEvents);
     }, []);
 
-    // Recalculate all event instances based on the current visible date range
     useEffect(() => {
         const start = currentMonth.startOf('month').startOf('week');
         const end = currentMonth.endOf('month').endOf('week');
-        setInstances(expandEvents(events, start, end));
-    }, [events, currentMonth]);
 
-    // Build a flat array of all days in the visible calendar range
+        const filteredEvents = events.filter((event) =>
+            includeKvK
+                ? true
+                : !event.pattern.every((p: any) => p.frequency === 'once')
+        );
+
+        setInstances(expandEvents(filteredEvents, start, end));
+
+        const kvkEventsExist = events.some((event) =>
+            event.pattern.some((p: any) =>
+                p.frequency === 'once' &&
+                dayjs(p.startDate).isBetween(start, end, 'day', '[]')
+            )
+        );
+        setHasKvKEvents(kvkEventsExist);
+    }, [events, currentMonth, includeKvK]);
+
     const start = currentMonth.startOf('month').startOf('week');
     const end = currentMonth.endOf('month').endOf('week');
     const days = [];
@@ -43,7 +56,6 @@ export default function CalendarPage() {
         day = day.add(1, 'day');
     }
 
-    // Group event instances by date
     const eventsByDate = instances.reduce((map, inst) => {
         if (!map[inst.date]) map[inst.date] = [];
         map[inst.date].push(inst);
@@ -53,13 +65,32 @@ export default function CalendarPage() {
     return (
         <main className="min-h-screen bg-gray-950 text-white font-sans">
             <div className="container mx-auto px-4 py-6">
-                {/* Header with title */}
                 <PageHeader title="Calendar" />
 
-                {/* Month selector header */}
+                {hasKvKEvents && (
+                    <div className="mb-6 flex items-center gap-3">
+                        <div className="relative">
+                            <input
+                                id="include-kvk"
+                                type="checkbox"
+                                checked={includeKvK}
+                                onChange={(e) => setIncludeKvK(e.target.checked)}
+                                className="sr-only peer"
+                            />
+                            <label
+                                htmlFor="include-kvk"
+                                className="block w-11 h-6 bg-gray-600 rounded-full peer-checked:bg-orange-500 transition-colors cursor-pointer"
+                            ></label>
+                            <div className="pointer-events-none absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform peer-checked:translate-x-full"></div>
+                        </div>
+                        <span className="text-sm text-orange-400">Include Unique/KvK events</span>
+                    </div>
+                )}
+
+
+
                 <CalendarHeader currentMonth={currentMonth} setCurrentMonth={setCurrentMonth} />
 
-                {/* Weekday names row */}
                 <div className="grid grid-cols-7 text-center text-xs uppercase text-orange-400 bg-blue-200/10 backdrop-blur-md border border-blue-300/10 shadow-sm font-semibold mb-2 rounded-xl">
                     {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((d) => (
                         <div key={d} className="py-2">
@@ -68,7 +99,6 @@ export default function CalendarPage() {
                     ))}
                 </div>
 
-                {/* Main calendar grid */}
                 <CalendarGrid
                     days={days}
                     eventsByDate={eventsByDate}
@@ -77,7 +107,6 @@ export default function CalendarPage() {
                     currentMonth={currentMonth}
                 />
 
-                {/* Detailed events view for selected day */}
                 {expandedDay && eventsByDate[expandedDay] && (
                     <EventDetails
                         expandedDay={expandedDay}
