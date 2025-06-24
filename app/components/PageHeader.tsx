@@ -10,9 +10,10 @@ type PageHeaderProps = {
 export default function PageHeader({ title }: PageHeaderProps) {
     const pathname = usePathname()
     const isPlayerProfile = /^\/players\/[^/]+$/.test(pathname)
+    const isCommanderBuild = /^\/builds\/[^/]+$/.test(pathname)
 
-    const backLabel = isPlayerProfile ? 'Back to Players' : 'Back to Home'
-    const backHref = isPlayerProfile ? '/players' : '/'
+    const backLabel = isPlayerProfile ? 'Back to Players' : isCommanderBuild ? 'Back to Builds' : 'Back to Home'
+    const backHref = isPlayerProfile ? '/players' : isCommanderBuild ? '/builds' : '/'
 
     return (
         // Flex container for title and "Back to Home" link
