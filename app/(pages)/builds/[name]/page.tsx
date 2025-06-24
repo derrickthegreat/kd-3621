@@ -34,7 +34,7 @@ export default function CommanderBuildPage() {
                 {commander.attributes.map((attribute) => (
                     <div key={attribute} className="flex items-center gap-2">
                         <Image
-                            src={`/icons/${attribute}.png`}
+                            src={`/icons/${attribute.toLowerCase()}.png`}
                             alt={attribute}
                             width={30}
                             height={30}
