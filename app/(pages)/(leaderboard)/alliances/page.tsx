@@ -24,8 +24,8 @@ export default function AlliancesPage() {
 
     useEffect(() => {
         Promise.all([
-            fetch('/data/alliancesFinal.json').then((res) => res.json()),
-            fetch('/data/alliances.json').then((res) => res.json()),
+            fetch('/data/alliancesFinal_v2.json').then((res) => res.json()),
+            fetch('/data/alliances_v2.json').then((res) => res.json()),
         ]).then(([finalData, initialData]) => {
             const initialMap = new Map<string, number>();
             initialData.forEach((a: Alliance) => {

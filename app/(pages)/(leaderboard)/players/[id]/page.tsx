@@ -98,7 +98,7 @@ export default function PlayerProfilePage() {
 
                 <div className="flex flex-col sm:flex-row gap-6 mb-6 items-start">
                     {/* KvK Stats */}
-                    <div className="flex-1">
+                    <div className="w-full sm:flex-1">
                         <h2 className="text-lg font-semibold mb-2">KvK Stats</h2>
                         <ul className="bg-gray-800 rounded-lg p-4 border border-gray-700 space-y-1 text-sm h-full">
                             {kvkStats.map(({ label, value }) => (
@@ -111,7 +111,7 @@ export default function PlayerProfilePage() {
                     </div>
 
                     {/* Career Stats */}
-                    <div className="flex-1">
+                    <div className="w-full sm:flex-1">
                         <h2 className="text-lg font-semibold mb-2">Career Stats</h2>
                         <ul className="bg-gray-800 rounded-lg p-4 border border-gray-700 space-y-1 text-sm h-full">
                             {careerStats.map(([label, value]) => (
