@@ -6,7 +6,7 @@ const Papa = require("papaparse");
 const baseDir = path.resolve(__dirname, "..");
 const publicDataDir = path.join(baseDir, "public", "data");
 
-const playersCsvPath = path.join(baseDir, "data", "KvK3621 - kvk_june_24.csv");
+const playersCsvPath = path.join(baseDir, "data", "KvK3621 - kvk_june_25.csv");
 const alliancesCsvPath = path.join(baseDir, "data", "KvK3621 - alliances_june_22.csv");
 
 // Helpers
