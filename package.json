@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "yarn convert-kvk && next build",
+    "build": "next build",
     "convert-kvk": "node scripts/convert-kvk.js",
     "start": "next start",
     "lint": "next lint"
