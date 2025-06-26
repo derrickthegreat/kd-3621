@@ -19,6 +19,30 @@ export default function PlayersPage() {
     const [sortAsc, setSortAsc] = useState(false);
 
 
+    const handleExport = () => {
+        const exportData = sorted.map(({ Rank, ID, Name, DKP, Killpoints, Power, "T4 Kills": t4, "T5 Kills": t5, "T45 Kills": t45, Deads }) => ({
+            Rank,
+            ID,
+            Name,
+            DKP,
+            Killpoints,
+            Power,
+            "T4 Kills": t4,
+            "T5 Kills": t5,
+            "T4+T5 Kills": t45,
+            Deads,
+        }));
+
+        const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "players_export.json";
+        a.click();
+        URL.revokeObjectURL(url);
+    };
+
+
     useEffect(() => {
         Promise.all([
             fetch('/data/players.json').then((res) => res.json()),
@@ -271,7 +295,7 @@ export default function PlayersPage() {
                     </div>
                 </div>
 
-                <div className="mb-4">
+                <div className="mb-4 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-2">
                     <input
                         type="text"
                         placeholder="Search by name or ID..."
@@ -282,6 +306,15 @@ export default function PlayersPage() {
                         }}
                         className="w-full max-w-sm bg-gray-800 text-white border border-gray-700 rounded px-4 py-2 text-sm focus:outline-none focus:border-orange-500"
                     />
+
+                    <div className="flex justify-end">
+                        <button
+                            onClick={handleExport}
+                            className="bg-amber-500 hover:bg-amber-600 text-sm text-white font-semibold py-2 px-4 rounded shadow"
+                        >
+                            Export Data
+                        </button>
+                    </div>
                 </div>
 
                 <DataTable

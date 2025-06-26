@@ -1,26 +1,25 @@
 const fs = require("fs");
 const path = require("path");
+const readline = require("readline");
 const Papa = require("papaparse");
 
-// Caminhos
+// Paths
 const baseDir = path.resolve(__dirname, "..");
 const publicDataDir = path.join(baseDir, "public", "data");
-
-const playersCsvPath = path.join(baseDir, "data", "KvK3621 - kvk_june_25.csv");
-const alliancesCsvPath = path.join(baseDir, "data", "KvK3621 - alliances_june_22.csv");
 
 // Helpers
 function parseCsv(filePath) {
     const csv = fs.readFileSync(filePath, "utf8");
-    return Papa.parse(csv, { header: true }).data;
+    const parsed = Papa.parse(csv, { header: true }).data;
+
+    return parsed.filter(row => Object.values(row).some(value => value?.toString().trim() !== ""));
 }
 
-// Convert string para número ou zero
+
 function parseNumber(val) {
     return Number(val?.toString().replace(/[^0-9.-]+/g, '')) || 0;
 }
 
-// Process players
 function processPlayers(rows) {
     return rows.map((row, index) => ({
         "#": index + 1,
@@ -44,7 +43,6 @@ function processPlayers(rows) {
     }));
 }
 
-// Process alliances
 function processAlliances(rows) {
     return rows.map((row, index) => {
         const tagMatch = row.Name.match(/\[([^\]]+)\]/);
@@ -59,17 +57,54 @@ function processAlliances(rows) {
     });
 }
 
+// Prompt helpers
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+function askQuestion(query) {
+    return new Promise(resolve => rl.question(query, answer => resolve(answer.trim())));
+}
+
 // Exec
-function main() {
+async function main() {
     if (!fs.existsSync(publicDataDir)) fs.mkdirSync(publicDataDir, { recursive: true });
 
-    const players = processPlayers(parseCsv(playersCsvPath));
-    const alliances = processAlliances(parseCsv(alliancesCsvPath));
+    const convertPlayers = (await askQuestion("Do you want to convert players? (yes/no): ")).toLowerCase().startsWith("y");
+    const convertAlliances = (await askQuestion("Do you want to convert alliances? (yes/no): ")).toLowerCase().startsWith("y");
 
-    fs.writeFileSync(path.join(publicDataDir, "playersFinal.json"), JSON.stringify(players, null, 2));
-    fs.writeFileSync(path.join(publicDataDir, "alliancesFinal.json"), JSON.stringify(alliances, null, 2));
+    if (!convertPlayers && !convertAlliances) {
+        console.log("❌ No conversion selected. Exiting.");
+        rl.close();
+        return;
+    }
 
-    console.log("✅ Converted CSVs to JSON in /public/data/");
+    if (convertPlayers) {
+        const playersFile = await askQuestion("Enter the players CSV filename (e.g., KvK3621 - kvk_month_DD.csv, where DD is the day): ");
+        const playersCsvPath = path.join(baseDir, "data", playersFile);
+        if (!fs.existsSync(playersCsvPath)) {
+            console.error("❌ File not found:", playersCsvPath);
+        } else {
+            const players = processPlayers(parseCsv(playersCsvPath));
+            fs.writeFileSync(path.join(publicDataDir, "playersFinal.json"), JSON.stringify(players, null, 2));
+            console.log("✅ Players converted successfully.");
+        }
+    }
+
+    if (convertAlliances) {
+        const alliancesFile = await askQuestion("Enter the alliances CSV filename (e.g., KvK3621 - alliances_month_DD.csv, where DD is the day): ");
+        const alliancesCsvPath = path.join(baseDir, "data", alliancesFile);
+        if (!fs.existsSync(alliancesCsvPath)) {
+            console.error("❌ File not found:", alliancesCsvPath);
+        } else {
+            const alliances = processAlliances(parseCsv(alliancesCsvPath));
+            fs.writeFileSync(path.join(publicDataDir, "alliancesFinal.json"), JSON.stringify(alliances, null, 2));
+            console.log("✅ Alliances converted successfully.");
+        }
+    }
+
+    rl.close();
 }
 
 main();
