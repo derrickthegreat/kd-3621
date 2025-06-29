@@ -1,0 +1,249 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// --- Enums ------------------------------------------------------
+
+enum Rarity {
+  COMMON
+  UNCOMMON
+  RARE
+  EPIC
+  LEGENDARY
+}
+
+enum Slot {
+  HEAD
+  CHEST
+  HANDS
+  FEET
+  WEAPON
+  ACCESSORY
+}
+
+// --- Alliance & Stats ------------------------------------------
+
+model Alliance {
+  id           String            @id @default(uuid())
+  tag          String            @unique
+  name         String
+  createdAt    DateTime          @default(now())
+  players      Player[]          @relation("PlayerAlliance")
+  stats        AllianceStats[]
+  applications EventApplication[]
+
+  @@map("alliances")
+}
+
+model AllianceStats {
+  id           String    @id @default(uuid())
+  alliance     Alliance  @relation(fields: [allianceId], references: [id])
+  allianceId   String
+  snapshot     DateTime  @default(now())
+  totalPower   Int
+  totalPlayers Int
+
+  @@index([allianceId, snapshot])
+  @@map("alliance_stats")
+}
+
+// --- Players & Snapshots ---------------------------------------
+
+model Player {
+  id           String             @id @default(uuid())
+  rokId        String             @unique
+  name         String
+  alliance     Alliance?          @relation("PlayerAlliance", fields: [allianceId], references: [id])
+  allianceId   String?
+  createdAt    DateTime           @default(now())
+  stats        PlayerStats[]
+  commanders   PlayerCommander[]
+  equipment    PlayerEquipment[]
+  applications EventApplication[]
+
+  @@map("players")
+}
+
+model PlayerStats {
+  id          String    @id @default(uuid())
+  player      Player    @relation(fields: [playerId], references: [id])
+  playerId    String
+  snapshot    DateTime  @default(now())
+  dkp         Int?
+  killPoints  Int
+  t4Kills     Int
+  t5Kills     Int
+  t45Kills    Int
+  deaths      Int
+  power       Int
+
+  @@index([playerId, snapshot])
+  @@map("player_stats")
+}
+
+// --- Commanders & Assignments ---------------------------------
+
+model Commander {
+  id        String             @id @default(uuid())
+  name      String
+  speciality String?
+  createdAt DateTime           @default(now())
+  players   PlayerCommander[]
+  applications ApplicationCommander[]
+
+  @@map("commanders")
+}
+
+model PlayerCommander {
+  id          String     @id @default(uuid())
+  player      Player     @relation(fields: [playerId], references: [id])
+  playerId    String
+  commander   Commander  @relation(fields: [commanderId], references: [id])
+  commanderId String
+  level       Int        @default(1)
+  createdAt   DateTime   @default(now())
+
+  @@unique([playerId, commanderId])
+  @@map("player_commanders")
+}
+
+// --- Equipment & Assignments ----------------------------------
+
+model Equipment {
+  id          String                   @id @default(uuid())
+  name        String
+  slot        Slot
+  rarity      Rarity
+  src         String
+  alt         String
+  createdAt   DateTime                 @default(now())
+
+  owners      PlayerEquipment[]
+  applications ApplicationEquipment[]
+  attributes  EquipmentAttribute[]
+  materials   EquipmentMaterial[]
+
+  @@map("equipment")
+}
+
+model PlayerEquipment {
+  id          String     @id @default(uuid())
+  player      Player     @relation(fields: [playerId], references: [id])
+  playerId    String
+  equipment   Equipment  @relation(fields: [equipmentId], references: [id])
+  equipmentId String
+  acquiredAt  DateTime   @default(now())
+
+  @@unique([playerId, equipmentId])
+  @@map("player_equipment")
+}
+
+// --- Events & Applications ------------------------------------
+
+model Event {
+  id            String             @id @default(uuid())
+  name          String
+  date          DateTime
+  description   String?
+  createdAt     DateTime           @default(now())
+  closedAt      DateTime?
+  applications  EventApplication[]
+
+  @@map("events")
+}
+
+model EventApplication {
+  id            String     @id @default(uuid())
+  event         Event      @relation(fields: [eventId], references: [id])
+  eventId       String
+  player        Player     @relation(fields: [playerId], references: [id])
+  playerId      String
+  createdAt     DateTime   @default(now())
+
+  commanders    ApplicationCommander[]
+  equipment     ApplicationEquipment[]
+
+  @@unique([eventId, playerId])
+  @@map("event_applications")
+  Alliance Alliance[]
+}
+
+model ApplicationCommander {
+  id              String            @id @default(uuid())
+  application     EventApplication  @relation(fields: [applicationId], references: [id])
+  applicationId   String
+  commander       Commander         @relation(fields: [commanderId], references: [id])
+  commanderId     String
+
+  @@unique([applicationId, commanderId])
+  @@map("application_commanders")
+}
+
+model ApplicationEquipment {
+  id              String            @id @default(uuid())
+  application     EventApplication  @relation(fields: [applicationId], references: [id])
+  applicationId   String
+  equipment       Equipment         @relation(fields: [equipmentId], references: [id])
+  equipmentId     String
+
+  @@unique([applicationId, equipmentId])
+  @@map("application_equipment")
+}
+
+// --- Attributes & Their Link to Equipment ---------------------
+
+model Attribute {
+  id          String                 @id @default(uuid())
+  name        String
+  description String?
+  createdAt   DateTime               @default(now())
+
+  equipment   EquipmentAttribute[]
+  
+  @@map("attributes")
+}
+
+// join table: Equipment ↔ Attribute
+model EquipmentAttribute {
+  id            String     @id @default(uuid())
+  equipment     Equipment  @relation(fields: [equipmentId], references: [id])
+  equipmentId   String
+  attribute     Attribute  @relation(fields: [attributeId], references: [id])
+  attributeId   String
+  // optional: numeric value, tier, etc.
+  value         String?
+
+  @@unique([equipmentId, attributeId])
+  @@map("equipment_attributes")
+}
+
+// --- Materials & Their Link to Equipment ----------------------
+
+model Material {
+  id          String                @id @default(uuid())
+  name        String
+  description String?
+  createdAt   DateTime              @default(now())
+
+  equipment   EquipmentMaterial[]
+  
+  @@map("materials")
+}
+
+// join table: Equipment ↔ Material
+model EquipmentMaterial {
+  id            String     @id @default(uuid())
+  equipment     Equipment  @relation(fields: [equipmentId], references: [id])
+  equipmentId   String
+  material      Material   @relation(fields: [materialId], references: [id])
+  materialId    String
+  quantity      Int        @default(1)
+
+  @@unique([equipmentId, materialId])
+  @@map("equipment_materials")
+}
