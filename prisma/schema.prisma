@@ -89,11 +89,11 @@ model PlayerStats {
 // --- Commanders & Assignments ---------------------------------
 
 model Commander {
-  id        String             @id @default(uuid())
-  name      String
-  speciality String?
-  createdAt DateTime           @default(now())
-  players   PlayerCommander[]
+  id           String                  @id @default(uuid())
+  name         String
+  speciality   String?
+  createdAt    DateTime                @default(now())
+  players      PlayerCommander[]
   applications ApplicationCommander[]
 
   @@map("commanders")
@@ -115,18 +115,19 @@ model PlayerCommander {
 // --- Equipment & Assignments ----------------------------------
 
 model Equipment {
-  id          String                   @id @default(uuid())
-  name        String
-  slot        Slot
-  rarity      Rarity
-  src         String
-  alt         String
-  createdAt   DateTime                 @default(now())
+  id           String                   @id @default(uuid())
+  name         String
+  slot         Slot
+  rarity       Rarity
+  src          String
+  alt          String
+  createdAt    DateTime                 @default(now())
 
-  owners      PlayerEquipment[]
+  owners       PlayerEquipment[]
   applications ApplicationEquipment[]
-  attributes  EquipmentAttribute[]
-  materials   EquipmentMaterial[]
+  attributes   EquipmentAttribute[]
+  iconic       EquipmentIconicAttribute[]
+  materials    EquipmentMaterial[]
 
   @@map("equipment")
 }
@@ -199,27 +200,42 @@ model ApplicationEquipment {
 
 model Attribute {
   id          String                 @id @default(uuid())
-  name        String
+  name        String                 @unique
   description String?
+  isIconic    Boolean                @default(false)
   createdAt   DateTime               @default(now())
 
   equipment   EquipmentAttribute[]
-  
+  iconics EquipmentIconicAttribute[]
+
   @@map("attributes")
 }
 
-// join table: Equipment ↔ Attribute
 model EquipmentAttribute {
   id            String     @id @default(uuid())
   equipment     Equipment  @relation(fields: [equipmentId], references: [id])
   equipmentId   String
   attribute     Attribute  @relation(fields: [attributeId], references: [id])
   attributeId   String
-  // optional: numeric value, tier, etc.
   value         String?
 
   @@unique([equipmentId, attributeId])
   @@map("equipment_attributes")
+}
+
+model EquipmentIconicAttribute {
+  id             String     @id @default(uuid())
+  equipment      Equipment  @relation(fields: [equipmentId], references: [id])
+  equipmentId    String
+
+  attribute      Attribute  @relation(fields: [attributeId], references: [id])
+  attributeId    String
+
+  value          String?
+  tier           Int?       // your optional tier column
+
+  @@unique([equipmentId, attributeId])
+  @@map("equipment_iconic_attributes")
 }
 
 // --- Materials & Their Link to Equipment ----------------------
@@ -235,7 +251,6 @@ model Material {
   @@map("materials")
 }
 
-// join table: Equipment ↔ Material
 model EquipmentMaterial {
   id            String     @id @default(uuid())
   equipment     Equipment  @relation(fields: [equipmentId], references: [id])
