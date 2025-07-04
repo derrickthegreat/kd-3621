@@ -26,6 +26,32 @@ enum Slot {
   ACCESSORY
 }
 
+enum TroopType {
+  CAVALRY
+  INFANTRY
+  ARCHERY
+  ENGINEERING
+  LEADERSHIP
+  GATHERING
+  PEACEKEEPING
+  CONQUERING
+  COMBO
+  DEFENSE
+  GARRISON
+  SKILL
+  SMITE
+  SUPPORT
+  VERSATILITY
+}
+
+enum Status {
+  NEW
+  REVIEWING
+  APPROVED
+  DECLINED
+  CLOSED
+}
+
 // --- Alliance & Stats ------------------------------------------
 
 model Alliance {
@@ -33,6 +59,7 @@ model Alliance {
   tag          String            @unique
   name         String
   createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @default(now())
   players      Player[]          @relation("PlayerAlliance")
   stats        AllianceStats[]
   applications EventApplication[]
@@ -46,7 +73,6 @@ model AllianceStats {
   allianceId   String
   snapshot     DateTime  @default(now())
   totalPower   Int
-  totalPlayers Int
 
   @@index([allianceId, snapshot])
   @@map("alliance_stats")
@@ -61,6 +87,7 @@ model Player {
   alliance     Alliance?          @relation("PlayerAlliance", fields: [allianceId], references: [id])
   allianceId   String?
   createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @default(now())
   stats        PlayerStats[]
   commanders   PlayerCommander[]
   equipment    PlayerEquipment[]
@@ -74,7 +101,6 @@ model PlayerStats {
   player      Player    @relation(fields: [playerId], references: [id])
   playerId    String
   snapshot    DateTime  @default(now())
-  dkp         Int?
   killPoints  Int
   t4Kills     Int
   t5Kills     Int
@@ -91,12 +117,32 @@ model PlayerStats {
 model Commander {
   id           String                  @id @default(uuid())
   name         String
-  speciality   String?
+  iconUrl      String
+  speciality   TroopType[]
   createdAt    DateTime                @default(now())
+  updateAt     DateTime                @default(now())
   players      PlayerCommander[]
   applications ApplicationCommander[]
 
   @@map("commanders")
+  primaryCommanderPairings CommanderPairing[] @relation(name: "PrimaryPairings")
+  secondaryCommanderPairings CommanderPairing[] @relation(name: "SecondaryPairings")
+}
+
+model CommanderSkillTree {
+  id           String                  @id @default(uuid())
+  name         String
+  rating       Float?
+  description  String?
+  url          String
+}
+
+model CommanderPairing {
+  id           String                  @id @default(uuid())
+  primary      Commander @relation(name: "PrimaryPairings", fields: [primaryid], references: [id])
+  primaryid    String
+  secondary    Commander @relation(name: "SecondaryPairings", fields: [secondaryid], references: [id])
+  secondaryid  String
 }
 
 model PlayerCommander {
@@ -107,6 +153,7 @@ model PlayerCommander {
   commanderId String
   level       Int        @default(1)
   createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @default(now())
 
   @@unique([playerId, commanderId])
   @@map("player_commanders")
@@ -120,8 +167,9 @@ model Equipment {
   slot         Slot
   rarity       Rarity
   src          String
-  alt          String
+  alt          String?
   createdAt    DateTime                 @default(now())
+  updatedAt    DateTime                 @default(now())
 
   owners       PlayerEquipment[]
   applications ApplicationEquipment[]
@@ -144,58 +192,6 @@ model PlayerEquipment {
   @@map("player_equipment")
 }
 
-// --- Events & Applications ------------------------------------
-
-model Event {
-  id            String             @id @default(uuid())
-  name          String
-  date          DateTime
-  description   String?
-  createdAt     DateTime           @default(now())
-  closedAt      DateTime?
-  applications  EventApplication[]
-
-  @@map("events")
-}
-
-model EventApplication {
-  id            String     @id @default(uuid())
-  event         Event      @relation(fields: [eventId], references: [id])
-  eventId       String
-  player        Player     @relation(fields: [playerId], references: [id])
-  playerId      String
-  createdAt     DateTime   @default(now())
-
-  commanders    ApplicationCommander[]
-  equipment     ApplicationEquipment[]
-
-  @@unique([eventId, playerId])
-  @@map("event_applications")
-  Alliance Alliance[]
-}
-
-model ApplicationCommander {
-  id              String            @id @default(uuid())
-  application     EventApplication  @relation(fields: [applicationId], references: [id])
-  applicationId   String
-  commander       Commander         @relation(fields: [commanderId], references: [id])
-  commanderId     String
-
-  @@unique([applicationId, commanderId])
-  @@map("application_commanders")
-}
-
-model ApplicationEquipment {
-  id              String            @id @default(uuid())
-  application     EventApplication  @relation(fields: [applicationId], references: [id])
-  applicationId   String
-  equipment       Equipment         @relation(fields: [equipmentId], references: [id])
-  equipmentId     String
-
-  @@unique([applicationId, equipmentId])
-  @@map("application_equipment")
-}
-
 // --- Attributes & Their Link to Equipment ---------------------
 
 model Attribute {
@@ -206,7 +202,7 @@ model Attribute {
   createdAt   DateTime               @default(now())
 
   equipment   EquipmentAttribute[]
-  iconics EquipmentIconicAttribute[]
+  iconics     EquipmentIconicAttribute[]
 
   @@map("attributes")
 }
@@ -243,8 +239,10 @@ model EquipmentIconicAttribute {
 model Material {
   id          String                @id @default(uuid())
   name        String
+  src         String?
   description String?
   createdAt   DateTime              @default(now())
+  updatedAt   DateTime              @default(now())
 
   equipment   EquipmentMaterial[]
   
@@ -257,8 +255,76 @@ model EquipmentMaterial {
   equipmentId   String
   material      Material   @relation(fields: [materialId], references: [id])
   materialId    String
+  rarity        Rarity?
   quantity      Int        @default(1)
 
   @@unique([equipmentId, materialId])
   @@map("equipment_materials")
+}
+
+
+// --- Events & Applications ------------------------------------
+
+model Event {
+  id            String             @id @default(uuid())
+  name          String
+  date          DateTime
+  description   String?
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @default(now())
+  closedAt      DateTime?
+  applications  EventApplication[]
+
+  @@map("events")
+}
+
+model EventApplication {
+  id            String     @id @default(uuid())
+  event         Event      @relation(fields: [eventId], references: [id])
+  eventId       String
+  player        Player     @relation(fields: [playerId], references: [id])
+  playerId      String
+  status        Status     @default(NEW)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @default(now())
+
+  commanders    ApplicationCommander[]
+  equipment     ApplicationEquipment[]
+
+  @@unique([eventId, playerId])
+  @@map("event_applications")
+  Alliance Alliance[]
+  EventRanking EventRanking[]
+}
+
+model EventRanking {
+  id              String            @id @default(uuid())
+  application     EventApplication  @relation(fields: [applicationId], references: [id])
+  applicationId   String
+  rank            Int
+  max_points      Int?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @default(now())
+}
+
+model ApplicationCommander {
+  id              String            @id @default(uuid())
+  application     EventApplication  @relation(fields: [applicationId], references: [id])
+  applicationId   String
+  commander       Commander         @relation(fields: [commanderId], references: [id])
+  commanderId     String
+
+  @@unique([applicationId, commanderId])
+  @@map("application_commanders")
+}
+
+model ApplicationEquipment {
+  id              String            @id @default(uuid())
+  application     EventApplication  @relation(fields: [applicationId], references: [id])
+  applicationId   String
+  equipment       Equipment         @relation(fields: [equipmentId], references: [id])
+  equipmentId     String
+
+  @@unique([applicationId, equipmentId])
+  @@map("application_equipment")
 }
