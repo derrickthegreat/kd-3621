@@ -86,6 +86,9 @@ model Player {
   name         String
   alliance     Alliance?          @relation("PlayerAlliance", fields: [allianceId], references: [id])
   allianceId   String?
+  isMigrant    Boolean            @default(false)
+  dateMigrated DateTime?
+  dateMigratedOut DateTime?
   createdAt    DateTime           @default(now())
   updatedAt    DateTime           @default(now())
   stats        PlayerStats[]
