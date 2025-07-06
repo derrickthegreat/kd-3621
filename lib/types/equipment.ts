@@ -4,7 +4,7 @@ export enum Slot {
   ARMS = 'ARMS',
   LEGS = 'LEGS',
   WEAPON = 'WEAPON',
-  GEAR = 'GEAR', // For things like optical camo, etc.
+  GEAR = 'GEAR', 
 }
 
 export enum Rarity {
@@ -13,7 +13,7 @@ export enum Rarity {
   RARE = 'RARE',
   EPIC = 'EPIC',
   LEGENDARY = 'LEGENDARY',
-  ICONIC = 'ICONIC', // Iconic can be a rarity itself or a characteristic of Legendary
+  ICONIC = 'ICONIC', 
 }
 
 export interface Attribute {
