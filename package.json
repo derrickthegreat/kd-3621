@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "npx prisma generate && next build",
     "convert-kvk": "node scripts/convert-kvk.js",
     "start": "next start",
     "lint": "next lint"
