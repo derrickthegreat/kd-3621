@@ -1,5 +1,3 @@
-// api/equipment/materials/route.ts
-
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 
@@ -35,9 +33,16 @@ export async function GET(request: NextRequest) {
 
   try {
     if (id || name) {
-      const material = await prisma.material.findUnique({
-        where: id ? { id } : { name: name! },
-      });
+      let material;
+      if (id) {
+        material = await prisma.material.findUnique({
+          where: { id }, // Using findUnique is fine when querying by @id
+        });
+      } else if (name) {
+        material = await prisma.material.findFirst({ // Changed to findFirst for 'name'
+          where: { name: name }, // 'name!' is fine, but name is already known to be non-null here
+        });
+      }
 
       if (!material) {
         return NextResponse.json({ message: 'Material not found' }, { status: 404 });
@@ -105,6 +110,7 @@ export async function POST(request: NextRequest) {
       let result;
 
       if (id) {
+        // If an ID is provided, it's an update, and 'id' is a unique primary key
         result = await prisma.material.update({
           where: { id },
           data: {
@@ -115,17 +121,23 @@ export async function POST(request: NextRequest) {
           },
         });
       } else {
-        const existing = await prisma.material.findUnique({ where: { name } });
+        // If no ID, we check if a material with this name already exists
+        // Use findFirst because 'name' is a unique field but not necessarily the @id
+        const existing = await prisma.material.findFirst({ where: { name } });
         if (existing) {
+          // If it exists, update it by its UNIQUE ID (existing.id)
+          // This is the line causing the error if it was not correctly updated previously.
           result = await prisma.material.update({
-            where: { name },
+            where: { id: existing.id }, // <--- THIS IS THE CRITICAL FIX
             data: {
+              name, // Include name in data if it can also be updated
               src,
               description,
               updatedAt: new Date(),
             },
           });
         } else {
+          // If it doesn't exist, create a new one
           result = await prisma.material.create({
             data: {
               name,
@@ -152,6 +164,7 @@ export async function POST(request: NextRequest) {
   } catch (error: any) {
     console.error('POST /api/equipment/materials error:', error);
     if (error.code === 'P2002') {
+      // P2002 is Prisma's error code for unique constraint violation
       return NextResponse.json({ message: 'Material name must be unique' }, { status: 409 });
     }
     return NextResponse.json({ message: 'Failed to save materials', error: error.message }, { status: 500 });

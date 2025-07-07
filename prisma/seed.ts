@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client"; 
+import { PrismaClient } from "@prisma/client";
 import { parse } from "csv-parse";
 import { promises as fs } from "fs";
 import fg from "fast-glob";
@@ -71,13 +71,12 @@ async function seed() {
 
 
             // Optionally, create AllianceStats here if your alliance CSV contains snapshot data
-            // Assuming 'Score' from alliance CSV maps to 'totalPower' and 'Members' to 'totalPlayers'
+            // Assuming 'Score' from alliance CSV maps to 'totalPower' and 'Members' to 'members'
             if (Score && Members) {
                 await prisma.allianceStats.create({
                     data: {
                         allianceId: alliance.id,
                         totalPower: parseInt(Score, 10),
-                        totalPlayers: parseInt(Members, 10),
                         snapshot: new Date(), // Using current timestamp for the snapshot
                     }
                 });
