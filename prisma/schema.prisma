@@ -125,7 +125,9 @@ model Commander {
   iconUrl      String
   speciality   TroopType[]
   createdAt    DateTime                @default(now())
-  updateAt     DateTime                @default(now())
+  createdBy    String?
+  updatedAt     DateTime                @default(now())
+  updatedBy    String?
   players      PlayerCommander[]
   applications ApplicationCommander[]
 
@@ -140,6 +142,10 @@ model CommanderSkillTree {
   rating       Float?
   description  String?
   url          String
+  createdAt    DateTime                @default(now())
+  createdBy    String?
+  updatedAt     DateTime                @default(now())
+  updatedBy    String?
 }
 
 model CommanderPairing {
@@ -148,6 +154,10 @@ model CommanderPairing {
   primaryid    String
   secondary    Commander @relation(name: "SecondaryPairings", fields: [secondaryid], references: [id])
   secondaryid  String
+  createdAt    DateTime                @default(now())
+  createdBy    String?
+  updatedAt     DateTime                @default(now())
+  updatedBy    String?
 }
 
 model PlayerCommander {
@@ -157,8 +167,10 @@ model PlayerCommander {
   commander   Commander  @relation(fields: [commanderId], references: [id])
   commanderId String
   level       Int        @default(1)
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @default(now())
+  createdAt    DateTime                @default(now())
+  createdBy    String?
+  updatedAt     DateTime                @default(now())
+  updatedBy    String?
 
   @@unique([playerId, commanderId])
   @@map("player_commanders")
@@ -173,8 +185,10 @@ model Equipment {
   rarity       Rarity
   src          String
   alt          String?
-  createdAt    DateTime                 @default(now())
-  updatedAt    DateTime                 @default(now())
+  createdAt    DateTime                @default(now())
+  createdBy    String?
+  updatedAt     DateTime                @default(now())
+  updatedBy    String?
 
   owners       PlayerEquipment[]
   applications ApplicationEquipment[]
@@ -192,6 +206,10 @@ model PlayerEquipment {
   equipment   Equipment  @relation(fields: [equipmentId], references: [id])
   equipmentId String
   acquiredAt  DateTime   @default(now())
+  createdAt    DateTime                @default(now())
+  createdBy    String?
+  updatedAt     DateTime                @default(now())
+  updatedBy    String?
 
   @@unique([playerId, equipmentId])
   @@map("player_equipment")
@@ -204,7 +222,10 @@ model Attribute {
   name        String                 @unique
   description String?
   isIconic    Boolean                @default(false)
-  createdAt   DateTime               @default(now())
+  createdAt    DateTime                @default(now())
+  createdBy    String?
+  updatedAt     DateTime                @default(now())
+  updatedBy    String?
 
   equipment   EquipmentAttribute[]
   iconics     EquipmentIconicAttribute[]
@@ -219,6 +240,10 @@ model EquipmentAttribute {
   attribute     Attribute  @relation(fields: [attributeId], references: [id])
   attributeId   String
   value         String?
+  createdAt    DateTime                @default(now())
+  createdBy    String?
+  updatedAt     DateTime                @default(now())
+  updatedBy    String?
 
   @@unique([equipmentId, attributeId])
   @@map("equipment_attributes")
@@ -233,7 +258,11 @@ model EquipmentIconicAttribute {
   attributeId    String
 
   value          String?
-  tier           Int?       // your optional tier column
+  tier           Int?
+  createdAt    DateTime                @default(now())
+  createdBy    String?
+  updatedAt     DateTime                @default(now())
+  updatedBy    String?
 
   @@unique([equipmentId, attributeId])
   @@map("equipment_iconic_attributes")
@@ -246,8 +275,10 @@ model Material {
   name        String
   src         String?
   description String?
-  createdAt   DateTime              @default(now())
-  updatedAt   DateTime              @default(now())
+  createdAt    DateTime                @default(now())
+  createdBy    String?
+  updatedAt     DateTime                @default(now())
+  updatedBy    String?
 
   equipment   EquipmentMaterial[]
   
@@ -262,6 +293,10 @@ model EquipmentMaterial {
   materialId    String
   rarity        Rarity?
   quantity      Int        @default(1)
+  createdAt    DateTime                @default(now())
+  createdBy    String?
+  updatedAt     DateTime                @default(now())
+  updatedBy    String?
 
   @@unique([equipmentId, materialId])
   @@map("equipment_materials")
@@ -277,13 +312,16 @@ model Event {
   endDate       DateTime?
   description   String?
   color         String?
-  createdAt     DateTime           @default(now())
-  updatedAt     DateTime           @default(now())
+  createdAt    DateTime                @default(now())
+  createdBy    String?
+  updatedAt     DateTime                @default(now())
+  updatedBy    String?
   closedAt      DateTime?
   isArchived    Boolean            @default(false)
   applications  EventApplication[]
 
   @@map("events")
+  EventRanking EventRanking[]
 }
 
 model EventApplication {
@@ -293,8 +331,10 @@ model EventApplication {
   player        Player     @relation(fields: [playerId], references: [id])
   playerId      String
   status        Status     @default(NEW)
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @default(now())
+  createdAt    DateTime                @default(now())
+  createdBy    String?
+  updatedAt     DateTime                @default(now())
+  updatedBy    String?
 
   commanders    ApplicationCommander[]
   equipment     ApplicationEquipment[]
@@ -309,10 +349,16 @@ model EventRanking {
   id              String            @id @default(uuid())
   application     EventApplication  @relation(fields: [applicationId], references: [id])
   applicationId   String
+  event           Event             @relation(fields: [eventId], references: [id])
+  eventId         String
   rank            Int
   max_points      Int?
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime   @default(now())
+  createdAt    DateTime                @default(now())
+  createdBy    String?
+  updatedAt     DateTime                @default(now())
+  updatedBy    String?
+
+  @@unique([eventId, applicationId]) // This is now valid
 }
 
 model ApplicationCommander {
@@ -321,6 +367,10 @@ model ApplicationCommander {
   applicationId   String
   commander       Commander         @relation(fields: [commanderId], references: [id])
   commanderId     String
+  createdAt    DateTime                @default(now())
+  createdBy    String?
+  updatedAt     DateTime                @default(now())
+  updatedBy    String?
 
   @@unique([applicationId, commanderId])
   @@map("application_commanders")
@@ -334,6 +384,10 @@ model ApplicationEquipment {
   equipmentId     String
   iconicTier      Int?
   isCrit          Boolean         @default(false)
+  createdAt    DateTime                @default(now())
+  createdBy    String?
+  updatedAt     DateTime                @default(now())
+  updatedBy    String?
 
   @@unique([applicationId, equipmentId])
   @@map("application_equipment")
