@@ -1,5 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, TroopType } from '@prisma/client';
+import {
+  getSessionInfo,
+  canRead,
+  canWrite,
+} from '@/lib/accessControlService';
+
+import { prepareCreateOrUpdate } from '@/lib/prismaUtils';
 
 const prisma = new PrismaClient();
 
@@ -49,8 +56,13 @@ const prisma = new PrismaClient();
  */
 
 export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
+  const session = await getSessionInfo();
 
+  if (!session || !canRead(session.role)) {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  }
+
+  const { searchParams } = new URL(request.url);
   const id = searchParams.get('id');
   const includePlayers = searchParams.get('players') === 'true';
   const includeApplications = searchParams.get('applications') === 'true';
@@ -86,14 +98,24 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const session = await getSessionInfo();
+
+  if (!session) {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  }
+
+  if (!canWrite(session.role)) {
+    return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
+  }
+
   try {
     const body = await request.json();
     const commanders = Array.isArray(body) ? body : [body];
 
     const results = [];
 
-    for (const data of commanders) {
-      const { id, name, iconUrl, speciality } = data;
+    for (const commander of commanders) {
+      const { id, name, iconUrl, speciality } = commander;
 
       if (!name || !iconUrl || !Array.isArray(speciality)) {
         return NextResponse.json(
@@ -103,31 +125,35 @@ export async function POST(request: NextRequest) {
       }
 
       const payload = {
+        id,
         name,
         iconUrl,
-        speciality,
-        updatedAt: new Date(),
+        speciality: speciality as TroopType[],
       };
 
-      const commander = id
-        ? await prisma.commander.update({ where: { id }, data: payload })
-        : await prisma.commander.create({ data: payload });
+      const result = await prepareCreateOrUpdate(prisma.commander, payload, {
+        userId: session.userId,
+      });
 
-      results.push(commander);
+      results.push(result);
     }
 
     return NextResponse.json(
       {
-        message: results.length === 1
-          ? (body.id ? 'Commander updated' : 'Commander created')
-          : `${results.length} commanders processed`,
+        message:
+          results.length === 1
+            ? (results[0]?.id ? 'Commander updated' : 'Commander created')
+            : `${results.length} commanders processed`,
         commander: results.length === 1 ? results[0] : results,
       },
       { status: 200 }
     );
   } catch (error: any) {
     console.error('POST /api/commander error:', error);
-    return NextResponse.json({ message: 'Failed to save commander(s)', error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { message: 'Failed to save commander(s)', error: error.message },
+      { status: 500 }
+    );
   } finally {
     await prisma.$disconnect();
   }

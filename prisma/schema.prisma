@@ -55,12 +55,14 @@ enum Status {
 // --- Alliance & Stats ------------------------------------------
 
 model Alliance {
-  id           String            @id @default(uuid())
-  tag          String            @unique
+  id           String             @id @default(uuid())
+  tag          String             @unique
   name         String
-  createdAt    DateTime          @default(now())
-  updatedAt    DateTime          @default(now())
-  players      Player[]          @relation("PlayerAlliance")
+  createdAt    DateTime           @default(now())
+  createdBy    String?
+  updatedAt    DateTime           @default(now())
+  updatedBy    String?
+  players      Player[]           @relation("PlayerAlliance")
   stats        AllianceStats[]
   applications EventApplication[]
 
@@ -68,11 +70,15 @@ model Alliance {
 }
 
 model AllianceStats {
-  id           String    @id @default(uuid())
-  alliance     Alliance  @relation(fields: [allianceId], references: [id])
-  allianceId   String
-  snapshot     DateTime  @default(now())
-  totalPower   Int
+  id         String   @id @default(uuid())
+  alliance   Alliance @relation(fields: [allianceId], references: [id])
+  allianceId String
+  snapshot   DateTime @default(now())
+  totalPower Int
+  createdAt    DateTime           @default(now())
+  createdBy    String?
+  updatedAt    DateTime           @default(now())
+  updatedBy    String?
 
   @@index([allianceId, snapshot])
   @@map("alliance_stats")
@@ -81,37 +87,43 @@ model AllianceStats {
 // --- Players & Snapshots ---------------------------------------
 
 model Player {
-  id           String             @id @default(uuid())
-  rokId        String             @unique
-  name         String
-  alliance     Alliance?          @relation("PlayerAlliance", fields: [allianceId], references: [id])
-  allianceId   String?
-  isMigrant    Boolean            @default(false)
-  dateMigrated DateTime?
+  id              String             @id @default(uuid())
+  rokId           String             @unique
+  name            String
+  alliance        Alliance?          @relation("PlayerAlliance", fields: [allianceId], references: [id])
+  allianceId      String?
+  isMigrant       Boolean            @default(false)
+  dateMigrated    DateTime?
   dateMigratedOut DateTime?
-  createdAt    DateTime           @default(now())
-  updatedAt    DateTime           @default(now())
-  userId       String?
-  userIdVerified Boolean          @default(false)
-  stats        PlayerStats[]
-  commanders   PlayerCommander[]
-  equipment    PlayerEquipment[]
-  applications EventApplication[]
+  createdAt       DateTime           @default(now())
+  createdBy       String?
+  updatedAt       DateTime           @default(now())
+  updatedBy       String?
+  userId          String?
+  userIdVerified  Boolean            @default(false)
+  stats           PlayerStats[]
+  commanders      PlayerCommander[]
+  equipment       PlayerEquipment[]
+  applications    EventApplication[]
 
   @@map("players")
 }
 
 model PlayerStats {
-  id          String    @id @default(uuid())
-  player      Player    @relation(fields: [playerId], references: [id])
-  playerId    String
-  snapshot    DateTime  @default(now())
-  killPoints  Int
-  t4Kills     Int
-  t5Kills     Int
-  t45Kills    Int
-  deaths      Int
-  power       Int
+  id         String   @id @default(uuid())
+  player     Player   @relation(fields: [playerId], references: [id])
+  playerId   String
+  snapshot   DateTime @default(now())
+  killPoints Int
+  t4Kills    Int
+  t5Kills    Int
+  t45Kills   Int
+  deaths     Int
+  power      Int
+  createdAt  DateTime @default(now())
+  createdBy  String?
+  updatedAt  DateTime @default(now())
+  updatedBy  String?
 
   @@index([playerId, snapshot])
   @@map("player_stats")
@@ -120,57 +132,57 @@ model PlayerStats {
 // --- Commanders & Assignments ---------------------------------
 
 model Commander {
-  id           String                  @id @default(uuid())
-  name         String
-  iconUrl      String
-  speciality   TroopType[]
-  createdAt    DateTime                @default(now())
-  createdBy    String?
-  updatedAt     DateTime                @default(now())
-  updatedBy    String?
-  players      PlayerCommander[]
-  applications ApplicationCommander[]
+  id                         String                 @id @default(uuid())
+  name                       String
+  iconUrl                    String
+  speciality                 TroopType[]
+  createdAt                  DateTime               @default(now())
+  createdBy                  String?
+  updatedAt                  DateTime               @default(now())
+  updatedBy                  String?
+  players                    PlayerCommander[]
+  applications               ApplicationCommander[]
+  primaryCommanderPairings   CommanderPairing[]     @relation(name: "PrimaryPairings")
+  secondaryCommanderPairings CommanderPairing[]     @relation(name: "SecondaryPairings")
 
   @@map("commanders")
-  primaryCommanderPairings CommanderPairing[] @relation(name: "PrimaryPairings")
-  secondaryCommanderPairings CommanderPairing[] @relation(name: "SecondaryPairings")
 }
 
 model CommanderSkillTree {
-  id           String                  @id @default(uuid())
-  name         String
-  rating       Float?
-  description  String?
-  url          String
-  createdAt    DateTime                @default(now())
-  createdBy    String?
-  updatedAt     DateTime                @default(now())
-  updatedBy    String?
+  id          String   @id @default(uuid())
+  name        String
+  rating      Float?
+  description String?
+  url         String
+  createdAt   DateTime @default(now())
+  createdBy   String?
+  updatedAt   DateTime @default(now())
+  updatedBy   String?
 }
 
 model CommanderPairing {
-  id           String                  @id @default(uuid())
-  primary      Commander @relation(name: "PrimaryPairings", fields: [primaryid], references: [id])
-  primaryid    String
-  secondary    Commander @relation(name: "SecondaryPairings", fields: [secondaryid], references: [id])
-  secondaryid  String
-  createdAt    DateTime                @default(now())
-  createdBy    String?
-  updatedAt     DateTime                @default(now())
-  updatedBy    String?
+  id          String    @id @default(uuid())
+  primary     Commander @relation(name: "PrimaryPairings", fields: [primaryid], references: [id])
+  primaryid   String
+  secondary   Commander @relation(name: "SecondaryPairings", fields: [secondaryid], references: [id])
+  secondaryid String
+  createdAt   DateTime  @default(now())
+  createdBy   String?
+  updatedAt   DateTime  @default(now())
+  updatedBy   String?
 }
 
 model PlayerCommander {
-  id          String     @id @default(uuid())
-  player      Player     @relation(fields: [playerId], references: [id])
+  id          String    @id @default(uuid())
+  player      Player    @relation(fields: [playerId], references: [id])
   playerId    String
-  commander   Commander  @relation(fields: [commanderId], references: [id])
+  commander   Commander @relation(fields: [commanderId], references: [id])
   commanderId String
-  level       Int        @default(1)
-  createdAt    DateTime                @default(now())
-  createdBy    String?
-  updatedAt     DateTime                @default(now())
-  updatedBy    String?
+  level       Int       @default(1)
+  createdAt   DateTime  @default(now())
+  createdBy   String?
+  updatedAt   DateTime  @default(now())
+  updatedBy   String?
 
   @@unique([playerId, commanderId])
   @@map("player_commanders")
@@ -179,16 +191,16 @@ model PlayerCommander {
 // --- Equipment & Assignments ----------------------------------
 
 model Equipment {
-  id           String                   @id @default(uuid())
-  name         String
-  slot         Slot
-  rarity       Rarity
-  src          String
-  alt          String?
-  createdAt    DateTime                @default(now())
-  createdBy    String?
-  updatedAt     DateTime                @default(now())
-  updatedBy    String?
+  id        String   @id @default(uuid())
+  name      String
+  slot      Slot
+  rarity    Rarity
+  src       String
+  alt       String?
+  createdAt DateTime @default(now())
+  createdBy String?
+  updatedAt DateTime @default(now())
+  updatedBy String?
 
   owners       PlayerEquipment[]
   applications ApplicationEquipment[]
@@ -200,16 +212,16 @@ model Equipment {
 }
 
 model PlayerEquipment {
-  id          String     @id @default(uuid())
-  player      Player     @relation(fields: [playerId], references: [id])
+  id          String    @id @default(uuid())
+  player      Player    @relation(fields: [playerId], references: [id])
   playerId    String
-  equipment   Equipment  @relation(fields: [equipmentId], references: [id])
+  equipment   Equipment @relation(fields: [equipmentId], references: [id])
   equipmentId String
-  acquiredAt  DateTime   @default(now())
-  createdAt    DateTime                @default(now())
-  createdBy    String?
-  updatedAt     DateTime                @default(now())
-  updatedBy    String?
+  acquiredAt  DateTime  @default(now())
+  createdAt   DateTime  @default(now())
+  createdBy   String?
+  updatedAt   DateTime  @default(now())
+  updatedBy   String?
 
   @@unique([playerId, equipmentId])
   @@map("player_equipment")
@@ -218,51 +230,51 @@ model PlayerEquipment {
 // --- Attributes & Their Link to Equipment ---------------------
 
 model Attribute {
-  id          String                 @id @default(uuid())
-  name        String                 @unique
+  id          String   @id @default(uuid())
+  name        String   @unique
   description String?
-  isIconic    Boolean                @default(false)
-  createdAt    DateTime                @default(now())
-  createdBy    String?
-  updatedAt     DateTime                @default(now())
-  updatedBy    String?
+  isIconic    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  createdBy   String?
+  updatedAt   DateTime @default(now())
+  updatedBy   String?
 
-  equipment   EquipmentAttribute[]
-  iconics     EquipmentIconicAttribute[]
+  equipment EquipmentAttribute[]
+  iconics   EquipmentIconicAttribute[]
 
   @@map("attributes")
 }
 
 model EquipmentAttribute {
-  id            String     @id @default(uuid())
-  equipment     Equipment  @relation(fields: [equipmentId], references: [id])
-  equipmentId   String
-  attribute     Attribute  @relation(fields: [attributeId], references: [id])
-  attributeId   String
-  value         String?
-  createdAt    DateTime                @default(now())
-  createdBy    String?
-  updatedAt     DateTime                @default(now())
-  updatedBy    String?
+  id          String    @id @default(uuid())
+  equipment   Equipment @relation(fields: [equipmentId], references: [id])
+  equipmentId String
+  attribute   Attribute @relation(fields: [attributeId], references: [id])
+  attributeId String
+  value       String?
+  createdAt   DateTime  @default(now())
+  createdBy   String?
+  updatedAt   DateTime  @default(now())
+  updatedBy   String?
 
   @@unique([equipmentId, attributeId])
   @@map("equipment_attributes")
 }
 
 model EquipmentIconicAttribute {
-  id             String     @id @default(uuid())
-  equipment      Equipment  @relation(fields: [equipmentId], references: [id])
-  equipmentId    String
+  id          String    @id @default(uuid())
+  equipment   Equipment @relation(fields: [equipmentId], references: [id])
+  equipmentId String
 
-  attribute      Attribute  @relation(fields: [attributeId], references: [id])
-  attributeId    String
+  attribute   Attribute @relation(fields: [attributeId], references: [id])
+  attributeId String
 
-  value          String?
-  tier           Int?
-  createdAt    DateTime                @default(now())
-  createdBy    String?
-  updatedAt     DateTime                @default(now())
-  updatedBy    String?
+  value     String?
+  tier      Int?
+  createdAt DateTime @default(now())
+  createdBy String?
+  updatedAt DateTime @default(now())
+  updatedBy String?
 
   @@unique([equipmentId, attributeId])
   @@map("equipment_iconic_attributes")
@@ -271,123 +283,122 @@ model EquipmentIconicAttribute {
 // --- Materials & Their Link to Equipment ----------------------
 
 model Material {
-  id          String                @id @default(uuid())
+  id          String   @id @default(uuid())
   name        String
   src         String?
   description String?
-  createdAt    DateTime                @default(now())
-  createdBy    String?
-  updatedAt     DateTime                @default(now())
-  updatedBy    String?
+  createdAt   DateTime @default(now())
+  createdBy   String?
+  updatedAt   DateTime @default(now())
+  updatedBy   String?
 
-  equipment   EquipmentMaterial[]
-  
+  equipment EquipmentMaterial[]
+
   @@map("materials")
 }
 
 model EquipmentMaterial {
-  id            String     @id @default(uuid())
-  equipment     Equipment  @relation(fields: [equipmentId], references: [id])
-  equipmentId   String
-  material      Material   @relation(fields: [materialId], references: [id])
-  materialId    String
-  rarity        Rarity?
-  quantity      Int        @default(1)
-  createdAt    DateTime                @default(now())
-  createdBy    String?
-  updatedAt     DateTime                @default(now())
-  updatedBy    String?
+  id          String    @id @default(uuid())
+  equipment   Equipment @relation(fields: [equipmentId], references: [id])
+  equipmentId String
+  material    Material  @relation(fields: [materialId], references: [id])
+  materialId  String
+  rarity      Rarity?
+  quantity    Int       @default(1)
+  createdAt   DateTime  @default(now())
+  createdBy   String?
+  updatedAt   DateTime  @default(now())
+  updatedBy   String?
 
   @@unique([equipmentId, materialId])
   @@map("equipment_materials")
 }
 
-
 // --- Events & Applications ------------------------------------
 
 model Event {
-  id            String             @id @default(uuid())
-  name          String
-  startDate     DateTime           @default(now())
-  endDate       DateTime?
-  description   String?
-  color         String?
-  createdAt    DateTime                @default(now())
+  id           String             @id @default(uuid())
+  name         String
+  startDate    DateTime           @default(now())
+  endDate      DateTime?
+  description  String?
+  color        String?
+  createdAt    DateTime           @default(now())
   createdBy    String?
-  updatedAt     DateTime                @default(now())
+  updatedAt    DateTime           @default(now())
   updatedBy    String?
-  closedAt      DateTime?
-  isArchived    Boolean            @default(false)
-  applications  EventApplication[]
+  closedAt     DateTime?
+  isArchived   Boolean            @default(false)
+  applications EventApplication[]
+  EventRanking EventRanking[]
 
   @@map("events")
-  EventRanking EventRanking[]
 }
 
 model EventApplication {
-  id            String     @id @default(uuid())
-  event         Event      @relation(fields: [eventId], references: [id])
-  eventId       String
-  player        Player     @relation(fields: [playerId], references: [id])
-  playerId      String
-  status        Status     @default(NEW)
-  createdAt    DateTime                @default(now())
-  createdBy    String?
-  updatedAt     DateTime                @default(now())
-  updatedBy    String?
+  id        String   @id @default(uuid())
+  event     Event    @relation(fields: [eventId], references: [id])
+  eventId   String
+  player    Player   @relation(fields: [playerId], references: [id])
+  playerId  String
+  status    Status   @default(NEW)
+  createdAt DateTime @default(now())
+  createdBy String?
+  updatedAt DateTime @default(now())
+  updatedBy String?
 
-  commanders    ApplicationCommander[]
-  equipment     ApplicationEquipment[]
+  commanders   ApplicationCommander[]
+  equipment    ApplicationEquipment[]
+  Alliance     Alliance[]
+  EventRanking EventRanking[]
 
   @@unique([eventId, playerId])
   @@map("event_applications")
-  Alliance Alliance[]
-  EventRanking EventRanking[]
 }
 
 model EventRanking {
-  id              String            @id @default(uuid())
-  application     EventApplication  @relation(fields: [applicationId], references: [id])
-  applicationId   String
-  event           Event             @relation(fields: [eventId], references: [id])
-  eventId         String
-  rank            Int
-  max_points      Int?
-  createdAt    DateTime                @default(now())
-  createdBy    String?
-  updatedAt     DateTime                @default(now())
-  updatedBy    String?
+  id            String           @id @default(uuid())
+  application   EventApplication @relation(fields: [applicationId], references: [id])
+  applicationId String
+  event         Event            @relation(fields: [eventId], references: [id])
+  eventId       String
+  rank          Int
+  max_points    Int?
+  createdAt     DateTime         @default(now())
+  createdBy     String?
+  updatedAt     DateTime         @default(now())
+  updatedBy     String?
 
   @@unique([eventId, applicationId]) // This is now valid
 }
 
 model ApplicationCommander {
-  id              String            @id @default(uuid())
-  application     EventApplication  @relation(fields: [applicationId], references: [id])
-  applicationId   String
-  commander       Commander         @relation(fields: [commanderId], references: [id])
-  commanderId     String
-  createdAt    DateTime                @default(now())
-  createdBy    String?
-  updatedAt     DateTime                @default(now())
-  updatedBy    String?
+  id            String           @id @default(uuid())
+  application   EventApplication @relation(fields: [applicationId], references: [id])
+  applicationId String
+  commander     Commander        @relation(fields: [commanderId], references: [id])
+  commanderId   String
+  createdAt     DateTime         @default(now())
+  createdBy     String?
+  updatedAt     DateTime         @default(now())
+  updatedBy     String?
 
   @@unique([applicationId, commanderId])
   @@map("application_commanders")
 }
 
 model ApplicationEquipment {
-  id              String            @id @default(uuid())
-  application     EventApplication  @relation(fields: [applicationId], references: [id])
-  applicationId   String
-  equipment       Equipment         @relation(fields: [equipmentId], references: [id])
-  equipmentId     String
-  iconicTier      Int?
-  isCrit          Boolean         @default(false)
-  createdAt    DateTime                @default(now())
-  createdBy    String?
-  updatedAt     DateTime                @default(now())
-  updatedBy    String?
+  id            String           @id @default(uuid())
+  application   EventApplication @relation(fields: [applicationId], references: [id])
+  applicationId String
+  equipment     Equipment        @relation(fields: [equipmentId], references: [id])
+  equipmentId   String
+  iconicTier    Int?
+  isCrit        Boolean          @default(false)
+  createdAt     DateTime         @default(now())
+  createdBy     String?
+  updatedAt     DateTime         @default(now())
+  updatedBy     String?
 
   @@unique([applicationId, equipmentId])
   @@map("application_equipment")

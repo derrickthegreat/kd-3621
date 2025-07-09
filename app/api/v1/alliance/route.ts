@@ -1,13 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
-
-interface AllianceRequest {
-  id?: string;
-  tag: string;
-  name: string;
-}
+import {
+  canRead,
+  canWrite,
+  getSessionInfo,
+} from '@/lib/accessControlService';
+import { prepareCreateOrUpdate } from '@/lib/prismaUtils';
 
 /**
  * API Endpoint: /api/alliance
@@ -47,9 +45,18 @@ interface AllianceRequest {
  *      { "id": "uuid456", "tag": "NEWTAG", "name": "Updated Alliance" }
  *    ]
  */
-export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
 
+const prisma = new PrismaClient();
+
+export async function GET(request: NextRequest) {
+  const session = await getSessionInfo();
+  console.log(session);
+
+  if (!session || !canRead(session.role)) {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  }
+
+  const { searchParams } = new URL(request.url);
   const id = searchParams.get('id');
   const tag = searchParams.get('tag');
   const includePlayers = searchParams.get('players') === 'true';
@@ -64,13 +71,9 @@ export async function GET(request: NextRequest) {
           players: includePlayers,
           applications: includeApplications,
           stats: includeStats
-            ? {
-                orderBy: { snapshot: 'desc' },
-              }
+            ? { orderBy: { snapshot: 'desc' } }
             : false,
-          _count: {
-            select: { players: true },
-          },
+          _count: { select: { players: true } },
         },
       });
 
@@ -116,10 +119,19 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const session = await getSessionInfo();
+
+  if (!session) {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  }
+
+  if (!canWrite(session.role)) {
+    return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
+  }
+
   try {
     const body = await request.json();
     const alliances = Array.isArray(body) ? body : [body];
-
     const results = [];
 
     for (const alliance of alliances) {
@@ -129,25 +141,13 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ message: 'Missing required fields: tag, name' }, { status: 400 });
       }
 
-      let result;
+      const payload = { id, tag, name };
 
-      if (id) {
-        result = await prisma.alliance.update({
-          where: { id },
-          data: { tag, name, updatedAt: new Date() },
-        });
-      } else {
-        // Try upsert by tag to avoid duplicates
-        const existing = await prisma.alliance.findUnique({ where: { tag } });
-        if (existing) {
-          result = await prisma.alliance.update({
-            where: { tag },
-            data: { name, updatedAt: new Date() },
-          });
-        } else {
-          result = await prisma.alliance.create({ data: { tag, name } });
-        }
-      }
+      const result = await prepareCreateOrUpdate(prisma.alliance, payload, {
+        userId: session.userId,
+        idField: 'id',
+        matchField: 'tag',
+      });
 
       results.push(result);
     }

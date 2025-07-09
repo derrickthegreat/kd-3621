@@ -1,0 +1,83 @@
+type PrismaDelegate = {
+  create: (args: any) => Promise<any>;
+  update: (args: any) => Promise<any>;
+  upsert?: (args: any) => Promise<any>;
+  findUnique?: (args: any) => Promise<any>;
+};
+
+interface CreateOrUpdateOptions {
+  userId: string;
+  idField?: string;         // default: 'id'
+  matchField?: string;      // optional: custom unique key like 'tag'
+  timestamps?: boolean;     // default: true
+}
+
+export async function prepareCreateOrUpdate<T extends Record<string, any>>(
+  model: PrismaDelegate,
+  data: T,
+  options: CreateOrUpdateOptions
+): Promise<any> {
+  const {
+    idField = 'id',
+    matchField,
+    userId,
+    timestamps = true,
+  } = options;
+
+  const now = new Date();
+
+  const commonFields = {
+    ...(timestamps && { updatedAt: now }),
+    updatedBy: userId,
+  };
+
+  const createFields = {
+    ...(timestamps && { createdAt: now }),
+    createdBy: userId,
+  };
+
+  // Case 1: ID-based update
+  if (data[idField]) {
+    return model.update({
+      where: { [idField]: data[idField] },
+      data: {
+        ...data,
+        ...commonFields,
+      },
+    });
+  }
+
+  // Case 2: Custom matchField (like 'tag') — treat as upsert
+  if (matchField && data[matchField]) {
+    const existing = await model.findUnique?.({
+      where: { [matchField]: data[matchField] },
+    });
+
+    if (existing) {
+      return model.update({
+        where: { [matchField]: data[matchField] },
+        data: {
+          ...data,
+          ...commonFields,
+        },
+      });
+    }
+
+    return model.create({
+      data: {
+        ...data,
+        ...commonFields,
+        ...createFields,
+      },
+    });
+  }
+
+  // Case 3: Pure create (no id or matchField)
+  return model.create({
+    data: {
+      ...data,
+      ...commonFields,
+      ...createFields,
+    },
+  });
+}

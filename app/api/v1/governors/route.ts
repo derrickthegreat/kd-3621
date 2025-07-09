@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
+import { getSessionInfo, canRead, canWrite } from '@/lib/accessControlService';
+import { prepareCreateOrUpdate } from '@/lib/prismaUtils';
 
 const prisma = new PrismaClient();
 
@@ -52,11 +54,23 @@ const prisma = new PrismaClient();
  */
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-
   const id = searchParams.get('id');
   const rokId = searchParams.get('rokId');
   const includeEquipment = searchParams.get('equipment') === 'true';
   const includeCommanders = searchParams.get('commanders') === 'true';
+
+  const session = await getSessionInfo();
+  const isPrivileged = session && canRead(session.role); // admin or system
+
+  const sanitizePlayer = (player: any) => {
+    if (!isPrivileged) {
+      delete player.userId;
+      delete player.userIdVerified;
+      delete player.dateMigrated;
+      delete player.dateMigratedOut;
+    }
+    return player;
+  };
 
   try {
     if (id || rokId) {
@@ -73,7 +87,7 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ message: 'Governor not found' }, { status: 404 });
       }
 
-      return NextResponse.json(player, { status: 200 });
+      return NextResponse.json(sanitizePlayer(player), { status: 200 });
     }
 
     const players = await prisma.player.findMany({
@@ -89,7 +103,8 @@ export async function GET(request: NextRequest) {
       orderBy: { createdAt: 'desc' },
     });
 
-    return NextResponse.json(players, { status: 200 });
+    const sanitizedPlayers = players.map(sanitizePlayer);
+    return NextResponse.json(sanitizedPlayers, { status: 200 });
   } catch (error: any) {
     console.error('GET /api/governor error:', error);
     return NextResponse.json({ message: 'Error fetching governors', error: error.message }, { status: 500 });
@@ -99,47 +114,50 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const session = await getSessionInfo();
+
+  if (!session) {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  }
+
+  if (!canWrite(session.role)) {
+    return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
+  }
+
   try {
     const body = await request.json();
     const governors = Array.isArray(body) ? body : [body];
 
     const results = [];
 
-    for (const gov of governors) {
-      const { id, rokId, name, allianceId } = gov;
+    for (const governor of governors) {
+      const { id, rokId, name, allianceId } = governor;
 
       if (!rokId || !name) {
         return NextResponse.json({ message: 'Missing required fields: rokId, name' }, { status: 400 });
       }
 
       const payload = {
+        id,
         rokId,
         name,
         allianceId,
-        updatedAt: new Date(),
       };
 
-      let result;
-
-      if (id) {
-        result = await prisma.player.update({ where: { id }, data: payload });
-      } else {
-        const existing = await prisma.player.findUnique({ where: { rokId } });
-        if (existing) {
-          result = await prisma.player.update({ where: { rokId }, data: payload });
-        } else {
-          result = await prisma.player.create({ data: payload });
-        }
-      }
+      const result = await prepareCreateOrUpdate(prisma.player, payload, {
+        userId: session.userId,
+        matchField: id ? 'id' : 'rokId',
+      });
 
       results.push(result);
     }
 
     return NextResponse.json(
       {
-        message: results.length === 1
-          ? (body.id ? 'Governor updated' : 'Governor created')
-          : `${results.length} governors processed`,
+        message:
+          results.length === 1
+            ? (results[0]?.id ? 'Governor updated' : 'Governor created')
+            : `${results.length} governors processed`,
         player: results.length === 1 ? results[0] : results,
       },
       { status: 200 }
