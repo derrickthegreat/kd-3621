@@ -68,6 +68,8 @@ export async function GET(request: NextRequest) {
       delete player.userIdVerified;
       delete player.dateMigrated;
       delete player.dateMigratedOut;
+      delete player.equipment;
+      delete player.commanders;
     }
     return player;
   };
