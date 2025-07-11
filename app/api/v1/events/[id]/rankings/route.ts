@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
+import { getSessionInfo, canWrite, canRead } from '@/lib/accessControlService';
 
 const prisma = new PrismaClient();
 
@@ -31,6 +32,10 @@ export async function GET(
   { params }: { params: Promise<{ id: string }>}
 ) {
   const { id } = await params;
+  const session = await getSessionInfo();
+  if (!session || !canRead(session.role)) {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  }
   try {
     const rankings = await prisma.eventRanking.findMany({
       where: {
@@ -65,6 +70,10 @@ export async function POST(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
+  const session = await getSessionInfo();
+  if (!session || !canWrite(session.role)) {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  }
   try {
     const body = await request.json();
     const rankings = Array.isArray(body) ? body : [body];
@@ -103,12 +112,15 @@ export async function POST(
           rank,
           max_points,
           updatedAt: new Date(),
+          updatedBy: session.userId,
         },
         create: {
           eventId: id,
           applicationId,
           rank,
           max_points,
+          createdAt: new Date(),
+          createdBy: session.userId,
         },
       });
 

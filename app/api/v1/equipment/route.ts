@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient, Rarity, Slot } from '@prisma/client';
+import { getSessionInfo, canWrite } from '@/lib/accessControlService';
 
 const prisma = new PrismaClient();
 /**
@@ -177,6 +178,10 @@ export async function GET(request: NextRequest) {
 
 // === POST: Create or update equipment with nested relations ===
 export async function POST(request: NextRequest) {
+  const session = await getSessionInfo();
+  if (!session || !canWrite(session.role)) {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  }
   try {
     const data = await request.json();
 

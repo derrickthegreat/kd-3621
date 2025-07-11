@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
+import { getSessionInfo, canWrite } from '@/lib/accessControlService';
+import { prepareCreateOrUpdate } from '@/lib/prismaUtils';
 
 const prisma = new PrismaClient();
 
@@ -49,47 +51,47 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const session = await getSessionInfo();
+  if (!session || !canWrite(session.role)) {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
-    const data = await request.json();
-    const inputEvents = Array.isArray(data) ? data : [data];
+    const body = await request.json();
+    const inputEvents = Array.isArray(body) ? body : [body];
 
     const results = [];
-    for (const event of inputEvents) {
-      const { id, name, startDate, endDate, description } = event;
+
+    for (const raw of inputEvents) {
+      const { id, name, startDate, endDate, description } = raw;
 
       if (!name || !startDate) {
-        return NextResponse.json({ message: 'Missing required fields: name, startDate' }, { status: 400 });
+        return NextResponse.json(
+          { message: 'Missing required fields: name, startDate' },
+          { status: 400 }
+        );
       }
 
-      let result;
-      if (id) {
-        result = await prisma.event.update({
-          where: { id },
-          data: {
-            name,
-            startDate: new Date(startDate),
-            endDate: endDate ? new Date(endDate) : undefined,
-            description,
-            updatedAt: new Date(),
-          },
-        });
-      } else {
-        result = await prisma.event.create({
-          data: {
-            name,
-            startDate: new Date(startDate),
-            endDate: endDate ? new Date(endDate) : undefined,
-            description,
-          },
-        });
-      }
+      const payload = {
+        id,
+        name,
+        startDate: new Date(startDate),
+        endDate: endDate ? new Date(endDate) : undefined,
+        description,
+      };
 
-      results.push(result);
+      const saved = await prepareCreateOrUpdate(prisma.event, payload, {
+        userId: session.userId,
+        idField: 'id', // Explicit — but this is the default
+        timestamps: true,
+      });
+
+      results.push(saved);
     }
 
     return NextResponse.json(
       {
-        message: results.length === 1 ? 'Event processed' : `${results.length} events processed`,
+        message: results.length === 1 ? 'Event saved' : `${results.length} events processed`,
         events: results.length === 1 ? results[0] : results,
       },
       { status: 200 }

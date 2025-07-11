@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient, Status } from '@prisma/client';
+import { getSessionInfo, canRead, canWrite } from '@/lib/accessControlService';
 
 const prisma = new PrismaClient();
 
@@ -48,7 +49,10 @@ export async function GET(
   const { id } = await params;
   const { searchParams } = new URL(request.url);
   const status = searchParams.get('status') as Status | null;
-
+  const session = await getSessionInfo();
+  if (!session || !canRead(session.role)) {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  }
   try {
     const applications = await prisma.eventApplication.findMany({
       where: {
@@ -82,6 +86,10 @@ export async function POST(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
+  const session = await getSessionInfo();
+  if (!session || !canWrite(session.role)) {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  }
   try {
     const body = await request.json();
     const { playerId, status, commanders = [], equipment = [] } = body;
@@ -101,11 +109,14 @@ export async function POST(
       update: {
         status: status ?? undefined,
         updatedAt: new Date(),
+        updatedBy: session.userId,
       },
       create: {
         eventId: id,
         playerId,
         status: status ?? 'NEW',
+        createdAt: new Date(),
+        createdBy: session.userId,
       },
     });
 

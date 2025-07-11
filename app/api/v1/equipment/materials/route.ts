@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
+import { getSessionInfo, canWrite } from '@/lib/accessControlService';
+import { prepareCreateOrUpdate } from '@/lib/prismaUtils';
 
 const prisma = new PrismaClient();
 
@@ -94,6 +96,11 @@ export async function GET(request: NextRequest) {
  * Returns saved material(s) as JSON.
  */
 export async function POST(request: NextRequest) {
+  const session = await getSessionInfo();
+  if (!session || !canWrite(session.role)) {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
     const data = await request.json();
     const materials: MaterialRequest[] = Array.isArray(data) ? data : [data];
@@ -107,46 +114,17 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ message: 'Missing required field: name' }, { status: 400 });
       }
 
-      let result;
+      const payload = {
+        id,
+        name,
+        src,
+        description,
+      };
 
-      if (id) {
-        // If an ID is provided, it's an update, and 'id' is a unique primary key
-        result = await prisma.material.update({
-          where: { id },
-          data: {
-            name,
-            src,
-            description,
-            updatedAt: new Date(),
-          },
-        });
-      } else {
-        // If no ID, we check if a material with this name already exists
-        // Use findFirst because 'name' is a unique field but not necessarily the @id
-        const existing = await prisma.material.findFirst({ where: { name } });
-        if (existing) {
-          // If it exists, update it by its UNIQUE ID (existing.id)
-          // This is the line causing the error if it was not correctly updated previously.
-          result = await prisma.material.update({
-            where: { id: existing.id }, // <--- THIS IS THE CRITICAL FIX
-            data: {
-              name, // Include name in data if it can also be updated
-              src,
-              description,
-              updatedAt: new Date(),
-            },
-          });
-        } else {
-          // If it doesn't exist, create a new one
-          result = await prisma.material.create({
-            data: {
-              name,
-              src,
-              description,
-            },
-          });
-        }
-      }
+      const result = await prepareCreateOrUpdate(prisma.material, payload, {
+        userId: session.userId,
+        matchField: 'name', // Match on 'name' when no ID
+      });
 
       results.push(result);
     }
@@ -155,7 +133,7 @@ export async function POST(request: NextRequest) {
       {
         message:
           results.length === 1
-            ? `${results[0].id ? 'Material updated' : 'Material created'}`
+            ? 'Material saved'
             : `${results.length} materials processed`,
         materials: results.length === 1 ? results[0] : results,
       },
@@ -164,7 +142,6 @@ export async function POST(request: NextRequest) {
   } catch (error: any) {
     console.error('POST /api/equipment/materials error:', error);
     if (error.code === 'P2002') {
-      // P2002 is Prisma's error code for unique constraint violation
       return NextResponse.json({ message: 'Material name must be unique' }, { status: 409 });
     }
     return NextResponse.json({ message: 'Failed to save materials', error: error.message }, { status: 500 });

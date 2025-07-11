@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
+import { getSessionInfo, canWrite } from '@/lib/accessControlService';
 
 const prisma = new PrismaClient();
 
@@ -42,38 +43,40 @@ export async function GET(
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: { id: string } }
 ) {
-  const { id } = await params;
+  const { id } = params;
+
+  const session = await getSessionInfo();
+  if (!session || !canWrite(session.role)) {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
     const data = await request.json();
 
     if (data.archive === true) {
-      // Archive event by setting isArchived flag to true
       const archivedEvent = await prisma.event.update({
         where: { id },
         data: {
           isArchived: true,
           updatedAt: new Date(),
+          updatedBy: session.userId,
         },
       });
 
       return NextResponse.json({ message: 'Event archived', event: archivedEvent }, { status: 200 });
     }
 
-    // Otherwise, update event fields if provided
     const allowedFields = ['name', 'startDate', 'endDate', 'description', 'closedAt', 'color'];
-    const updateData: any = {};
+    const updateData: Record<string, any> = {};
 
     for (const field of allowedFields) {
-      if (field in data) {
-        updateData[field] = data[field] ? new Date(data[field]) || data[field] : null;
-        if (field === 'name' || field === 'description') {
-          updateData[field] = data[field];
-        } else {
-          // For date fields
-          updateData[field] = data[field] ? new Date(data[field]) : null;
-        }
+      if (data[field] !== undefined) {
+        updateData[field] =
+          ['startDate', 'endDate', 'closedAt'].includes(field) && data[field]
+            ? new Date(data[field])
+            : data[field];
       }
     }
 
@@ -82,6 +85,7 @@ export async function POST(
     }
 
     updateData.updatedAt = new Date();
+    updateData.updatedBy = session.userId;
 
     const updatedEvent = await prisma.event.update({
       where: { id },

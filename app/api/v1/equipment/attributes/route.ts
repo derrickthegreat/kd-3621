@@ -38,6 +38,8 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
+import { getSessionInfo, canWrite } from '@/lib/accessControlService';
+import { prepareCreateOrUpdate } from '@/lib/prismaUtils';
 
 const prisma = new PrismaClient();
 
@@ -56,7 +58,7 @@ export async function GET(request: NextRequest) {
 
   try {
     if (id || name) {
-      const attribute = await prisma.attribute.findUnique({
+      const attribute = await prisma.attribute.findFirst({
         where: id ? { id } : { name: name! },
       });
 
@@ -84,6 +86,11 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const session = await getSessionInfo();
+  if (!session || !canWrite(session.role)) {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
     const body = await request.json();
     const attributes: AttributeRequest[] = Array.isArray(body) ? body : [body];
@@ -101,32 +108,16 @@ export async function POST(request: NextRequest) {
       }
 
       const payload = {
+        id,
         name,
         description,
         isIconic: isIconic ?? false,
-        createdAt: new Date(),
       };
 
-      let result;
-
-      if (id) {
-        result = await prisma.attribute.update({
-          where: { id },
-          data: payload,
-        });
-      } else {
-        // Upsert by name if already exists
-        const existing = await prisma.attribute.findUnique({ where: { name } });
-
-        if (existing) {
-          result = await prisma.attribute.update({
-            where: { name },
-            data: payload,
-          });
-        } else {
-          result = await prisma.attribute.create({ data: payload });
-        }
-      }
+      const result = await prepareCreateOrUpdate(prisma.attribute, payload, {
+        userId: session.userId,
+        matchField: 'name',
+      });
 
       results.push(result);
     }
