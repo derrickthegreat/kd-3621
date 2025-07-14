@@ -1,3 +1,5 @@
+import { PrismaClient } from "@prisma/client";
+
 type PrismaDelegate = {
   create: (args: any) => Promise<any>;
   update: (args: any) => Promise<any>;
@@ -81,3 +83,10 @@ export async function prepareCreateOrUpdate<T extends Record<string, any>>(
     },
   });
 }
+
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined;
+}
+
+export const prisma =  globalForPrisma.prisma ?? new PrismaClient();
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;

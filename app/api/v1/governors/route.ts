@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
-import { getSessionInfo, canRead, canWrite } from '@/lib/accessControlService';
-import { prepareCreateOrUpdate } from '@/lib/prismaUtils';
+import AccessControlService from '@/lib/db/accessControlService';
+import { prepareCreateOrUpdate } from '@/lib/db/prismaUtils';
 
 const prisma = new PrismaClient();
 
 /**
- * API Endpoint: /api/governor
+ * API Endpoint: /api/v1/governors
  *
  * Methods:
  *  - GET: List all governors or fetch one by 'id' or 'rokId', with optional includes.
@@ -18,10 +18,10 @@ const prisma = new PrismaClient();
  *      - commanders: "true" | "false" (include player's commanders)
  *
  *    Example GET requests:
- *      GET /api/governor                 => List all governors with stats
- *      GET /api/governor?id=uuid123     => Get governor by ID with stats
- *      GET /api/governor?rokId=rok456   => Get governor by rokId with stats
- *      GET /api/governor?rokId=rok456&equipment=true&commanders=true
+ *      GET /api/v1/governors                 => List all governors with stats
+ *      GET /api/v1/governors?id=uuid123     => Get governor by ID with stats
+ *      GET /api/v1/governors?rokId=rok456   => Get governor by rokId with stats
+ *      GET /api/v1/governors?rokId=rok456&equipment=true&commanders=true
  *                                       => Get governor with equipment and commanders
  *
  *  - POST: Create or update one or many governors.
@@ -59,8 +59,9 @@ export async function GET(request: NextRequest) {
   const includeEquipment = searchParams.get('equipment') === 'true';
   const includeCommanders = searchParams.get('commanders') === 'true';
 
-  const session = await getSessionInfo();
-  const isPrivileged = session && canRead(session.role); // admin or system
+  // Access Control
+  const session = await AccessControlService.getSessionInfo(request);
+  const isPrivileged = session && AccessControlService.canRead(session.role);
 
   const sanitizePlayer = (player: any) => {
     if (!isPrivileged) {
@@ -116,13 +117,12 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const session = await getSessionInfo();
-
+  // Access Control
+  const session = await AccessControlService.getSessionInfo(request);
   if (!session) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
-
-  if (!canWrite(session.role)) {
+  if (!AccessControlService.canWrite(session.role)) {
     return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
   }
 

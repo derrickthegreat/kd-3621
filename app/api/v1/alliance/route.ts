@@ -1,11 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
-import {
-  canRead,
-  canWrite,
-  getSessionInfo,
-} from '@/lib/accessControlService';
-import { prepareCreateOrUpdate } from '@/lib/prismaUtils';
+import AccessControlService from '@/lib/db/accessControlService';
+import { prepareCreateOrUpdate } from '@/lib/db/prismaUtils';
 
 /**
  * API Endpoint: /api/alliance
@@ -49,12 +45,9 @@ import { prepareCreateOrUpdate } from '@/lib/prismaUtils';
 const prisma = new PrismaClient();
 
 export async function GET(request: NextRequest) {
-  const session = await getSessionInfo();
-  console.log(session);
-
-  if (!session || !canRead(session.role)) {
-    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
-  }
+  const unauthorizedResponse = await AccessControlService.requireReadAccess(request);
+  
+  if (unauthorizedResponse) return unauthorizedResponse;
 
   const { searchParams } = new URL(request.url);
   const id = searchParams.get('id');
@@ -119,16 +112,14 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const session = await getSessionInfo();
-
-  if (!session) {
+  const session = await AccessControlService.getSessionInfo(request);
+  if(!session) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
-
-  if (!canWrite(session.role)) {
+  if(!AccessControlService.canWrite(session.role)) {
     return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
   }
-
+  
   try {
     const body = await request.json();
     const alliances = Array.isArray(body) ? body : [body];

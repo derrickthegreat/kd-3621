@@ -9,6 +9,12 @@ datasource db {
 
 // --- Enums ------------------------------------------------------
 
+enum UserRole {
+  ADMIN
+  KINGDOM_MEMBER
+  SYSTEM
+}
+
 enum Rarity {
   COMMON
   UNCOMMON
@@ -99,6 +105,7 @@ model Player {
   createdBy       String?
   updatedAt       DateTime           @default(now())
   updatedBy       String?
+  user            User?
   userId          String?
   userIdVerified  Boolean            @default(false)
   stats           PlayerStats[]
@@ -402,4 +409,28 @@ model ApplicationEquipment {
 
   @@unique([applicationId, equipmentId])
   @@map("application_equipment")
+}
+
+// --- User Management ------------------------------------
+model User {
+  id        String   @id @default(cuid()) // Your internal ID for the user
+  clerkId   String   @unique // The ID from Clerk. This is what you get from `auth()`
+  role      UserRole @default(KINGDOM_MEMBER) // The user's role
+  player    Player?  @relation(fields: [playerId], references: [id])
+  playerId  String?  @unique // Link to the Player model
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model UserAuditLog {
+  id         String   @id @default(uuid())
+  userId     String   // ID of the user being modified
+  actorId    String   // Who made the change (admin/system)
+  action     String   // e.g. "Updated role to admin"
+  createdAt  DateTime @default(now())
+
+  @@index([userId])
+  @@map("user_audit_logs")
 }

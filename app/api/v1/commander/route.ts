@@ -1,12 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient, TroopType } from '@prisma/client';
-import {
-  getSessionInfo,
-  canRead,
-  canWrite,
-} from '@/lib/accessControlService';
-
-import { prepareCreateOrUpdate } from '@/lib/prismaUtils';
+import AccessControlService from '@/lib/db/accessControlService';
+import { prepareCreateOrUpdate } from '@/lib/db/prismaUtils';
 
 const prisma = new PrismaClient();
 
@@ -56,11 +51,8 @@ const prisma = new PrismaClient();
  */
 
 export async function GET(request: NextRequest) {
-  const session = await getSessionInfo();
-
-  if (!session || !canRead(session.role)) {
-    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
-  }
+  const unauthorizedResponse = await AccessControlService.requireReadAccess(request);
+  if(unauthorizedResponse) return unauthorizedResponse;
 
   const { searchParams } = new URL(request.url);
   const id = searchParams.get('id');
@@ -98,13 +90,11 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const session = await getSessionInfo();
-
-  if (!session) {
+  const session = await AccessControlService.getSessionInfo(request);
+  if(!session) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
-
-  if (!canWrite(session.role)) {
+  if(!AccessControlService.canWrite(session.role)) {
     return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
   }
 

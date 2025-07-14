@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
-import { getSessionInfo, canWrite, canRead } from '@/lib/accessControlService';
+import AccessControlService from '@/lib/db/accessControlService';
+
 
 const prisma = new PrismaClient();
 
@@ -31,11 +32,11 @@ export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }>}
 ) {
+  const unauthorizedResponse = await AccessControlService.requireReadAccess(request);
+  if(unauthorizedResponse) return unauthorizedResponse;
+
   const { id } = await params;
-  const session = await getSessionInfo();
-  if (!session || !canRead(session.role)) {
-    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
-  }
+
   try {
     const rankings = await prisma.eventRanking.findMany({
       where: {
@@ -69,11 +70,16 @@ export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = await params;
-  const session = await getSessionInfo();
-  if (!session || !canWrite(session.role)) {
+  const session = await AccessControlService.getSessionInfo(request);
+  if(!session) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
+  if(!AccessControlService.canWrite(session.role)) {
+    return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
+  }
+  
+  const { id } = await params;
+
   try {
     const body = await request.json();
     const rankings = Array.isArray(body) ? body : [body];

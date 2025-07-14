@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
-import { getSessionInfo, canWrite } from '@/lib/accessControlService';
+import AccessControlService from '@/lib/db/accessControlService';
 
 const prisma = new PrismaClient();
 
@@ -18,9 +18,12 @@ export async function POST(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
-  const session = await getSessionInfo();
-  if (!session || !canWrite(session.role)) {
+  const session = await AccessControlService.getSessionInfo(request);
+  if(!session) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  }
+  if(!AccessControlService.canWrite(session.role)) {
+    return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
   }
   try {
     const eventId = id;

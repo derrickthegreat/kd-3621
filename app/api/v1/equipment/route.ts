@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient, Rarity, Slot } from '@prisma/client';
-import { getSessionInfo, canWrite } from '@/lib/accessControlService';
+import AccessControlService from '@/lib/db/accessControlService';
 
 const prisma = new PrismaClient();
 /**
@@ -93,20 +93,23 @@ interface EquipmentMaterialInput {
   quantity?: number;
 }
 
-interface EquipmentRequest {
-  id?: string;
-  name: string;
-  slot: Slot;
-  rarity: Rarity;
-  src: string;
-  alt?: string;
-  attributes?: EquipmentAttributeInput[];
-  iconic?: EquipmentIconicAttributeInput[];
-  materials?: EquipmentMaterialInput[];
-}
+// interface EquipmentRequest {
+//   id?: string;
+//   name: string;
+//   slot: Slot;
+//   rarity: Rarity;
+//   src: string;
+//   alt?: string;
+//   attributes?: EquipmentAttributeInput[];
+//   iconic?: EquipmentIconicAttributeInput[];
+//   materials?: EquipmentMaterialInput[];
+// }
 
 // === GET: Fetch all or single equipment ===
 export async function GET(request: NextRequest) {
+  const unauthorizedResponse = await AccessControlService.requireReadAccess(request);
+  if(unauthorizedResponse) return unauthorizedResponse;
+
   const { searchParams } = new URL(request.url);
 
   const id = searchParams.get('id');
@@ -134,7 +137,7 @@ export async function GET(request: NextRequest) {
         },
       });
     } else if (name) { // Use else if to handle 'name' only if 'id' is not present
-      equipment = await prisma.equipment.findFirst({ // <--- FIX: Changed findUnique to findFirst
+      equipment = await prisma.equipment.findFirst({
         where: { name: name },
         include: {
           attributes: includeAttributes
@@ -178,9 +181,12 @@ export async function GET(request: NextRequest) {
 
 // === POST: Create or update equipment with nested relations ===
 export async function POST(request: NextRequest) {
-  const session = await getSessionInfo();
-  if (!session || !canWrite(session.role)) {
+  const session = await AccessControlService.getSessionInfo(request);
+  if(!session) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  }
+  if(!AccessControlService.canWrite(session.role)) {
+    return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
   }
   try {
     const data = await request.json();
