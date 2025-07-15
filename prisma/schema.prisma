@@ -58,6 +58,29 @@ enum Status {
   CLOSED
 }
 
+// --- User Management ------------------------------------
+model User {
+  id        String   @id @default(uuid())
+  clerkId   String   @unique
+  role      UserRole @default(KINGDOM_MEMBER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+  governors UserPlayer[]
+}
+
+model UserAuditLog {
+  id         String   @id @default(uuid())
+  userId     String   // ID of the user being modified
+  actorId    String   // Who made the change (admin/system)
+  action     String   // e.g. "Updated role to admin"
+  createdAt  DateTime @default(now())
+
+  @@index([userId])
+  @@map("user_audit_logs")
+}
+
 // --- Alliance & Stats ------------------------------------------
 
 model Alliance {
@@ -83,7 +106,7 @@ model AllianceStats {
   totalPower Int
   createdAt    DateTime           @default(now())
   createdBy    String?
-  updatedAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
   updatedBy    String?
 
   @@index([allianceId, snapshot])
@@ -103,17 +126,15 @@ model Player {
   dateMigratedOut DateTime?
   createdAt       DateTime           @default(now())
   createdBy       String?
-  updatedAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
   updatedBy       String?
-  user            User?
-  userId          String?
-  userIdVerified  Boolean            @default(false)
   stats           PlayerStats[]
   commanders      PlayerCommander[]
   equipment       PlayerEquipment[]
   applications    EventApplication[]
 
   @@map("players")
+  UserPlayers UserPlayer[]
 }
 
 model PlayerStats {
@@ -129,11 +150,25 @@ model PlayerStats {
   power      Int
   createdAt  DateTime @default(now())
   createdBy  String?
-  updatedAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
   updatedBy  String?
 
   @@index([playerId, snapshot])
   @@map("player_stats")
+}
+
+model UserPlayer {
+  id          String    @id @default(uuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  playerId    String
+  player      Player    @relation(fields: [playerId], references: [id])
+  assignedAt  DateTime  @default(now())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([userId, playerId])
+  @@map("users_players")
 }
 
 // --- Commanders & Assignments ---------------------------------
@@ -145,7 +180,7 @@ model Commander {
   speciality                 TroopType[]
   createdAt                  DateTime               @default(now())
   createdBy                  String?
-  updatedAt                  DateTime               @default(now())
+  updatedAt                  DateTime               @updatedAt
   updatedBy                  String?
   players                    PlayerCommander[]
   applications               ApplicationCommander[]
@@ -163,7 +198,7 @@ model CommanderSkillTree {
   url         String
   createdAt   DateTime @default(now())
   createdBy   String?
-  updatedAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
   updatedBy   String?
 }
 
@@ -175,7 +210,7 @@ model CommanderPairing {
   secondaryid String
   createdAt   DateTime  @default(now())
   createdBy   String?
-  updatedAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   updatedBy   String?
 }
 
@@ -188,7 +223,7 @@ model PlayerCommander {
   level       Int       @default(1)
   createdAt   DateTime  @default(now())
   createdBy   String?
-  updatedAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   updatedBy   String?
 
   @@unique([playerId, commanderId])
@@ -206,7 +241,7 @@ model Equipment {
   alt       String?
   createdAt DateTime @default(now())
   createdBy String?
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   updatedBy String?
 
   owners       PlayerEquipment[]
@@ -227,7 +262,7 @@ model PlayerEquipment {
   acquiredAt  DateTime  @default(now())
   createdAt   DateTime  @default(now())
   createdBy   String?
-  updatedAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   updatedBy   String?
 
   @@unique([playerId, equipmentId])
@@ -243,7 +278,7 @@ model Attribute {
   isIconic    Boolean  @default(false)
   createdAt   DateTime @default(now())
   createdBy   String?
-  updatedAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
   updatedBy   String?
 
   equipment EquipmentAttribute[]
@@ -261,7 +296,7 @@ model EquipmentAttribute {
   value       String?
   createdAt   DateTime  @default(now())
   createdBy   String?
-  updatedAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   updatedBy   String?
 
   @@unique([equipmentId, attributeId])
@@ -280,7 +315,7 @@ model EquipmentIconicAttribute {
   tier      Int?
   createdAt DateTime @default(now())
   createdBy String?
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   updatedBy String?
 
   @@unique([equipmentId, attributeId])
@@ -296,7 +331,7 @@ model Material {
   description String?
   createdAt   DateTime @default(now())
   createdBy   String?
-  updatedAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
   updatedBy   String?
 
   equipment EquipmentMaterial[]
@@ -314,7 +349,7 @@ model EquipmentMaterial {
   quantity    Int       @default(1)
   createdAt   DateTime  @default(now())
   createdBy   String?
-  updatedAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   updatedBy   String?
 
   @@unique([equipmentId, materialId])
@@ -332,7 +367,7 @@ model Event {
   color        String?
   createdAt    DateTime           @default(now())
   createdBy    String?
-  updatedAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
   updatedBy    String?
   closedAt     DateTime?
   isArchived   Boolean            @default(false)
@@ -351,7 +386,7 @@ model EventApplication {
   status    Status   @default(NEW)
   createdAt DateTime @default(now())
   createdBy String?
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   updatedBy String?
 
   commanders   ApplicationCommander[]
@@ -373,7 +408,7 @@ model EventRanking {
   max_points    Int?
   createdAt     DateTime         @default(now())
   createdBy     String?
-  updatedAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
   updatedBy     String?
 
   @@unique([eventId, applicationId]) // This is now valid
@@ -387,7 +422,7 @@ model ApplicationCommander {
   commanderId   String
   createdAt     DateTime         @default(now())
   createdBy     String?
-  updatedAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
   updatedBy     String?
 
   @@unique([applicationId, commanderId])
@@ -404,33 +439,11 @@ model ApplicationEquipment {
   isCrit        Boolean          @default(false)
   createdAt     DateTime         @default(now())
   createdBy     String?
-  updatedAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
   updatedBy     String?
 
   @@unique([applicationId, equipmentId])
   @@map("application_equipment")
 }
 
-// --- User Management ------------------------------------
-model User {
-  id        String   @id @default(cuid()) // Your internal ID for the user
-  clerkId   String   @unique // The ID from Clerk. This is what you get from `auth()`
-  role      UserRole @default(KINGDOM_MEMBER) // The user's role
-  player    Player?  @relation(fields: [playerId], references: [id])
-  playerId  String?  @unique // Link to the Player model
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
-  @@map("users")
-}
-
-model UserAuditLog {
-  id         String   @id @default(uuid())
-  userId     String   // ID of the user being modified
-  actorId    String   // Who made the change (admin/system)
-  action     String   // e.g. "Updated role to admin"
-  createdAt  DateTime @default(now())
-
-  @@index([userId])
-  @@map("user_audit_logs")
-}

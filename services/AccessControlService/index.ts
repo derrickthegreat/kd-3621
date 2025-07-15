@@ -1,12 +1,38 @@
-// services/AccessControlService.ts
-import { auth, clerkClient } from '@clerk/nextjs/server';
+/**
+ * AccessControlService provides a flexible and database-driven mechanism
+ * to authorize API routes based on user roles. It integrates with Clerk
+ * for authentication and maps Clerk users to local database users with
+ * roles stored in the database. Supports:
+ * 
+ * - Dynamic role-based route control
+ * - Fallback creation of DB user if missing
+ * - Optional system-level authentication via HMAC signature
+ * - Read/Write permission checks via role matrix
+ * 
+ * Usage:
+ * 
+ * ```ts
+ * import { AccessControlService } from '@/services/AccessControlService';
+ * import { UserRole } from '@prisma/client';
+ * 
+ * const access = new AccessControlService([UserRole.ADMIN]);
+ * 
+ * export function GET(req: NextRequest) {
+ *    const unauthorized = await access.requireReadAccess(req);
+ *    if (unauthorized) return unauthorized;
+ *    const session = await access.getSessionInfo(req);
+ *    ... rest of api logic 
+ * }
+ * ```
+ */
+
+import { auth } from '@clerk/nextjs/server';
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { prisma } from '@/lib/db/prismaUtils';
-import { UserRole } from '@prisma/client';
+import { UserRole, User } from '@prisma/client';
 
 // ----- Role Types -----
-// This can now be derived directly from your Prisma enum
 export type Role = UserRole;
 
 export interface SessionInfo {
@@ -18,14 +44,10 @@ const SYSTEM_SECRET = process.env.SYSTEM_API_SECRET!;
 const SIGNATURE_HEADER = 'x-signature';
 
 // ----- Role Permissions Matrix -----
-// This is a mapping from your DB roles to permissions.
-// You can keep this hardcoded for now or make it dynamic by storing
-// permissions in the DB with Prisma.
 const roleAccessMatrix: Record<Role, { canRead: boolean; canWrite: boolean }> = {
   [UserRole.ADMIN]: { canRead: true, canWrite: true },
   [UserRole.KINGDOM_MEMBER]: { canRead: true, canWrite: true },
   [UserRole.SYSTEM]: { canRead: true, canWrite: true },
-  [UserRole.MIGRANT]: { canRead: true, canWrite: false },
 };
 
 export class AccessControlService {
@@ -35,7 +57,6 @@ export class AccessControlService {
     this.allowedRoles = allowedRoles;
   }
 
-  // Helper methods now use the matrix defined above
   private canRead(role: Role): boolean {
     return roleAccessMatrix[role]?.canRead ?? false;
   }
@@ -44,7 +65,29 @@ export class AccessControlService {
     return roleAccessMatrix[role]?.canWrite ?? false;
   }
 
-  // --- HMAC Support for System Requests (No Change) ---
+  private isAllowed(role: Role): boolean {
+    return this.allowedRoles.includes(role);
+  }
+
+  // --- Helper: Create DB user if not found ---
+  private async getOrCreateLocalUser(clerkId: string): Promise<User | null> {
+    let user = await prisma.user.findUnique({ where: { clerkId } });
+    if (!user) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.warn(`[AccessControl] Creating local user for clerkId ${clerkId}`);
+      }
+
+      try {
+        user = await prisma.user.create({ data: { clerkId } });
+      } catch (e: any) {
+        console.error(`[AccessControl] Failed to create user for clerkId ${clerkId}:`, e);
+        return null;
+      }
+    }
+    return user;
+  }
+
+  // --- HMAC Support for System Requests ---
   private async getRawBody(req: NextRequest): Promise<string> {
     const reader = req.body?.getReader();
     if (!reader) return '';
@@ -60,59 +103,42 @@ export class AccessControlService {
   public async isSystemRequest(req: NextRequest): Promise<boolean> {
     const signature = req.headers.get(SIGNATURE_HEADER);
     if (!signature) return false;
+
     const rawBody = await this.getRawBody(req);
     const expected = crypto
       .createHmac('sha256', SYSTEM_SECRET)
       .update(rawBody)
       .digest('hex');
+
     return signature === expected;
   }
 
-  // --- Session Resolution (REFUNDED) ---
   public async getSessionInfo(req: NextRequest): Promise<SessionInfo | null> {
-    // 1. Handle System Requests first
     if (await this.isSystemRequest(req)) {
       return { userId: 'System', role: UserRole.SYSTEM };
     }
 
-    // 2. Authenticate with Clerk
     const { userId } = await auth();
     if (!userId) return null;
 
-    // 3. Find the user in your database using their Clerk ID
-    const user = await prisma.user.findUnique({
-      where: { clerkId: userId },
-    });
+    const user = await this.getOrCreateLocalUser(userId);
+    if (!user) return null;
 
-    if (!user) {
-      // Option: Create the user if they don't exist
-      // const clerkUser = await clerkClient().users.getUser(userId);
-      // const newUser = await prisma.user.create({
-      //   data: {
-      //     clerkId: userId,
-      //     role: UserRole.KINGDOM_MEMBER, // Default role
-      //     // ... other fields from clerkUser
-      //   },
-      // });
-      // return { userId, role: newUser.role };
-      console.warn(`User with clerkId ${userId} not found in database.`);
-      return null;
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('[AccessControl] SessionInfo:', { userId: user.clerkId, role: user.role });
     }
 
-    // 4. Return the session info with the role from the database
-    return { userId, role: user.role };
+    return { userId: user.clerkId, role: user.role };
   }
 
   // --- Access Enforcement Wrappers ---
   public async requireReadAccess(req: NextRequest): Promise<NextResponse | null> {
     const session = await this.getSessionInfo(req);
-
     if (!session) {
       return NextResponse.json({ message: 'Authentication Required' }, { status: 401 });
     }
-    
-    // Check if the user's role is in the list of allowed roles for this route
-    if (!this.allowedRoles.includes(session.role)) {
+
+    if (!this.isAllowed(session.role)) {
       return NextResponse.json({ message: 'Forbidden: Insufficient Role' }, { status: 403 });
     }
 
@@ -125,12 +151,11 @@ export class AccessControlService {
 
   public async requireWriteAccess(req: NextRequest): Promise<NextResponse | null> {
     const session = await this.getSessionInfo(req);
-
     if (!session) {
       return NextResponse.json({ message: 'Authentication Required' }, { status: 401 });
     }
 
-    if (!this.allowedRoles.includes(session.role)) {
+    if (!this.isAllowed(session.role)) {
       return NextResponse.json({ message: 'Forbidden: Insufficient Role' }, { status: 403 });
     }
 
@@ -141,3 +166,7 @@ export class AccessControlService {
     return null;
   }
 }
+
+// --- Default Export for Standard Admin Usage ---
+const defaultAccessRoles = new AccessControlService([UserRole.ADMIN, UserRole.SYSTEM]);
+export default defaultAccessRoles;
