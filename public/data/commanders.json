@@ -1,0 +1,1466 @@
+[
+  {
+    "name": "Aethelflaed",
+    "image": "aethelflaed.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "Leadership",
+      "Peacekeeping",
+      "Support"
+    ],
+    "builds": [
+      {
+        "name": "All in one",
+        "image": "aethelflaed/aethelflaed-all-in-one.png"
+      },
+      {
+        "name": "Barbarian Hunting",
+        "image": "aethelflaed/aethelflaed-barbarian-hunting.png"
+      },
+      {
+        "name": "Open Field",
+        "image": "aethelflaed/aethelflaed-open-field.png"
+      }
+    ]
+  },
+  {
+    "name": "Alexander Nevsky",
+    "image": "alexander-nevsky.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "Cavalry",
+      "Versatility",
+      "Skill"
+    ],
+    "builds": [
+      {
+        "name": "Nuke",
+        "image": "alexander-nevsky/alexander-nevsky-nuke.png"
+      },
+      {
+        "name": "Open Field",
+        "image": "alexander-nevsky/alexander-nevsky-open-field.png"
+      },
+      {
+        "name": "1v1",
+        "image": "alexander-nevsky/alexander-nevsky-1-v-1.png"
+      }
+    ]
+  },
+  {
+    "name": "Alexander the Great",
+    "image": "alexander-the-great.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "Infantry",
+      "Versatility",
+      "Attack"
+    ],
+    "builds": [
+      {
+        "name": "Open Field",
+        "image": "alexander-the-great/alexander-the-great-open-field.png"
+      }
+    ]
+  },
+  {
+    "name": "Amanitore",
+    "image": "amanitore.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "Archer",
+      "Garrison",
+      "Support"
+    ],
+    "builds": [
+      {
+        "name": "Garrison",
+        "image": "amanitore/amanitore-garrison.png"
+      }
+    ]
+  },
+  {
+    "name": "Artemisia",
+    "image": "artemisia.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "Archer",
+      "Garrison",
+      "Defense"
+    ],
+    "builds": [
+      {
+        "name": "Open Field",
+        "image": "artemisia/artemisia-open-field.png"
+      },
+      {
+        "name": "Garrison vs Attila",
+        "image": "artemisia/artemisia-garrison-vs-attila.png"
+      },
+      {
+        "name": "Flags & Passes vs Attila",
+        "image": "artemisia/artemisia-flags-and-passes-vs-attila.png"
+      }
+    ]
+  },
+  {
+    "name": "Arthur Pendragon",
+    "image": "arthur-pendragon.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "Cavalry",
+      "Versatility",
+      "Combo"
+    ],
+    "builds": [
+      {
+        "name": "Open Field",
+        "image": "arthur-pendragon/arthur-pendragon-open-field.png"
+      }
+    ]
+  },
+  {
+    "name": "Attila",
+    "image": "attila.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "Cavalry",
+      "Conquering",
+      "Attack"
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Bai Qi",
+    "image": "bai-qi.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "Infantry",
+      "Versatility",
+      "Smite"
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Baibars",
+    "image": "baibars.png",
+    "rarity": "Epic",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Belisarius Prime",
+    "image": "belisarius-prime.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Belisarius",
+    "image": "belisarius.png",
+    "rarity": "Epic",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Bertrand Du Guesclin",
+    "image": "bertrand-du-guesclin.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Bjorn Ironside",
+    "image": "bjorn-ironside.png",
+    "rarity": "Epic",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Boudica Prime",
+    "image": "boudica-prime.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Boudica",
+    "image": "boudica.png",
+    "rarity": "Epic",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Cao Cao",
+    "image": "cao-cao.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Chandragupta Maurya",
+    "image": "chandragupta-maurya.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Charlemagne",
+    "image": "charlemagne.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Charles Martel",
+    "image": "charles-martel.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Cheok Jun Gyeong",
+    "image": "cheok-jun-gyeong.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Cleopatra",
+    "image": "cleopatra.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Constantine",
+    "image": "constantine.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Cyrus The Great",
+    "image": "cyrus-the-great.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Diaochan",
+    "image": "diaochan.png",
+    "rarity": "Epic",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Edward",
+    "image": "edward.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "El Cid",
+    "image": "el-cid.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Eulji Mundeok",
+    "image": "eulji-mundeok.png",
+    "rarity": "Epic",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Flavius Aetius",
+    "image": "flavius-aetius.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Frederick",
+    "image": "frederick.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Genghis Khan",
+    "image": "genghis-khan.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Gilgamesh",
+    "image": "gilgamesh.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Gorgo",
+    "image": "gorgo.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Guan Yu",
+    "image": "guan-yu.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Hannibal Barca",
+    "image": "hannibal-barca.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Harald Sigurdsson",
+    "image": "harald-sigurdsson.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Henry",
+    "image": "henry.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Hermann Prime",
+    "image": "hermann-prime.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Hermann",
+    "image": "hermann.png",
+    "rarity": "Epic",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Honda Tadakatsu",
+    "image": "honda-tadakatsu.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Huo",
+    "image": "huo.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Imhotep",
+    "image": "imhotep.png",
+    "rarity": "Epic",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Ishida Mitsunari",
+    "image": "ishida-mitsunari.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Jadwiga",
+    "image": "jadwiga.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Jan Zizka",
+    "image": "jan-zizka.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Joan Of Arc Prime",
+    "image": "joan-of-arc-prime.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Joan Of Arc",
+    "image": "joan-of-arc.png",
+    "rarity": "Epic",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Julius Caesar",
+    "image": "julius-caesar.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Keira",
+    "image": "keira.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Kinich Janaab Pakal",
+    "image": "kinich-janaab-pakal.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Kusunoki Masashige",
+    "image": "kusunoki-masashige.png",
+    "rarity": "Epic",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Leonidas",
+    "image": "leonidas.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Liu Che",
+    "image": "liu-che.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Lohar",
+    "image": "lohar.png",
+    "rarity": "Epic",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Lu Bu",
+    "image": "lu-bu.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Matilda Of Flanders",
+    "image": "matilda-of-flanders.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Mehmed",
+    "image": "mehmed.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Minamoto No Yoshitsune",
+    "image": "minamoto-no-yoshitsune.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Moctezuma",
+    "image": "moctezuma.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Mulan",
+    "image": "mulan.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Nebuchadnezzar",
+    "image": "nebuchadnezzar.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Osman",
+    "image": "osman.png",
+    "rarity": "Epic",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Pelagius",
+    "image": "pelagius.png",
+    "rarity": "Epic",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Philip",
+    "image": "philip.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Ragnar Lodbrok",
+    "image": "ragnar-lodbrok.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Ragnar",
+    "image": "ragnar.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Ramesses",
+    "image": "ramesses.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Richard",
+    "image": "richard.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Saladin",
+    "image": "saladin.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Sargon The Great",
+    "image": "sargon-the-great.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Scipio Africanus Prime",
+    "image": "scipio-africanus-prime.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Seondeok",
+    "image": "seondeok.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Shajar",
+    "image": "shajar.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Subutai",
+    "image": "subutai.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Suleiman",
+    "image": "suleiman.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Sun Tzu",
+    "image": "sun-tzu.png",
+    "rarity": "Epic",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Takeda Shingen",
+    "image": "takeda-shingen.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Tariq Ibnziyad",
+    "image": "tariq-ibnziyad.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Theodora",
+    "image": "theodora.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Thutmose",
+    "image": "thutmose.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Tokugawa Ieyasu",
+    "image": "tokugawa-ieyasu.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Tomyris",
+    "image": "tomyris.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Trajan",
+    "image": "trajan.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "William Wallace",
+    "image": "william-wallace.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "William",
+    "image": "william.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Wu Zetian",
+    "image": "wu-zetian.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Xiang Yu",
+    "image": "xiang-yu.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Yi Seong Gye",
+    "image": "yi-seong-gye.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Yi Sun Sin",
+    "image": "yi-sun-sin.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Zenobia",
+    "image": "zenobia.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  },
+  {
+    "name": "Zhuge Liang",
+    "image": "zhuge-liang.png",
+    "rarity": "Legendary",
+    "attributes": [
+      "",
+      "",
+      ""
+    ],
+    "builds": [
+      {
+        "name": "",
+        "image": ""
+      }
+    ]
+  }
+]

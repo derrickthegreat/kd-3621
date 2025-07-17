@@ -1,0 +1,916 @@
+[
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-07",
+                "frequency": "four-weeks",
+                "duration": 2
+            }
+        ],
+        "title": "More Than Gems",
+        "description": "More Than Gems Event",
+        "color": "#FF5733"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2024-01-12",
+                "frequency": "four-weeks",
+                "duration": 2
+            }
+        ],
+        "title": "Egg / Hammer Event",
+        "description": "Holy Knight’s Treasure or Hunt for History Event, depends on Kingdom Age",
+        "color": "#634ca6"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2024-01-26",
+                "frequency": "four-weeks",
+                "duration": 2
+            }
+        ],
+        "title": "Egg / Hammer Event",
+        "description": "Holy Knight’s Treasure or Hunt for History Event, depends on Kingdom Age",
+        "color": "#8e7cc3"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2024-01-12",
+                "frequency": "four-weeks",
+                "duration": 2
+            },
+            {
+                "startDate": "2024-01-26",
+                "frequency": "four-weeks",
+                "duration": 2
+            }
+        ],
+        "title": "20 GH Event",
+        "description": "Holy Knight’s Treasure or Hunt for History Event, depends on Kingdom Age",
+        "color": "#F93827"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2024-01-01",
+                "frequency": "eight-weeks",
+                "duration": 6
+            },
+            {
+                "startDate": "2024-01-15",
+                "frequency": "eight-weeks",
+                "duration": 6
+            },
+            {
+                "startDate": "2024-01-29",
+                "frequency": "eight-weeks",
+                "duration": 6
+            },
+            {
+                "startDate": "2024-02-12",
+                "frequency": "eight-weeks",
+                "duration": 6
+            }
+        ],
+        "title": "MGE",
+        "description": "Mightiest Governor Event",
+        "color": "#3a94ee"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2024-01-02",
+                "frequency": "eight-weeks",
+                "duration": 3
+            },
+            {
+                "startDate": "2024-01-16",
+                "frequency": "eight-weeks",
+                "duration": 3
+            },
+            {
+                "startDate": "2024-01-30",
+                "frequency": "eight-weeks",
+                "duration": 3
+            },
+            {
+                "startDate": "2024-02-13",
+                "frequency": "eight-weeks",
+                "duration": 3
+            }
+        ],
+        "title": "Wheel",
+        "description": "Wheel of Fortune",
+        "color": "#f99806"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-03-17",
+                "frequency": "eight-weeks",
+                "duration": 2
+            }
+        ],
+        "title": "Esmeralda",
+        "description": "Esmeralda’s House Event",
+        "color": "#33FF57"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-05-05",
+                "frequency": "five-weeks",
+                "duration": 2
+            }
+        ],
+        "title": "Realm of Mystique",
+        "description": "Realm of Mystique event",
+        "color": "#e033ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-02-17",
+                "frequency": "eight-weeks",
+                "duration": 2
+            }
+        ],
+        "title": "Dhalruk's Puzzle Box",
+        "description": "Dhalruk's Puzzle Box Event",
+        "color": "#e035ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-02-04",
+                "frequency": "eight-weeks",
+                "duration": 2
+            }
+        ],
+        "title": "King of the Tribes",
+        "description": "King of Tribes Event",
+        "color": "#ff0066"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-02-05",
+                "frequency": "two-weeks",
+                "duration": 5
+            }
+        ],
+        "title": "Ark of Osiris",
+        "description": "Ark of Osiris Event",
+        "color": "#339933"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-02-01",
+                "frequency": "one-week",
+                "duration": 2
+            }
+        ],
+        "title": "Champions of Olympia",
+        "description": "Champions of Olympia Event",
+        "color": "#5b33ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-07",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "22:01",
+                "endTime": "23:01"
+            },
+            {
+                "startDate": "2025-06-09",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "14:01",
+                "endTime": "15:01"
+            },
+            {
+                "startDate": "2025-06-11",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "06:01",
+                "endTime": "07:01"
+            },
+            {
+                "startDate": "2025-06-12",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "22:01",
+                "endTime": "23:01"
+            },
+            {
+                "startDate": "2025-06-14",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "14:01",
+                "endTime": "15:01"
+            },
+            {
+                "startDate": "2025-06-16",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "06:01",
+                "endTime": "07:01"
+            },
+            {
+                "startDate": "2025-06-17",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "22:01",
+                "endTime": "23:01"
+            },
+            {
+                "startDate": "2025-06-19",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "14:01",
+                "endTime": "15:01"
+            },
+            {
+                "startDate": "2025-06-21",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "06:01",
+                "endTime": "07:01"
+            },
+            {
+                "startDate": "2025-06-22",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "22:01",
+                "endTime": "23:01"
+            },
+            {
+                "startDate": "2025-06-24",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "14:01",
+                "endTime": "15:01"
+            },
+            {
+                "startDate": "2025-06-26",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "06:01",
+                "endTime": "07:01"
+            },
+            {
+                "startDate": "2025-06-27",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "22:01",
+                "endTime": "23:01"
+            },
+            {
+                "startDate": "2025-06-29",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "14:01",
+                "endTime": "15:01"
+            },
+            {
+                "startDate": "2025-07-01",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "06:01",
+                "endTime": "07:01"
+            },
+            {
+                "startDate": "2025-07-02",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "22:01",
+                "endTime": "23:01"
+            },
+            {
+                "startDate": "2025-07-04",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "14:01",
+                "endTime": "15:01"
+            },
+            {
+                "startDate": "2025-07-06",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "06:01",
+                "endTime": "07:01"
+            },
+            {
+                "startDate": "2025-07-07",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "22:01",
+                "endTime": "23:01"
+            }
+        ],
+        "title": "Ruins",
+        "description": "Ruins capture window (KvK)",
+        "color": "#ffcc00"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-17",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "00:01",
+                "endTime": "02:01"
+            },
+            {
+                "startDate": "2025-06-21",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "14:01",
+                "endTime": "16:01"
+            },
+            {
+                "startDate": "2025-06-24",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "04:01",
+                "endTime": "06:01"
+            },
+            {
+                "startDate": "2025-06-28",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "18:01",
+                "endTime": "20:01"
+            },
+            {
+                "startDate": "2025-07-02",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "08:01",
+                "endTime": "10:01"
+            },
+            {
+                "startDate": "2025-07-05",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "22:01",
+                "endTime": "00:01"
+            }
+        ],
+        "title": "Altars",
+        "description": "Altar capture window (KvK)",
+        "color": "#00ccff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-05-28",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "00:00",
+                "endTime": "02:00"
+            }
+        ],
+        "title": "Build 20 Alliance Forts in Lost Kingdom",
+        "description": "Making Camp",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-05-28",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "12:01",
+                "endTime": "14:01"
+            }
+        ],
+        "title": "Waiting Period",
+        "description": "Eye for an Eye",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-05-29",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "00:01",
+                "endTime": "02:01"
+            }
+        ],
+        "title": "Crusader Camps open",
+        "description": "Crusader Camps open",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-05-29",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "08:01",
+                "endTime": "10:01"
+            }
+        ],
+        "title": "Waiting Period",
+        "description": "Renovations",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-05-29",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "20:01",
+                "endTime": "22:01"
+            }
+        ],
+        "title": "Ruined Crusader Fortresses open",
+        "description": "Ruined Crusader Fortresses open",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-05-31",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "02:01",
+                "endTime": "04:01"
+            }
+        ],
+        "title": "Level 6 Barbarian Forts",
+        "description": "Reprisal",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-01",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "22:01",
+                "endTime": "00:01"
+            }
+        ],
+        "title": "Waiting Period",
+        "description": "Beyond the Pass",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-02",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "10:01",
+                "endTime": "12:01"
+            }
+        ],
+        "title": "Level 4 Passes open",
+        "description": "Level 4 Passes open",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-03",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "18:01",
+                "endTime": "20:01"
+            }
+        ],
+        "title": "Waiting Period",
+        "description": "Seeking Sanctuary",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-04",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "06:01",
+                "endTime": "08:01"
+            }
+        ],
+        "title": "Hierons open",
+        "description": "Hierons open",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-05",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "14:01",
+                "endTime": "16:01"
+            }
+        ],
+        "title": "Waiting Period",
+        "description": "Light and Darkness",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-06",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "02:01",
+                "endTime": "04:01"
+            }
+        ],
+        "title": "Level 5 Passes open",
+        "description": "Level 5 Passes open",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-07",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "10:01",
+                "endTime": "12:01"
+            }
+        ],
+        "title": "Waiting Period",
+        "description": "Retaking Ruins",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-07",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "22:01",
+                "endTime": "00:01"
+            }
+        ],
+        "title": "First Ruins open",
+        "description": "First Ruins open",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-09",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "04:01",
+                "endTime": "06:01"
+            }
+        ],
+        "title": "Level 7 Barbarian Forts",
+        "description": "Raging Conflict",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-11",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "00:01",
+                "endTime": "02:01"
+            }
+        ],
+        "title": "Waiting Period",
+        "description": "Territorial Expansion",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-11",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "12:01",
+                "endTime": "14:01"
+            }
+        ],
+        "title": "Level 6 Passes open",
+        "description": "Level 6 Passes open",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-12",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "20:01",
+                "endTime": "22:01"
+            }
+        ],
+        "title": "Waiting Period",
+        "description": "Chosen of the Circles",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-13",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "08:01",
+                "endTime": "10:01"
+            }
+        ],
+        "title": "Circles open",
+        "description": "Circles open",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-14",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "16:01",
+                "endTime": "18:01"
+            }
+        ],
+        "title": "Waiting Period",
+        "description": "Wild Ambitions",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-15",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "04:01",
+                "endTime": "06:01"
+            }
+        ],
+        "title": "Level 7 Passes open",
+        "description": "Level 7 Passes open",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-16",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "12:01",
+                "endTime": "14:01"
+            }
+        ],
+        "title": "Waiting Period",
+        "description": "Altar Appropriation",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-17",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "00:01",
+                "endTime": "02:01"
+            }
+        ],
+        "title": "First Altars open",
+        "description": "First Altars open",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-18",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "06:01",
+                "endTime": "08:01"
+            }
+        ],
+        "title": "Level 8 Barbarian Forts",
+        "description": "Drums of War",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-20",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "02:01",
+                "endTime": "04:01"
+            }
+        ],
+        "title": "Waiting Period",
+        "description": "Blood Moon Rising",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-20",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "14:01",
+                "endTime": "16:01"
+            }
+        ],
+        "title": "Level 8 Passes open",
+        "description": "Level 8 Passes open",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-21",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "22:01",
+                "endTime": "00:01"
+            }
+        ],
+        "title": "Level 9 Barbarian Forts",
+        "description": "Ever Onwards",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-23",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "18:01",
+                "endTime": "20:01"
+            }
+        ],
+        "title": "Waiting Period",
+        "description": "Twilight",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-24",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "06:01",
+                "endTime": "08:01"
+            }
+        ],
+        "title": "Great Ziggurat opens",
+        "description": "Great Ziggurat opens",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-26",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "08:01",
+                "endTime": "10:01"
+            }
+        ],
+        "title": "Waiting Period",
+        "description": "Crimson Dawn",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-26",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "20:01",
+                "endTime": "22:01"
+            }
+        ],
+        "title": "Level 8 Passes unseal",
+        "description": "Level 8 Passes unseal",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-29",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "16:01",
+                "endTime": "18:01"
+            }
+        ],
+        "title": "Waiting Period",
+        "description": "Lone Banner",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-06-30",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "04:01",
+                "endTime": "06:01"
+            }
+        ],
+        "title": "Level 9 Passes unseal",
+        "description": "Level 9 Passes unseal",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-07-03",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "00:01",
+                "endTime": "02:01"
+            }
+        ],
+        "title": "Waiting Period",
+        "description": "Blood and Fire",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-07-03",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "12:01",
+                "endTime": "14:01"
+            }
+        ],
+        "title": "Level 6 Passes unseal",
+        "description": "Level 6 Passes unseal",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-07-05",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "12:01",
+                "endTime": "14:01"
+            }
+        ],
+        "title": "Waiting Period",
+        "description": "The Last Battle",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-07-06",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "00:01",
+                "endTime": "02:01"
+            }
+        ],
+        "title": "Level 4 Passes unseal",
+        "description": "Level 4 Passes unseal",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-07-08",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "12:01",
+                "endTime": "14:01"
+            }
+        ],
+        "title": "The last chronicle ends",
+        "description": "Chronicles Ended",
+        "color": "#6699ff"
+    },
+    {
+        "pattern": [
+            {
+                "startDate": "2025-07-09",
+                "frequency": "once",
+                "duration": 1,
+                "startTime": "00:00",
+                "endTime": "02:00"
+            }
+        ],
+        "title": "KvK ends",
+        "description": "KvK ends",
+        "color": "#6699ff"
+    }
+]

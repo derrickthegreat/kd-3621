@@ -1,103 +1,104 @@
-import Image from "next/image";
+'use client'
+
+import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import HomeCard from './components/HomeCard';
+import DiscordButton from './components/DiscordButton';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const bgRef = useRef<HTMLDivElement>(null);
+  const target = useRef({ x: 0, y: 0 });
+  const current = useRef({ x: 0, y: 0 });
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const [expanded, setExpanded] = useState(false);
+
+  // Background motion
+  useEffect(() => {
+    const handleMouseMove = ({ clientX, clientY }: MouseEvent) => {
+      const x = (clientX - window.innerWidth / 2) / 40;
+      const y = (clientY - window.innerHeight / 2) / 40;
+      target.current = { x, y };
+    }
+
+    const animate = () => {
+      const lerp = 0.03;
+      current.current.x += (target.current.x - current.current.x) * lerp;
+      current.current.y += (target.current.y - current.current.y) * lerp;
+
+      if (bgRef.current) {
+        bgRef.current.style.transform = `scale(1.1) translate3d(${current.current.x}px, ${current.current.y}px, 0)`;
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('mousemove', handleMouseMove);
+    requestAnimationFrame(animate);
+
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, [])
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setExpanded((prev) => !prev)
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="relative min-h-screen overflow-hidden">
+      <div
+        ref={bgRef}
+        className="absolute inset-0 z-0 bg-center bg-cover bg-no-repeat will-change-transform"
+        style={{ backgroundImage: "url('/rok_night.png')" }}
+      >
+        <div className="absolute inset-0 backdrop-brightness-40" />
+      </div>
+
+      <Image
+        src="/left-corner.png"
+        alt="Left corner character"
+        width={600}
+        height={600}
+        className="absolute bottom-0 left-0 z-20 pointer-events-none"
+      />
+      <Image
+        src="/right-corner.png"
+        alt="Right corner character"
+        width={600}
+        height={600}
+        className="absolute bottom-0 right-0 z-20 pointer-events-none"
+      />
+
+      <div className="absolute inset-0 z-30 flex flex-col justify-center items-center text-center px-4 text-white">
+
+        <h1 className="text-4xl sm:text-6xl font-bold mb-4">Kingdom of Okros</h1>
+
+        <div className="flex items-center gap-4 mb-4">
+          <div className="h-px w-24 sm:w-40 bg-gradient-to-r from-orange-500 to-orange-300 text-transparent" />
+          <span className="bg-gradient-to-r from-orange-500 to-orange-300 text-transparent bg-clip-text text-xl sm:text-4xl font-medium">3621</span>
+          <div className="h-px w-24 sm:w-40 bg-gradient-to-r from-orange-500 to-orange-300 text-transparent" />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        <p className="text-lg sm:text-2xl mb-10">We're building something epic. Stay tuned!</p>
+
+        <div className="grid gap-6 w-full max-w-6xl px-4 sm:px-6 md:px-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
+
+          {[
+            { href: '/players', icon: '/icons/player.png', label: 'Players' },
+            { href: '/alliances', icon: '/icons/alliance.png', label: 'Alliances' },
+            { href: '/calendar', icon: '/icons/events.png', label: 'Calendar' },
+            { href: '/equipments', icon: '/icons/equipment/revival_helmet.png', label: 'Equipments' },
+            { href: '/builds', icon: '/icons/commanders/arthur-pendragon.png', label: 'Builds' },
+
+          ].map((card) => (
+            <HomeCard key={card.href} {...card} />
+          ))}
+        </div>
+      </div>
+
+      <DiscordButton />
     </div>
-  );
+  )
 }

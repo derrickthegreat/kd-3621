@@ -1,0 +1,6452 @@
+[
+    {
+        "src": "/icons/equipment/sharplongsword.png",
+        "alt": "Sharp Longsword",
+        "name": "Sharp Longsword",
+        "slot": "Weapon",
+        "rarity": "Normal",
+        "type": "Cavalry",
+        "attributes": [
+            {
+                "stat": "Cavalry Defense",
+                "value": 5
+            },
+            {
+                "stat": "Gathering Speed",
+                "value": 2
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 100
+            },
+            {
+                "material": "Gold",
+                "value": 100000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/blessedblade.png",
+        "alt": "Blessed Blade",
+        "name": "Blessed Blade",
+        "slot": "Weapon",
+        "rarity": "Advanced",
+        "type": "Infantry",
+        "attributes": [
+            {
+                "stat": "Infantry Health",
+                "value": 6
+            },
+            {
+                "stat": "Archer Attack",
+                "value": 4
+            },
+            {
+                "stat": "DMG to Barbarians",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Iron Ore",
+                "value": 60
+            },
+            {
+                "material": "Ebony",
+                "value": 20
+            },
+            {
+                "material": "Gold",
+                "value": 500000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/staffofthelost.png",
+        "alt": "Staff of the Lost",
+        "name": "Staff of the Lost",
+        "slot": "Weapon",
+        "rarity": "Elite",
+        "type": "Archer",
+        "attributes": [
+            {
+                "stat": "Archer Defense",
+                "value": 8
+            },
+            {
+                "stat": "Infantry Defense",
+                "value": 5
+            },
+            {
+                "stat": "Cavalry Defense",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 20
+            },
+            {
+                "material": "Iron Ore",
+                "value": 20
+            },
+            {
+                "material": "Ebony",
+                "value": 50
+            },
+            {
+                "material": "Gold",
+                "value": 2000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/gatekeepers.png",
+        "alt": "Gatekeepers Shield",
+        "name": "Gatekeepers Shield",
+        "slot": "Weapon",
+        "rarity": "Elite",
+        "type": "Infantry",
+        "attributes": [
+            {
+                "stat": "Infantry Health",
+                "value": 8
+            },
+            {
+                "stat": "Cavalry Health",
+                "value": 5
+            },
+            {
+                "stat": "EXP Gain",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 20
+            },
+            {
+                "material": "Iron Ore",
+                "value": 50
+            },
+            {
+                "material": "Ebony",
+                "value": 20
+            },
+            {
+                "material": "Gold",
+                "value": 2000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/blazingaxe.png",
+        "alt": "Blazing Axe",
+        "name": "Blazing Axe",
+        "slot": "Weapon",
+        "rarity": "Elite",
+        "type": "Cavalry",
+        "attributes": [
+            {
+                "stat": "Cavalry Attack",
+                "value": 8
+            },
+            {
+                "stat": "Archer Attack",
+                "value": 5
+            },
+            {
+                "stat": "Infantry Attack",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 50
+            },
+            {
+                "material": "Iron Ore",
+                "value": 20
+            },
+            {
+                "material": "Ebony",
+                "value": 20
+            },
+            {
+                "material": "Gold",
+                "value": 2000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/oathsworn.png",
+        "alt": "Knight's Oathsworn Bow",
+        "name": "Knight's Oathsworn Bow",
+        "slot": "Weapon",
+        "rarity": "Epic",
+        "type": "Siege",
+        "attributes": [
+            {
+                "stat": "Siege Unit Attack",
+                "value": 13
+            },
+            {
+                "stat": "March Speed (Siege Unit)",
+                "value": 2
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 30
+            },
+            {
+                "material": "Iron Ore",
+                "value": 30
+            },
+            {
+                "material": "Ebony",
+                "value": 30
+            },
+            {
+                "material": "Gold",
+                "value": 5000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/heartsaint.png",
+        "alt": "Heart of the Saint",
+        "name": "Heart of the Saint",
+        "slot": "Weapon",
+        "rarity": "Epic",
+        "type": "Cavalry",
+        "attributes": [
+            {
+                "stat": "Cavalry Defense",
+                "value": 13
+            },
+            {
+                "stat": "Archer Health",
+                "value": 6
+            },
+            {
+                "stat": "Infantry Health",
+                "value": 4
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 70
+            },
+            {
+                "material": "Iron Ore",
+                "value": 15
+            },
+            {
+                "material": "Ebony",
+                "value": 15
+            },
+            {
+                "material": "Gold",
+                "value": 5000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/sakura.png",
+        "alt": "Sakura Fubuki",
+        "name": "Sakura Fubuki",
+        "slot": "Weapon",
+        "rarity": "Epic",
+        "type": "Infantry",
+        "attributes": [
+            {
+                "stat": "Infantry Attack",
+                "value": 13
+            },
+            {
+                "stat": "Cavalry Health",
+                "value": 6
+            },
+            {
+                "stat": "Archer Attack",
+                "value": 4
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 15
+            },
+            {
+                "material": "Iron Ore",
+                "value": 70
+            },
+            {
+                "material": "Ebony",
+                "value": 15
+            },
+            {
+                "material": "Gold",
+                "value": 5000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/goldenage.png",
+        "alt": "Golden Age",
+        "name": "Golden Age",
+        "slot": "Weapon",
+        "rarity": "Epic",
+        "type": "Archer",
+        "attributes": [
+            {
+                "stat": "Archer Defense",
+                "value": 13
+            },
+            {
+                "stat": "Infantry Defense",
+                "value": 6
+            },
+            {
+                "stat": "Cavalry Attack",
+                "value": 4
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 15
+            },
+            {
+                "material": "Iron Ore",
+                "value": 15
+            },
+            {
+                "material": "Ebony",
+                "value": 70
+            },
+            {
+                "material": "Gold",
+                "value": 5000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/twilightepiphany.png",
+        "alt": "Twilight Epiphany",
+        "name": "Twilight Epiphany",
+        "slot": "Weapon",
+        "rarity": "Legendary",
+        "type": "Siege",
+        "attributes": [
+            {
+                "stat": "Siege Unit Attack",
+                "value": 25
+            },
+            {
+                "stat": "March Speed (Siege Units)",
+                "value": 6
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 30
+            },
+            {
+                "material": "Iron Ore",
+                "value": 30
+            },
+            {
+                "material": "Ebony",
+                "value": 30
+            },
+            {
+                "material": "Gold",
+                "value": 30000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Siege Unit Base Attack",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Enemy Defense Ignored",
+                "value": 2,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 800,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Troops on the Map",
+                "value": 2,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to get 6.5% damage bonus, for 2 seconds w/ 5 seconds cooldown",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/trial.png",
+        "alt": "Trial of the Lost Kingdom",
+        "name": "Trial of the Lost Kingdom",
+        "slot": "Weapon",
+        "rarity": "Legendary",
+        "type": "Cavalry",
+        "attributes": [
+            {
+                "stat": "Cavalry Defense",
+                "value": 15
+            },
+            {
+                "stat": "Infantry Health",
+                "value": 5
+            },
+            {
+                "stat": "Archer Attack",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 30
+            },
+            {
+                "material": "Iron Ore",
+                "value": 15
+            },
+            {
+                "material": "Gold",
+                "value": 20000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/hydrablast.png",
+        "alt": "The Hydra's Blast",
+        "name": "The Hydra's Blast",
+        "slot": "Weapon",
+        "rarity": "Legendary",
+        "type": "Archer",
+        "attributes": [
+            {
+                "stat": "Archer Defense",
+                "value": 25
+            },
+            {
+                "stat": "Cavalry Defense",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 10
+            },
+            {
+                "material": "Iron Ore",
+                "value": 10
+            },
+            {
+                "material": "Ebony",
+                "value": 70
+            },
+            {
+                "material": "Gold",
+                "value": 30000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Archer Base Attack",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Enemy Defense Ignored",
+                "value": 3,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 1000,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Troops on the Map",
+                "value": 2.5,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to get 6.5% damage bonus, for 2 seconds w/ 5 seconds cooldown",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/sunandmoon.png",
+        "alt": "Hammer of the Sun and Moon",
+        "name": "Hammer of the Sun and Moon",
+        "slot": "Weapon",
+        "rarity": "Legendary",
+        "type": "Infantry",
+        "attributes": [
+            {
+                "stat": "Infantry Attack",
+                "value": 25
+            },
+            {
+                "stat": "Archer Health",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 10
+            },
+            {
+                "material": "Iron Ore",
+                "value": 70
+            },
+            {
+                "material": "Ebony",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 30000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Infantry Base Attack",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Enemy Health Ignored",
+                "value": 2.5,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 1000,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Troops on the Map",
+                "value": 3,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to get 6.5% damage bonus, for 2 seconds w/ 5 seconds cooldown",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/dominion.png",
+        "alt": "Sacred Dominion",
+        "name": "Sacred Dominion",
+        "slot": "Weapon",
+        "rarity": "Legendary",
+        "type": "Cavalry",
+        "attributes": [
+            {
+                "stat": "Cavalry Attack",
+                "value": 25
+            },
+            {
+                "stat": "Archer Defense",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 70
+            },
+            {
+                "material": "Iron Ore",
+                "value": 10
+            },
+            {
+                "material": "Ebony",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 20000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Cavalry Base Attack",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Enemy Defense Ignored",
+                "value": 2.5,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 1000,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Troops on the Map",
+                "value": 3,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to get 6.5% damage bonus, for 2 seconds w/ 5 seconds cooldown",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/khan.png",
+        "alt": "Pride of the Khan",
+        "name": "Pride of the Khan",
+        "slot": "Helmet",
+        "rarity": "Legendary",
+        "type": "Cavalry",
+        "attributes": [
+            {
+                "stat": "Cavalry Defense",
+                "value": 15
+            },
+            {
+                "stat": "Archer Health",
+                "value": 8
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 50
+            },
+            {
+                "material": "Ebony",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 30000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Cavalry Base Defense",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Cavalry Attack",
+                "value": 1.5,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 650,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Troops on the Map",
+                "value": 1.5,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to get 5% skill damage / smite damage bonus, 5 seconds cooldown",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/conqueror.png",
+        "alt": "Helm of the Conqueror",
+        "name": "Helm of the Conqueror",
+        "slot": "Helmet",
+        "rarity": "Legendary",
+        "type": "Infantry",
+        "attributes": [
+            {
+                "stat": "Infantry Defense",
+                "value": 15
+            },
+            {
+                "stat": "Cavalry Health",
+                "value": 8
+            }
+        ],
+        "materials": [
+            {
+                "material": "Iron Ore",
+                "value": 50
+            },
+            {
+                "material": "Leather",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 30000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Infantry Base Defense",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Infantry Health",
+                "value": 1.5,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 650,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Troops on the Map",
+                "value": 1.5,
+                "tier": 5
+            },
+            {
+                "stat": "10% chance to get 5% skill damage / smite damage bonus, 5 seconds cooldown",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/night.png",
+        "alt": "Ancestral Mask of Night",
+        "name": "Ancestral Mask of Night",
+        "slot": "Helmet",
+        "rarity": "Legendary",
+        "type": "Archer",
+        "attributes": [
+            {
+                "stat": "Archer Attack",
+                "value": 15
+            },
+            {
+                "stat": "Infantry Attack",
+                "value": 8
+            }
+        ],
+        "materials": [
+            {
+                "material": "Ebony",
+                "value": 50
+            },
+            {
+                "material": "Iron Ore",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 30000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Archer Base Defense",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Archer Health",
+                "value": 1.5,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 650,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Troops on the Map",
+                "value": 1.5,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to get 5% skill damage / smite damage bonus, 5 seconds cooldown",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/visage.png",
+        "alt": "Abyssal Visage",
+        "name": "Abyssal Visage",
+        "slot": "Helmet",
+        "rarity": "Epic",
+        "type": "Cavalry",
+        "attributes": [
+            {
+                "stat": "Cavalry Attack",
+                "value": 8
+            },
+            {
+                "stat": "Infantry Attack",
+                "value": 3
+            },
+            {
+                "stat": "Archer Attack",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 30
+            },
+            {
+                "material": "Iron Ore",
+                "value": 10
+            },
+            {
+                "material": "Ebony",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 5000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/lineage.png",
+        "alt": "Witch's Lineage",
+        "name": "Witch's Lineage",
+        "slot": "Helmet",
+        "rarity": "Epic",
+        "type": "Infantry",
+        "attributes": [
+            {
+                "stat": "Infantry Attack",
+                "value": 8
+            },
+            {
+                "stat": "Cavalry Attack",
+                "value": 3
+            },
+            {
+                "stat": "Archer Defense",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Iron Ore",
+                "value": 30
+            },
+            {
+                "material": "Leather",
+                "value": 10
+            },
+            {
+                "material": "Ebony",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 5000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/diadem.png",
+        "alt": "Knight's Steel Diadem",
+        "name": "Knight's Steel Diadem",
+        "slot": "Helmet",
+        "rarity": "Epic",
+        "type": "Siege",
+        "attributes": [
+            {
+                "stat": "Siege Unit Health",
+                "value": 8
+            },
+            {
+                "stat": "March Speed (Siege Units)",
+                "value": 2
+            }
+        ],
+        "materials": [
+            {
+                "material": "Iron Ore",
+                "value": 20
+            },
+            {
+                "material": "Leather",
+                "value": 20
+            },
+            {
+                "material": "Ebony",
+                "value": 20
+            },
+            {
+                "material": "Gold",
+                "value": 5000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/expedition.png",
+        "alt": "Expedition War Helm",
+        "name": "Expedition War Helm",
+        "slot": "Helmet",
+        "rarity": "Elite",
+        "type": "Cavalry",
+        "attributes": [
+            {
+                "stat": "Cavalry Defense",
+                "value": 6
+            },
+            {
+                "stat": "Infantry Defense",
+                "value": 2
+            },
+            {
+                "stat": "EXP Gain",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 40
+            },
+            {
+                "material": "Iron Ore",
+                "value": 20
+            },
+            {
+                "material": "Gold",
+                "value": 2000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/fear.png",
+        "alt": "Helm of Fear",
+        "name": "Helm of Fear",
+        "slot": "Helmet",
+        "rarity": "Advanced",
+        "type": "Cavalry",
+        "attributes": [
+            {
+                "stat": "Cavalry Attack",
+                "value": 4
+            },
+            {
+                "stat": "Infantry Defense",
+                "value": 2
+            },
+            {
+                "stat": "DMG to Barbarians",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 40
+            },
+            {
+                "material": "Iron Ore",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 500000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/phoenix.png",
+        "alt": "Helm of Phoenix",
+        "name": "Helm of Phoenix",
+        "slot": "Helmet",
+        "rarity": "Advanced",
+        "type": "Archer",
+        "attributes": [
+            {
+                "stat": "Archer Defense",
+                "value": 4
+            },
+            {
+                "stat": "Infantry Health",
+                "value": 2
+            },
+            {
+                "stat": "DMG to Barbarians",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Ebony",
+                "value": 40
+            },
+            {
+                "material": "Iron Ore",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 500000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/iron.png",
+        "alt": "Iron Helm",
+        "name": "Iron Helm",
+        "slot": "Helmet",
+        "rarity": "Normal",
+        "type": "Infantry",
+        "attributes": [
+            {
+                "stat": "Infantry Attack",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Iron Ore",
+                "value": 80
+            },
+            {
+                "material": "Gold",
+                "value": 100000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/retribution.png",
+        "alt": "Shadow Legion's Retribution",
+        "name": "Shadow Legion's Retribution",
+        "slot": "Chest",
+        "rarity": "Legendary",
+        "type": "Cavalry",
+        "attributes": [
+            {
+                "stat": "Cavalry Attack",
+                "value": 12
+            },
+            {
+                "stat": "Infantry Attack",
+                "value": 5
+            },
+            {
+                "stat": "Archer Attack",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 40
+            },
+            {
+                "material": "Iron Ore",
+                "value": 10
+            },
+            {
+                "material": "Ebony",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 15000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Cavalry Base Defense",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Enemy Health Ignored",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 500,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Troops on the Map",
+                "value": 1,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to get 5% counterattack bonus, for 2 seconds 5 seconds cooldown",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/milky.png",
+        "alt": "The Milky Way",
+        "name": "The Milky Way",
+        "slot": "Chest",
+        "rarity": "Legendary",
+        "type": "Archer",
+        "attributes": [
+            {
+                "stat": "Archer Health",
+                "value": 12
+            },
+            {
+                "stat": "Cavalry Health",
+                "value": 6
+            },
+            {
+                "stat": "EXP Gain",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Ebony",
+                "value": 40
+            },
+            {
+                "material": "Leather",
+                "value": 10
+            },
+            {
+                "material": "Iron Ore",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 15000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Archer Base Defense",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Enemy Defense Ignored",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 500,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Troops on the Map",
+                "value": 1,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to get 5% counterattack bonus, for 2 seconds 5 seconds cooldown",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/hope.png",
+        "alt": "Hope Cloak",
+        "name": "Hope Cloak",
+        "slot": "Chest",
+        "rarity": "Legendary",
+        "type": "Infantry",
+        "attributes": [
+            {
+                "stat": "Infantry Defense",
+                "value": 12
+            },
+            {
+                "stat": "Cavalry Defense",
+                "value": 5
+            },
+            {
+                "stat": "Archer Defense",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Iron Ore",
+                "value": 40
+            },
+            {
+                "material": "Leather",
+                "value": 10
+            },
+            {
+                "material": "Ebony",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 15000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Infantry Base Defense",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Enemy Attack Ignored",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 500,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Troops on the Map",
+                "value": 1,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to get 5% counterattack bonus, for 2 seconds 5 seconds cooldown",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/quinn.png",
+        "alt": "Quinn's Soul",
+        "name": "Quinn's Soul",
+        "slot": "Chest",
+        "rarity": "Epic",
+        "type": "Infantry",
+        "attributes": [
+            {
+                "stat": "Infantry Attack",
+                "value": 8
+            },
+            {
+                "stat": "Archer Health",
+                "value": 4
+            },
+            {
+                "stat": "DMG to Barbarians",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Iron Ore",
+                "value": 40
+            },
+            {
+                "material": "Ebony",
+                "value": 20
+            },
+            {
+                "material": "Gold",
+                "value": 5000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/blessing.png",
+        "alt": "Dark Lord's Blessing",
+        "name": "Dark Lord's Blessing",
+        "slot": "Chest",
+        "rarity": "Epic",
+        "type": "Cavalry",
+        "attributes": [
+            {
+                "stat": "Cavalry Defense",
+                "value": 8
+            },
+            {
+                "stat": "Archer Attack",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 40
+            },
+            {
+                "material": "Ebony",
+                "value": 20
+            },
+            {
+                "material": "Gold",
+                "value": 5000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/heavy.png",
+        "alt": "Commander's Heavy Armor",
+        "name": "Commander's Heavy Armor",
+        "slot": "Chest",
+        "rarity": "Elite",
+        "type": "Archer",
+        "attributes": [
+            {
+                "stat": "Archer Health",
+                "value": 6
+            },
+            {
+                "stat": "Infantry Attack",
+                "value": 3
+            },
+            {
+                "stat": "EXP Gain",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Ebony",
+                "value": 40
+            },
+            {
+                "material": "Iron Ore",
+                "value": 20
+            },
+            {
+                "material": "Gold",
+                "value": 2000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/milanese.png",
+        "alt": "Milanese Plate",
+        "name": "Milanese Plate",
+        "slot": "Chest",
+        "rarity": "Advanced",
+        "type": "Cavalry",
+        "attributes": [
+            {
+                "stat": "Cavalry Defense",
+                "value": 4
+            },
+            {
+                "stat": "Archer Attack",
+                "value": 2
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 40
+            },
+            {
+                "material": "Ebony",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 500000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/infantry_breastplate.png",
+        "alt": "Infantry Breastplate",
+        "name": "Infantry Breastplate",
+        "slot": "Chest",
+        "rarity": "Advanced",
+        "type": "Infantry",
+        "attributes": [
+            {
+                "stat": "Infantry Defense",
+                "value": 4
+            },
+            {
+                "stat": "Cavalry Health",
+                "value": 2
+            },
+            {
+                "stat": "DMG to Barbarians",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Iron Ore",
+                "value": 40
+            },
+            {
+                "material": "Leather",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 500000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/chainmail.png",
+        "alt": "Chain Mail",
+        "name": "Chain Mail",
+        "slot": "Chest",
+        "rarity": "Normal",
+        "type": "Archer",
+        "attributes": [
+            {
+                "stat": "Archer Attack",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Ebony",
+                "value": 80
+            },
+            {
+                "material": "Gold",
+                "value": 100000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/valorous.png",
+        "alt": "Knight's Valorous Cloak",
+        "name": "Knight's Valorous Cloak",
+        "slot": "Chest",
+        "rarity": "Epic",
+        "type": "Siege",
+        "attributes": [
+            {
+                "stat": "Siege Unit Attack",
+                "value": 8
+            },
+            {
+                "stat": "March Speed (Siege Units)",
+                "value": 2
+            }
+        ],
+        "materials": [
+            {
+                "material": "Iron Ore",
+                "value": 20
+            },
+            {
+                "material": "Leather",
+                "value": 20
+            },
+            {
+                "material": "Ebony",
+                "value": 20
+            },
+            {
+                "material": "Gold",
+                "value": 5000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/navar.png",
+        "alt": "Navar's Control",
+        "name": "Navar's Control",
+        "slot": "Gloves",
+        "rarity": "Legendary",
+        "type": "Cavalry",
+        "attributes": [
+            {
+                "stat": "Cavalry Health",
+                "value": 8
+            },
+            {
+                "stat": "Infantry Defense",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 30
+            },
+            {
+                "material": "Iron Ore",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 15000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Cavalry Base Attack",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Cavalry Defense",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 300,
+                "tier": 3
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 0.5,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to reduce 3% march speed, for 3 seconds, stack up to 3 times",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/grips.png",
+        "alt": "Sacred Grips",
+        "name": "Sacred Grips",
+        "slot": "Gloves",
+        "rarity": "Legendary",
+        "type": "Infantry",
+        "attributes": [
+            {
+                "stat": "Infantry Defense",
+                "value": 8
+            },
+            {
+                "stat": "Archer Attack",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Iron Ore",
+                "value": 30
+            },
+            {
+                "material": "Ebony",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 15000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Infantry Base Attack",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Infantry Attack",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 300,
+                "tier": 3
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 0.5,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to reduce 3% march speed, for 3 seconds, stack up to 3 times",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/ian.png",
+        "alt": "Ian's Choice",
+        "name": "Ian's Choice",
+        "slot": "Gloves",
+        "rarity": "Legendary",
+        "type": "Archer",
+        "attributes": [
+            {
+                "stat": "Archer Attack",
+                "value": 8
+            },
+            {
+                "stat": "EXP Gain",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Ebony",
+                "value": 30
+            },
+            {
+                "material": "Leather",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 15000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Archer Base Attack",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Enemy Attack Ignored",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 300,
+                "tier": 3
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 0.5,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to reduce 3% march speed, for 3 seconds, stack up to 3 times",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/sufferance.png",
+        "alt": "Iset's Sufferance",
+        "name": "Iset's Sufferance",
+        "slot": "Gloves",
+        "rarity": "Epic",
+        "type": "Cavalry",
+        "attributes": [
+            {
+                "stat": "Cavalry Attack",
+                "value": 3
+            },
+            {
+                "stat": "Cavalry Health",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 40
+            },
+            {
+                "material": "Gold",
+                "value": 500000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/brutality.png",
+        "alt": "Seth's Brutality",
+        "name": "Seth's Brutality",
+        "slot": "Gloves",
+        "type": "Infantry",
+        "rarity": "Epic",
+        "attributes": [
+            {
+                "stat": "Infantry Defense",
+                "value": 5.5
+            },
+            {
+                "stat": "Archer Defense",
+                "value": 2
+            },
+            {
+                "stat": "DMG to Barbarians",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Iron Ore",
+                "value": 30
+            },
+            {
+                "material": "Ebony",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 5000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/calvin.png",
+        "alt": "Calvin's Hand",
+        "name": "Calvin's Hand",
+        "slot": "Gloves",
+        "rarity": "Elite",
+        "type": "Infantry",
+        "attributes": [
+            {
+                "stat": "Infantry Attack",
+                "value": 4
+            },
+            {
+                "stat": "Infantry Health",
+                "value": 1
+            },
+            {
+                "stat": "Archer Attack",
+                "value": 1
+            }
+        ],
+        "materials": [
+            {
+                "material": "Iron Ore",
+                "value": 30
+            },
+            {
+                "material": "Leather",
+                "value": 5
+            },
+            {
+                "material": "Ebony",
+                "value": 5
+            },
+            {
+                "material": "Gold",
+                "value": 2000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/saintsong.png",
+        "alt": "Saint's Song",
+        "name": "Saint's Song",
+        "slot": "Gloves",
+        "type": "Archer",
+        "rarity": "Elite",
+        "attributes": [
+            {
+                "stat": "Archer Attack",
+                "value": 4
+            },
+            {
+                "stat": "Cavalry Attack",
+                "value": 2
+            },
+            {
+                "stat": "EXP Gain",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 30
+            },
+            {
+                "material": "Ebony",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 2000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/leathergloves.png",
+        "alt": "Leather Gloves",
+        "name": "Leather Gloves",
+        "slot": "Gloves",
+        "type": "Archer",
+        "rarity": "Advanced",
+        "attributes": [
+            {
+                "stat": "Archer Health",
+                "value": 2.5
+            },
+            {
+                "stat": "Infantry Defense",
+                "value": 1
+            }
+        ],
+        "materials": [
+            {
+                "material": "Ebony",
+                "value": 20
+            },
+            {
+                "material": "Iron Ore",
+                "value": 15
+            },
+            {
+                "material": "Gold",
+                "value": 500000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/clothgloves.png",
+        "alt": "Cloth Gloves",
+        "name": "Cloth Gloves",
+        "slot": "Gloves",
+        "type": "Infantry",
+        "rarity": "Normal",
+        "attributes": [
+            {
+                "stat": "Infantry Defense",
+                "value": 2
+            }
+        ],
+        "materials": [
+            {
+                "material": "Iron Ore",
+                "value": 60
+            },
+            {
+                "material": "Gold",
+                "value": 100000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/battleworn.png",
+        "alt": "Knight's Battleworn Gauntlets",
+        "name": "Knight's Battleworn Gauntlets",
+        "slot": "Gloves",
+        "type": "Siege",
+        "rarity": "Epic",
+        "attributes": [
+            {
+                "stat": "Siege Unit Defense",
+                "value": 5.5
+            },
+            {
+                "stat": "March Speed (Siege Units)",
+                "value": 2
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 10
+            },
+            {
+                "material": "Iron Ore",
+                "value": 15
+            },
+            {
+                "material": "Ebony",
+                "value": 15
+            },
+            {
+                "material": "Gold",
+                "value": 5000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/bronzebracers.png",
+        "alt": "Bronze Bracers",
+        "name": "Bronze Bracers",
+        "slot": "Gloves",
+        "rarity": "Advanced",
+        "type": "Cavalry",
+        "attributes": [
+            {
+                "stat": "Cavalry Defense",
+                "value": 2.5
+            },
+            {
+                "stat": "Infantry Health",
+                "value": 1
+            },
+            {
+                "stat": "DMG to Barbarians",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 20
+            },
+            {
+                "material": "Iron Ore",
+                "value": 15
+            },
+            {
+                "material": "Gold",
+                "value": 500000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/tassetswargod.png",
+        "alt": "Tassets of the War God",
+        "name": "Tassets of the War God",
+        "type": "Archer",
+        "slot": "Legs",
+        "rarity": "Legendary",
+        "attributes": [
+            {
+                "stat": "Archer Attack",
+                "value": 12
+            },
+            {
+                "stat": "Cavalry Attack",
+                "value": 5
+            },
+            {
+                "stat": "Infantry Attack",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Ebony",
+                "value": 40
+            },
+            {
+                "material": "Leather",
+                "value": 10
+            },
+            {
+                "material": "Iron Ore",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 15000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Archer Base Health",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Enemy Health Ignored",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 500,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Troops on the Map",
+                "value": 1,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to reduce 5% skill damage taken, 5 seconds cooldown",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/eternalnight.png",
+        "alt": "Eternal Night",
+        "name": "Eternal Night",
+        "type": "Infantry",
+        "slot": "Legs",
+        "rarity": "Legendary",
+        "attributes": [
+            {
+                "stat": "Infantry Defense",
+                "value": 12
+            },
+            {
+                "stat": "Archer Defense",
+                "value": 5
+            },
+            {
+                "stat": "Cavalry Defense",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Iron Ore",
+                "value": 40
+            },
+            {
+                "material": "Leather",
+                "value": 10
+            },
+            {
+                "material": "Ebony",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 15000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Infantry Base Health",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Enemy Health Ignored",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 500,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Troops on the Map",
+                "value": 1,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to reduce 3% march speed, for 3 seconds, stack up to 3 times",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/ashdawn.png",
+        "alt": "Ash of the Dawn",
+        "name": "Ash of the Dawn",
+        "slot": "Legs",
+        "rarity": "Legendary",
+        "type": "Cavalry",
+        "attributes": [
+            {
+                "stat": "Cavalry Health",
+                "value": 12
+            },
+            {
+                "stat": "Infantry Health",
+                "value": 5
+            },
+            {
+                "stat": "EXP Gain",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 40
+            },
+            {
+                "material": "Iron Ore",
+                "value": 10
+            },
+            {
+                "material": "Ebony",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 15000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Cavalry Base Health",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Cavalry Health",
+                "value": 2,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 500,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Troops on the Map",
+                "value": 1,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to reduce 5% skill damage taken, 5 seconds cooldown",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/humility.png",
+        "alt": "Karuak's Humility",
+        "name": "Karuak's Humility",
+        "slot": "Legs",
+        "type": "Infantry",
+        "rarity": "Epic",
+        "attributes": [
+            {
+                "stat": "Infantry Health",
+                "value": 8
+            },
+            {
+                "stat": "Cavalry Attack",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Iron Ore",
+                "value": 40
+            },
+            {
+                "material": "Leather",
+                "value": 20
+            },
+            {
+                "material": "Gold",
+                "value": 5000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/gladiator.png",
+        "alt": "Gladiator",
+        "name": "Gladiator",
+        "slot": "Legs",
+        "rarity": "Epic",
+        "type": "Cavalry",
+        "attributes": [
+            {
+                "stat": "Cavalry Health",
+                "value": 8
+            },
+            {
+                "stat": "Archer Defense",
+                "value": 4
+            },
+            {
+                "stat": "DMG to Barbarians",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 40
+            },
+            {
+                "material": "Ebony",
+                "value": 20
+            },
+            {
+                "material": "Gold",
+                "value": 5000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/fanatic.png",
+        "alt": "Fanatic's Tassets",
+        "name": "Fanatic's Tassets",
+        "slot": "Legs",
+        "type": "Archer",
+        "rarity": "Epic",
+        "attributes": [
+            {
+                "stat": "Archer Defense",
+                "value": 8
+            },
+            {
+                "stat": "Cavalry Defense",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Ebony",
+                "value": 40
+            },
+            {
+                "material": "Leather",
+                "value": 20
+            },
+            {
+                "material": "Gold",
+                "value": 5000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/greaves.png",
+        "alt": "Greaves of the Exile",
+        "name": "Greaves of the Exile",
+        "slot": "Legs",
+        "type": "Archer",
+        "rarity": "Elite",
+        "attributes": [
+            {
+                "stat": "Archer Defense",
+                "value": 6
+            },
+            {
+                "stat": "Infantry Defense",
+                "value": 3
+            },
+            {
+                "stat": "EXP Gain",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Iron Ore",
+                "value": 40
+            },
+            {
+                "material": "Ebony",
+                "value": 20
+            },
+            {
+                "material": "Gold",
+                "value": 2000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/sentry.png",
+        "alt": "Sentry Breeches",
+        "name": "Sentry Breeches",
+        "slot": "Legs",
+        "type": "Infantry",
+        "rarity": "Elite",
+        "attributes": [
+            {
+                "stat": "Infantry Attack",
+                "value": 6
+            },
+            {
+                "stat": "Archer Attack",
+                "value": 3
+            },
+            {
+                "stat": "Cavalry Defense",
+                "value": 1
+            }
+        ],
+        "materials": [
+            {
+                "material": "Iron Ore",
+                "value": 40
+            },
+            {
+                "material": "Leather",
+                "value": 10
+            },
+            {
+                "material": "Ebony",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 2000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/coarse.png",
+        "alt": "Coarse Breeches",
+        "name": "Coarse Breeches",
+        "slot": "Legs",
+        "rarity": "Normal",
+        "type": "Cavalry",
+        "attributes": [
+            {
+                "stat": "Cavalry Attack",
+                "value": 2
+            },
+            {
+                "stat": "Gathering Speed",
+                "value": 1
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 60
+            },
+            {
+                "material": "Gold",
+                "value": 100000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/ranger.png",
+        "alt": "Ranger Trousers",
+        "name": "Ranger Trousers",
+        "slot": "Legs",
+        "type": "Infantry",
+        "rarity": "Advanced",
+        "attributes": [
+            {
+                "stat": "Infantry Attack",
+                "value": 4
+            },
+            {
+                "stat": "Archer Defense",
+                "value": 2
+            },
+            {
+                "stat": "DMG to Barbarians",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Iron Ore",
+                "value": 40
+            },
+            {
+                "material": "Ebony",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 500000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/triumphant.png",
+        "alt": "Knight's Triumphant Tassets",
+        "name": "Knight's Triumphant Tassets",
+        "slot": "Legs",
+        "type": "Siege",
+        "rarity": "Epic",
+        "attributes": [
+            {
+                "stat": "Siege Unit Defense",
+                "value": 8
+            },
+            {
+                "stat": "DMG to Barbarians",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 20
+            },
+            {
+                "material": "Iron Ore",
+                "value": 20
+            },
+            {
+                "material": "Ebony",
+                "value": 20
+            },
+            {
+                "material": "Gold",
+                "value": 5000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/mountain.png",
+        "alt": "Mountain Crushers",
+        "name": "Mountain Crushers",
+        "slot": "Boots",
+        "rarity": "Legendary",
+        "type": "Cavalry",
+        "attributes": [
+            {
+                "stat": "Cavalry Attack",
+                "value": 8
+            },
+            {
+                "stat": "Archer Attack",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 30
+            },
+            {
+                "material": "Ebony",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 15000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Cavalry Base Health",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Cavalry Attack",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 300,
+                "tier": 3
+            },
+            {
+                "stat": "March Speed",
+                "value": 5,
+                "tier": 4
+            },
+            {
+                "stat": "Gain 5% March Speed and 1% Defense outside alliance territory.",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/shio.png",
+        "alt": "Shio's Return",
+        "name": "Shio's Return",
+        "slot": "Boots",
+        "type": "Infantry",
+        "rarity": "Legendary",
+        "attributes": [
+            {
+                "stat": "Infantry Defense",
+                "value": 8
+            },
+            {
+                "stat": "Archer Health",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Iron Ore",
+                "value": 30
+            },
+            {
+                "material": "Ebony",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 15000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Infantry Base Health",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Infantry Defense",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 300,
+                "tier": 3
+            },
+            {
+                "stat": "March Speed",
+                "value": 5,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to reduce 3% march speed, for 3 seconds, stack up to 3 times",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/commanderboots.png",
+        "alt": "Commander's Boots",
+        "name": "Commander's Boots",
+        "type": "Archer",
+        "slot": "Boots",
+        "rarity": "Legendary",
+        "attributes": [
+            {
+                "stat": "Archer Attack",
+                "value": 8
+            },
+            {
+                "stat": "EXP Gain",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Ebony",
+                "value": 30
+            },
+            {
+                "material": "Leather",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 15000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Archer Base Health",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Archer Attack",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 300,
+                "tier": 3
+            },
+            {
+                "stat": "March Speed",
+                "value": 5,
+                "tier": 4
+            },
+            {
+                "stat": "Gain 5% March Speed and 1% Defense outside alliance territory.",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/cloud.png",
+        "alt": "Cloud Racers",
+        "name": "Cloud Racers",
+        "slot": "Boots",
+        "rarity": "Epic",
+        "type": "Cavalry",
+        "attributes": [
+            {
+                "stat": "Cavalry Attack",
+                "value": 5.5
+            },
+            {
+                "stat": "Archer Health",
+                "value": 2
+            },
+            {
+                "stat": "Gathering Speed",
+                "value": 6
+            }
+        ],
+        "materials": [
+            {
+                "material": "Ebony",
+                "value": 10
+            },
+            {
+                "material": "Leather",
+                "value": 30
+            },
+            {
+                "material": "Gold",
+                "value": 5000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/frost.png",
+        "alt": "Frost Treads",
+        "name": "Frost Treads",
+        "slot": "Boots",
+        "type": "Infantry",
+        "rarity": "Epic",
+        "attributes": [
+            {
+                "stat": "Infantry Defense",
+                "value": 5.5
+            },
+            {
+                "stat": "DMG to Barbarians",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 10
+            },
+            {
+                "material": "Iron Ore",
+                "value": 30
+            },
+            {
+                "material": "Gold",
+                "value": 5000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/flame.png",
+        "alt": "Flame Treads",
+        "name": "Flame Treads",
+        "slot": "Boots",
+        "type": "Archer",
+        "rarity": "Epic",
+        "attributes": [
+            {
+                "stat": "Archer Health",
+                "value": 5.5
+            },
+            {
+                "stat": "Cavalry Attack",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Ebony",
+                "value": 30
+            },
+            {
+                "material": "Leather",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 5000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/scarlethounds.png",
+        "alt": "The Scarlet Hounds",
+        "name": "The Scarlet Hounds",
+        "slot": "Boots",
+        "rarity": "Elite",
+        "type": "Infantry",
+        "attributes": [
+            {
+                "stat": "Infantry Health",
+                "value": 4
+            },
+            {
+                "stat": "EXP Gain",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Iron Ore",
+                "value": 40
+            },
+            {
+                "material": "Gold",
+                "value": 2000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/edged.png",
+        "alt": "Edged Boots",
+        "name": "Edged Boots",
+        "slot": "Boots",
+        "rarity": "Advanced",
+        "type": "Archer",
+        "attributes": [
+            {
+                "stat": "Archer Attack",
+                "value": 2.5
+            },
+            {
+                "stat": "Cavalry Attack",
+                "value": 1
+            },
+            {
+                "stat": "DMG to Barbarians",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Ebony",
+                "value": 20
+            },
+            {
+                "material": "Leather",
+                "value": 15
+            },
+            {
+                "material": "Gold",
+                "value": 500000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/reverence.png",
+        "alt": "Boots of Reverence",
+        "name": "Boots of Reverence",
+        "slot": "Boots",
+        "rarity": "Advanced",
+        "type": "Infantry",
+        "attributes": [
+            {
+                "stat": "Infantry Attack",
+                "value": 2.5
+            },
+            {
+                "stat": "Archer Defense",
+                "value": 1
+            }
+        ],
+        "materials": [
+            {
+                "material": "Ebony",
+                "value": 15
+            },
+            {
+                "material": "Iron Ore",
+                "value": 20
+            },
+            {
+                "material": "Gold",
+                "value": 500000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/sturdy.png",
+        "alt": "Sturdy Boots",
+        "name": "Sturdy Boots",
+        "slot": "Boots",
+        "rarity": "Normal",
+        "type": "Archer",
+        "attributes": [
+            {
+                "stat": "Archer Defense",
+                "value": 2
+            },
+            {
+                "stat": "Gathering Speed",
+                "value": 1
+            }
+        ],
+        "materials": [
+            {
+                "material": "Ebony",
+                "value": 60
+            },
+            {
+                "material": "Gold",
+                "value": 100000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/sabatons.png",
+        "alt": "Knight's Winter Sabatons",
+        "name": "Knight's Winter Sabatons",
+        "slot": "Boots",
+        "rarity": "Epic",
+        "type": "Siege",
+        "attributes": [
+            {
+                "stat": "Siege Unit Health",
+                "value": 5.5
+            },
+            {
+                "stat": "DMG to Barbarians",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 15
+            },
+            {
+                "material": "Iron Ore",
+                "value": 10
+            },
+            {
+                "material": "Ebony",
+                "value": 15
+            },
+            {
+                "material": "Gold",
+                "value": 5000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/db_helmet.png",
+        "alt": "db_helmet",
+        "name": "Dragon's Breath Helm",
+        "slot": "Helmet",
+        "rarity": "Legendary",
+        "set": "Dragon's Breath",
+        "type": "Archer",
+        "attributes": [
+            {
+                "stat": "Archer Attack",
+                "value": 11
+            },
+            {
+                "stat": "Cavalry Attack",
+                "value": 3
+            },
+            {
+                "stat": "Infantry Defense",
+                "value": 4
+            }
+        ],
+        "materials": [
+            {
+                "material": "Ebony",
+                "value": 40
+            },
+            {
+                "material": "Leather",
+                "value": 10
+            },
+            {
+                "material": "Iron Ore",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 20000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Archer Base Defense",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Archer Health",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 500,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Troops on the Map",
+                "value": 1,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to get 5% skill damage / smite damage bonus, 5 seconds cooldown",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/db_chest.png",
+        "alt": "db_chest",
+        "name": "Dragon's Breath Plate",
+        "slot": "Chest",
+        "rarity": "Legendary",
+        "set": "Dragon's Breath",
+        "type": "Archer",
+        "attributes": [
+            {
+                "stat": "Archer Health",
+                "value": 11
+            },
+            {
+                "stat": "Cavalry Defense",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Ebony",
+                "value": 40
+            },
+            {
+                "material": "Leather",
+                "value": 10
+            },
+            {
+                "material": "Iron Ore",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 20000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Archer Base Defense",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Enemy Defense Ignored",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 500,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Rallied Armies/Garrisons",
+                "value": 1,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to get 5% counterattack bonus, for 2 seconds 5 seconds cooldown",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/db_weapon.png",
+        "alt": "db_weapon",
+        "name": "Dragon's Breath Bow",
+        "slot": "Weapon",
+        "rarity": "Legendary",
+        "set": "Dragon's Breath",
+        "type": "Archer",
+        "attributes": [
+            {
+                "stat": "Archer Defense",
+                "value": 20
+            },
+            {
+                "stat": "Infantry Health",
+                "value": 5
+            },
+            {
+                "stat": "Cavalry Health",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Ebony",
+                "value": 60
+            },
+            {
+                "material": "Leather",
+                "value": 15
+            },
+            {
+                "material": "Iron Ore",
+                "value": 15
+            },
+            {
+                "material": "Gold",
+                "value": 20000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Archer Base Attack",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Enemy Defense Ignored",
+                "value": 2,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 800,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Troops on the Map",
+                "value": 2,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to get 6.5% damage bonus, for 2 seconds w/ 5 seconds cooldown",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/db_gloves.png",
+        "alt": "db_gloves",
+        "name": "Dragon's Breath Vambraces",
+        "slot": "Gloves",
+        "rarity": "Legendary",
+        "set": "Dragon's Breath",
+        "type": "Archer",
+        "attributes": [
+            {
+                "stat": "Archer Attack",
+                "value": 7.5
+            },
+            {
+                "stat": "Infantry Attack",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Ebony",
+                "value": 30
+            },
+            {
+                "material": "Iron Ore",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 20000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Archer Base Attack",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Enemy Attack Ignored",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 300,
+                "tier": 3
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 0.5,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to reduce 3% march speed, for 3 seconds, stack up to 3 times",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/db_pants.png",
+        "alt": "db_pants",
+        "name": "Dragon's Breath Tassets",
+        "slot": "Legs",
+        "rarity": "Legendary",
+        "set": "Dragon's Breath",
+        "type": "Archer",
+        "attributes": [
+            {
+                "stat": "Archer Attack",
+                "value": 11
+            },
+            {
+                "stat": "Cavalry Attack",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Ebony",
+                "value": 40
+            },
+            {
+                "material": "Leather",
+                "value": 10
+            },
+            {
+                "material": "Iron Ore",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 20000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Archer Base Health",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Enemy Health Ignored",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 500,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Troops on the Map",
+                "value": 1,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to reduce 5% skill damage taken, 5 seconds cooldown",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/db_boots.png",
+        "alt": "db_boots",
+        "name": "Dragon's Breath Boots",
+        "slot": "Boots",
+        "rarity": "Legendary",
+        "set": "Dragon's Breath",
+        "type": "Archer",
+        "attributes": [
+            {
+                "stat": "Archer Defense",
+                "value": 7.5
+            },
+            {
+                "stat": "Infantry Defense",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Ebony",
+                "value": 30
+            },
+            {
+                "material": "Iron Ore",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 20000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Archer Base Health",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Archer Attack",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 300,
+                "tier": 3
+            },
+            {
+                "stat": "March Speed",
+                "value": 5,
+                "tier": 4
+            },
+            {
+                "stat": "Gain 5% March Speed and 1% Defense outside alliance territory.",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/ee_helmet.png",
+        "alt": "ee_helmet",
+        "name": "Gold Helm of the Eternal Empire",
+        "slot": "Helmet",
+        "rarity": "Legendary",
+        "set": "Eternal Empire",
+        "type": "Infantry",
+        "attributes": [
+            {
+                "stat": "Infantry Defense",
+                "value": 11
+            },
+            {
+                "stat": "Archer Health",
+                "value": 4
+            },
+            {
+                "stat": "Cavalry Health",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Iron Ore",
+                "value": 40
+            },
+            {
+                "material": "Ebony",
+                "value": 10
+            },
+            {
+                "material": "Leather",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 20000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Infantry Base Defense",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Infantry Health",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 500,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Troops on the Map",
+                "value": 1,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to get 5% skill damage / smite damage bonus, 5 seconds cooldown",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/ee_chest.png",
+        "alt": "ee_chest",
+        "name": "Plate of the Eternal Empire",
+        "slot": "Chest",
+        "rarity": "Legendary",
+        "set": "Eternal Empire",
+        "type": "Infantry",
+        "attributes": [
+            {
+                "stat": "Infantry Attack",
+                "value": 11
+            },
+            {
+                "stat": "Archer Defense",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Iron Ore",
+                "value": 40
+            },
+            {
+                "material": "Ebony",
+                "value": 10
+            },
+            {
+                "material": "Leather",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 20000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Infantry Base Defense",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Enemy Attack Ignored",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 500,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Rallied Armies/Garrisons",
+                "value": 1,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to get 5% counterattack bonus, for 2 seconds 5 seconds cooldown",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/ee_weapon.png",
+        "alt": "ee_weapon",
+        "name": "Shield of the Eternal Empire",
+        "slot": "Weapon",
+        "rarity": "Legendary",
+        "set": "Eternal Empire",
+        "type": "Infantry",
+        "attributes": [
+            {
+                "stat": "Infantry Attack",
+                "value": 20
+            },
+            {
+                "stat": "Archer Attack",
+                "value": 5
+            },
+            {
+                "stat": "Cavalry Attack",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Iron Ore",
+                "value": 60
+            },
+            {
+                "material": "Ebony",
+                "value": 15
+            },
+            {
+                "material": "Leather",
+                "value": 15
+            },
+            {
+                "material": "Gold",
+                "value": 20000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Infantry Base Attack",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Enemy Health Ignored",
+                "value": 2,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 800,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Troops on the Map",
+                "value": 2,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to get 6.5% damage bonus, for 2 seconds w/ 5 seconds cooldown",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/ee_gloves.png",
+        "alt": "ee_gloves",
+        "name": "Vambraces of the Eternal Empire",
+        "slot": "Gloves",
+        "rarity": "Legendary",
+        "set": "Eternal Empire",
+        "type": "Infantry",
+        "attributes": [
+            {
+                "stat": "Infantry Defense",
+                "value": 7.5
+            },
+            {
+                "stat": "Cavalry Attack",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Iron Ore",
+                "value": 30
+            },
+            {
+                "material": "Leather",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 20000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Infantry Base Attack",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Infantry Attack",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 300,
+                "tier": 3
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 0.5,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to reduce 3% march speed, for 3 seconds, stack up to 3 times",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/ee_pants.png",
+        "alt": "ee_pants",
+        "name": "Greaves of the Eternal Empire",
+        "slot": "Legs",
+        "rarity": "Legendary",
+        "set": "Eternal Empire",
+        "type": "Infantry",
+        "attributes": [
+            {
+                "stat": "Infantry Attack",
+                "value": 11
+            },
+            {
+                "stat": "Archer Defense",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Iron Ore",
+                "value": 40
+            },
+            {
+                "material": "Ebony",
+                "value": 10
+            },
+            {
+                "material": "Leather",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 20000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Infantry Base Health",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Enemy Health Ignored",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 300,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Troops on the Map",
+                "value": 1,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to reduce 3% march speed, for 3 seconds, stack up to 3 times",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/ee_boots.png",
+        "alt": "ee_boots",
+        "name": "Sturdy Boots of the Eternal Empire",
+        "slot": "Boots",
+        "rarity": "Legendary",
+        "set": "Eternal Empire",
+        "type": "Infantry",
+        "attributes": [
+            {
+                "stat": "Infantry Defense",
+                "value": 7.5
+            },
+            {
+                "stat": "Cavalry Defense",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Iron Ore",
+                "value": 30
+            },
+            {
+                "material": "Leather",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 20000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Infantry Base Health",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Infantry Defense",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 300,
+                "tier": 3
+            },
+            {
+                "stat": "March Speed",
+                "value": 5,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to reduce 3% march speed, for 3 seconds, stack up to 3 times",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/fg_helmet.png",
+        "alt": "fg_helmet",
+        "name": "Mask of the Forest Guardian",
+        "slot": "Helmet",
+        "rarity": "Epic",
+        "set": "Forest Guardian",
+        "type": "Siege",
+        "attributes": [
+            {
+                "stat": "Gathering Speed",
+                "value": 8
+            },
+            {
+                "stat": "Siege Unit Attack",
+                "value": 4
+            },
+            {
+                "stat": "Infantry Attack",
+                "value": 4
+            }
+        ],
+        "materials": [
+            {
+                "material": "Animal Bone",
+                "value": 25
+            },
+            {
+                "material": "Gold",
+                "value": 6000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/fg_chest.png",
+        "alt": "fg_chest",
+        "name": "Robe of the Forest Guardian",
+        "slot": "Chest",
+        "rarity": "Epic",
+        "type": "Siege",
+        "set": "Forest Guardian",
+        "attributes": [
+            {
+                "stat": "Gathering Speed",
+                "value": 8
+            },
+            {
+                "stat": "Siege Unit Attack",
+                "value": 4
+            },
+            {
+                "stat": "Archer Attack",
+                "value": 4
+            }
+        ],
+        "materials": [
+            {
+                "material": "Animal Bone",
+                "value": 25
+            },
+            {
+                "material": "Gold",
+                "value": 6000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/fg_weapon.png",
+        "alt": "fg_weapon",
+        "name": "Scepter of the Forest Guardian",
+        "slot": "Weapon",
+        "rarity": "Epic",
+        "set": "Forest Guardian",
+        "type": "Siege",
+        "attributes": [
+            {
+                "stat": "Gathering Speed",
+                "value": 10
+            },
+            {
+                "stat": "Siege Unit Defense",
+                "value": 6
+            },
+            {
+                "stat": "Cavalry Attack",
+                "value": 4
+            }
+        ],
+        "materials": [
+            {
+                "material": "Animal Bone",
+                "value": 35
+            },
+            {
+                "material": "Gold",
+                "value": 6000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/fg_gloves.png",
+        "alt": "fg_gloves",
+        "name": "Claws of the Forest Guardian",
+        "slot": "Gloves",
+        "rarity": "Epic",
+        "set": "Forest Guardian",
+        "type": "Siege",
+        "attributes": [
+            {
+                "stat": "Gathering Speed",
+                "value": 6
+            },
+            {
+                "stat": "Siege Unit Defense",
+                "value": 2
+            },
+            {
+                "stat": "Siege Unit Attack",
+                "value": 2
+            }
+        ],
+        "materials": [
+            {
+                "material": "Animal Bone",
+                "value": 15
+            },
+            {
+                "material": "Gold",
+                "value": 6000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/gg_helmet.png",
+        "alt": "gg_helmet",
+        "name": "Diadem of the Glorious Goddess",
+        "slot": "Helmet",
+        "rarity": "Legendary",
+        "set": "Garb of the Glorious Goddess",
+        "type": "Leadership",
+        "attributes": [
+            {
+                "stat": "Troop Attack",
+                "value": 8
+            },
+            {
+                "stat": "March Speed (Cavalry)",
+                "value": 2
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 20
+            },
+            {
+                "material": "Iron Ore",
+                "value": 20
+            },
+            {
+                "material": "Ebony",
+                "value": 20
+            },
+            {
+                "material": "Gold",
+                "value": 20000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Troop Base Attack",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Troop Health",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 500,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Troops on the Map",
+                "value": 1,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to get 5% skill damage / smite damage bonus, 5 seconds cooldown",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/gg_chest.png",
+        "alt": "gg_chest",
+        "name": "Plate of the Glorious Goddess",
+        "slot": "Chest",
+        "rarity": "Legendary",
+        "set": "Garb of the Glorious Goddess",
+        "type": "Leadership",
+        "attributes": [
+            {
+                "stat": "Troop Defense",
+                "value": 8
+            },
+            {
+                "stat": "March Speed (Infantry)",
+                "value": 2
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 20
+            },
+            {
+                "material": "Iron Ore",
+                "value": 20
+            },
+            {
+                "material": "Ebony",
+                "value": 20
+            },
+            {
+                "material": "Gold",
+                "value": 20000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Troop Base Defense",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Enemy Defense Ignored",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 500,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Rallied Armies/Garrisons",
+                "value": 1,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to get 5% counterattack bonus, for 2 seconds 5 seconds cooldown",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/gg_weapon.png",
+        "alt": "gg_weapon",
+        "name": "Scepter of the Glorious Goddess",
+        "slot": "Weapon",
+        "rarity": "Legendary",
+        "set": "Garb of the Glorious Goddess",
+        "type": "Leadership",
+        "attributes": [
+            {
+                "stat": "Troop Attack",
+                "value": 15
+            },
+            {
+                "stat": "March Speed (Infantry)",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 30
+            },
+            {
+                "material": "Iron Ore",
+                "value": 30
+            },
+            {
+                "material": "Ebony",
+                "value": 30
+            },
+            {
+                "material": "Gold",
+                "value": 20000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Troop Base Attack",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Enemy Defense Ignored",
+                "value": 2,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 800,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Troops on the Map",
+                "value": 2,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to get 6.5% damage bonus, for 2 seconds w/ 5 seconds cooldown",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/gg_gloves.png",
+        "alt": "gg_gloves",
+        "name": "Gauntlets of the Glorious Goddess",
+        "slot": "Gloves",
+        "rarity": "Legendary",
+        "set": "Garb of the Glorious Goddess",
+        "type": "Leadership",
+        "attributes": [
+            {
+                "stat": "Troop Defense",
+                "value": 6
+            },
+            {
+                "stat": "March Speed (Siege Units)",
+                "value": 2
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 15
+            },
+            {
+                "material": "Iron Ore",
+                "value": 15
+            },
+            {
+                "material": "Ebony",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 20000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Troop Base Defense",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Enememy Attack Ignored",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 300,
+                "tier": 3
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 0.5,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to reduce 3% march speed, for 3 seconds, stack up to 3 times",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/gg_pants.png",
+        "alt": "gg_pants",
+        "name": "Chausses of the Glorious Goddess",
+        "slot": "Legs",
+        "rarity": "Legendary",
+        "set": "Garb of the Glorious Goddess",
+        "type": "Leadership",
+        "attributes": [
+            {
+                "stat": "Troop Health",
+                "value": 8
+            },
+            {
+                "stat": "March Speed (Archer)",
+                "value": 2
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 20
+            },
+            {
+                "material": "Iron Ore",
+                "value": 20
+            },
+            {
+                "material": "Ebony",
+                "value": 20
+            },
+            {
+                "material": "Gold",
+                "value": 20000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Troop Base Health",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Enemy Health Ignored",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 500,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Troops on the Map",
+                "value": 1,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to reduce 3% march speed, for 3 seconds, stack up to 3 times",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/gg_boots.png",
+        "alt": "gg_boots",
+        "name": "Greaves of the Glorious Goddess",
+        "slot": "Boots",
+        "rarity": "Legendary",
+        "set": "Garb of the Glorious Goddess",
+        "type": "Leadership",
+        "attributes": [
+            {
+                "stat": "Troop Health",
+                "value": 6
+            },
+            {
+                "stat": "March Speed (Siege Units)",
+                "value": 2
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 10
+            },
+            {
+                "material": "Iron Ore",
+                "value": 15
+            },
+            {
+                "material": "Ebony",
+                "value": 15
+            },
+            {
+                "material": "Gold",
+                "value": 20000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Troop Base Health",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Troop Attack",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 300,
+                "tier": 3
+            },
+            {
+                "stat": "March Speed",
+                "value": 5,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to reduce 3% march speed, for 3 seconds, stack up to 3 times",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/harvester_helmet.png",
+        "alt": "harvester_helmet",
+        "name": "Harvester's Headscarf",
+        "slot": "Helmet",
+        "rarity": "Elite",
+        "set": "Harvester",
+        "type": "Siege",
+        "attributes": [
+            {
+                "stat": "Gathering Speed",
+                "value": 5
+            },
+            {
+                "stat": "Siege Unit Attack",
+                "value": 3
+            },
+            {
+                "stat": "Siege Unit Defense",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Animal Bone",
+                "value": 30
+            },
+            {
+                "material": "Gold",
+                "value": 3000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/harvester_chest.png",
+        "alt": "harvester_chest",
+        "name": "Harvester Robes",
+        "slot": "Chest",
+        "rarity": "Elite",
+        "set": "Harvester",
+        "type": "Siege",
+        "attributes": [
+            {
+                "stat": "Gathering Speed",
+                "value": 5
+            },
+            {
+                "stat": "Siege Unit Defense",
+                "value": 3
+            },
+            {
+                "stat": "Siege Unit Health",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Animal Bone",
+                "value": 30
+            },
+            {
+                "material": "Gold",
+                "value": 3000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/harvester_pants.png",
+        "alt": "harvester_pants",
+        "name": "Harvester Breeches",
+        "slot": "Legs",
+        "rarity": "Elite",
+        "set": "Harvester",
+        "type": "Siege",
+        "attributes": [
+            {
+                "stat": "Gathering Speed",
+                "value": 5
+            },
+            {
+                "stat": "Siege Unit Attack",
+                "value": 3
+            },
+            {
+                "stat": "Siege Unit Defense",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Animal Bone",
+                "value": 30
+            },
+            {
+                "material": "Gold",
+                "value": 3000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/harvester_boots.png",
+        "alt": "harvester_boots",
+        "name": "Harvester Boots",
+        "slot": "Boots",
+        "rarity": "Elite",
+        "set": "Harvester",
+        "type": "Siege",
+        "attributes": [
+            {
+                "stat": "Gathering Speed",
+                "value": 5
+            },
+            {
+                "stat": "Siege Unit Defense",
+                "value": 2
+            },
+            {
+                "stat": "Siege Unit Health",
+                "value": 2
+            }
+        ],
+        "materials": [
+            {
+                "material": "Animal Bone",
+                "value": 20
+            },
+            {
+                "material": "Gold",
+                "value": 3000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/hw_helmet.png",
+        "alt": "hw_helmet",
+        "name": "War Helm of the Hellish Wasteland",
+        "slot": "Helmet",
+        "rarity": "Legendary",
+        "set": "Hellish Wasteland",
+        "type": "Cavalry",
+        "attributes": [
+            {
+                "stat": "Cavalry Defense",
+                "value": 11
+            },
+            {
+                "stat": "Infantry Attack",
+                "value": 4
+            },
+            {
+                "stat": "Archer Defense",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 40
+            },
+            {
+                "material": "Iron Ore",
+                "value": 10
+            },
+            {
+                "material": "Ebony",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 20000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Cavalry Base Defense",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Cavalry Attack",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 500,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Troops on the Map",
+                "value": 1,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to get 5% skill damage / smite damage bonus, 5 seconds cooldown",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/hw_chest.png",
+        "alt": "hw_chest",
+        "name": "Heavy Armor of the Hellish Wasteland",
+        "slot": "Chest",
+        "rarity": "Legendary",
+        "set": "Hellish Wasteland",
+        "type": "Cavalry",
+        "attributes": [
+            {
+                "stat": "Cavalry Health",
+                "value": 11
+            },
+            {
+                "stat": "Infantry Attack",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 40
+            },
+            {
+                "material": "Iron Ore",
+                "value": 10
+            },
+            {
+                "material": "Ebony",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 20000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Cavalry Base Defense",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Enemy Health Ignored",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 500,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Rallied Armies/Garrisons",
+                "value": 1,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to get 5% counterattack bonus, for 2 seconds 5 seconds cooldown",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/hw_weapon.png",
+        "alt": "hw_weapon",
+        "name": "Lance of the Hellish Wasteland",
+        "slot": "Weapon",
+        "rarity": "Legendary",
+        "set": "Hellish Wasteland",
+        "type": "Cavalry",
+        "attributes": [
+            {
+                "stat": "Cavalry Attack",
+                "value": 20
+            },
+            {
+                "stat": "Infantry Health",
+                "value": 5
+            },
+            {
+                "stat": "Archer Attack",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 60
+            },
+            {
+                "material": "Iron Ore",
+                "value": 15
+            },
+            {
+                "material": "Ebony",
+                "value": 15
+            },
+            {
+                "material": "Gold",
+                "value": 20000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Cavalry Base Attack",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Enemy Defense Ignored",
+                "value": 2,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 800,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Troops on the Map",
+                "value": 2,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to get 6.5% damage bonus, for 2 seconds w/ 5 seconds cooldown",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/hw_gloves.png",
+        "alt": "hw_gloves",
+        "name": "Armband of the Hellish Wasteland",
+        "slot": "Gloves",
+        "rarity": "Legendary",
+        "set": "Hellish Wasteland",
+        "type": "Cavalry",
+        "attributes": [
+            {
+                "stat": "Cavalry Defense",
+                "value": 7.5
+            },
+            {
+                "stat": "Archer Health",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 30
+            },
+            {
+                "material": "Ebony",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 20000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Cavalry Base Attack",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Cavalry Defense",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 300,
+                "tier": 3
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 0.5,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to reduce 3% march speed, for 3 seconds, stack up to 3 times",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/hw_pants.png",
+        "alt": "hw_pants",
+        "name": "Tassets of the Hellish Wasteland",
+        "slot": "Legs",
+        "rarity": "Legendary",
+        "set": "Hellish Wasteland",
+        "type": "Cavalry",
+        "attributes": [
+            {
+                "stat": "Cavalry Attack",
+                "value": 11
+            },
+            {
+                "stat": "Infantry Defense",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 40
+            },
+            {
+                "material": "Iron Ore",
+                "value": 10
+            },
+            {
+                "material": "Ebony",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 20000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Cavalry Base Health",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Cavalry Health",
+                "value": 2,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 500,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Troops on the Map",
+                "value": 1,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to reduce 5% skill damage taken, 5 seconds cooldown",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/hw_boots.png",
+        "alt": "hw_boots",
+        "name": "Boots of the Hellish Wasteland",
+        "slot": "Boots",
+        "rarity": "Legendary",
+        "set": "Hellish Wasteland",
+        "type": "Cavalry",
+        "attributes": [
+            {
+                "stat": "Cavalry Health",
+                "value": 7.5
+            },
+            {
+                "stat": "Archer Attack",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 30
+            },
+            {
+                "material": "Ebony",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 20000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Cavalry Base Health",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Cavalry Attack",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 300,
+                "tier": 3
+            },
+            {
+                "stat": "March Speed",
+                "value": 5,
+                "tier": 4
+            },
+            {
+                "stat": "Gain 5% March Speed and 1% Defense outside alliance territory.",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/revival_helmet.png",
+        "alt": "revival_helmet",
+        "name": "Revival Helm",
+        "slot": "Helmet",
+        "rarity": "Epic",
+        "set": "Revival",
+        "type": "Archer",
+        "attributes": [
+            {
+                "stat": "Archer Defense",
+                "value": 7.5
+            },
+            {
+                "stat": "Infantry Defense",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Ebony",
+                "value": 30
+            },
+            {
+                "material": "Iron Ore",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 6000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/revival_chest.png",
+        "alt": "revival_chest",
+        "name": "Revival Plate",
+        "slot": "Chest",
+        "rarity": "Epic",
+        "set": "Revival",
+        "type": "Archer",
+        "attributes": [
+            {
+                "stat": "Archer Attack",
+                "value": 7.5
+            },
+            {
+                "stat": "Cavalry Defense",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Ebony",
+                "value": 40
+            },
+            {
+                "material": "Iron Ore",
+                "value": 20
+            },
+            {
+                "material": "Gold",
+                "value": 6000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/revival_gloves.png",
+        "alt": "revival_gloves",
+        "name": "Revival Gauntlets",
+        "slot": "Gloves",
+        "rarity": "Epic",
+        "type": "Archer",
+        "set": "Revival",
+        "attributes": [
+            {
+                "stat": "Archer Attack",
+                "value": 4.5
+            },
+            {
+                "stat": "Infantry Attack",
+                "value": 3
+            },
+            {
+                "stat": "Cavalry Attack",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Ebony",
+                "value": 30
+            },
+            {
+                "material": "Iron Ore",
+                "value": 10
+            },
+            {
+                "material": "Gold",
+                "value": 6000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/revival_pants.png",
+        "alt": "revival_pants",
+        "name": "Revival Greaves",
+        "slot": "Legs",
+        "rarity": "Epic",
+        "type": "Archer",
+        "set": "Revival",
+        "attributes": [
+            {
+                "stat": "Archer Defense",
+                "value": 7.5
+            },
+            {
+                "stat": "Cavalry Attack",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Ebony",
+                "value": 40
+            },
+            {
+                "material": "Iron Ore",
+                "value": 20
+            },
+            {
+                "material": "Gold",
+                "value": 6000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/vanguard_weapon.png",
+        "alt": "vanguard_weapon",
+        "name": "Vanguard Halberd",
+        "slot": "Weapon",
+        "rarity": "Advanced",
+        "set": "Vanguard",
+        "type": "Cavalry",
+        "attributes": [
+            {
+                "stat": "Cavalry Defense",
+                "value": 5
+            },
+            {
+                "stat": "Cavalry Health",
+                "value": 4
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 110
+            },
+            {
+                "material": "Gold",
+                "value": 750000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/vanguard_pants.png",
+        "alt": "vanguard_pants",
+        "name": "Vanguard Greaves",
+        "slot": "Legs",
+        "rarity": "Advanced",
+        "set": "Vanguard",
+        "type": "Cavalry",
+        "attributes": [
+            {
+                "stat": "Cavalry Attack",
+                "value": 4
+            },
+            {
+                "stat": "Cavalry Health",
+                "value": 1
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 70
+            },
+            {
+                "material": "Gold",
+                "value": 750000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/windswept_helmet.png",
+        "alt": "windswept_helmet",
+        "name": "Windswept War Helm",
+        "slot": "Helmet",
+        "rarity": "Elite",
+        "set": "Windswept",
+        "type": "Infantry,Cavalry",
+        "attributes": [
+            {
+                "stat": "Infantry Attack",
+                "value": 4.5
+            },
+            {
+                "stat": "Cavalry Attack",
+                "value": 4.5
+            },
+            {
+                "stat": "March Speed",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 30
+            },
+            {
+                "material": "Iron Ore",
+                "value": 30
+            },
+            {
+                "material": "Gold",
+                "value": 3000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/windswept_chest.png",
+        "alt": "windswept_chest",
+        "name": "Windswept Breastplate",
+        "slot": "Chest",
+        "rarity": "Elite",
+        "set": "Windswept",
+        "type": "Infantry,Cavalry",
+        "attributes": [
+            {
+                "stat": "Infantry Defense",
+                "value": 4.5
+            },
+            {
+                "stat": "Cavalry Defense",
+                "value": 4.5
+            },
+            {
+                "stat": "March Speed",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 30
+            },
+            {
+                "material": "Iron Ore",
+                "value": 30
+            },
+            {
+                "material": "Gold",
+                "value": 3000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/windswept_gloves.png",
+        "alt": "windswept_gloves",
+        "name": "Windswept Bracers",
+        "slot": "Gloves",
+        "rarity": "Elite",
+        "set": "Windswept",
+        "type": "Infantry,Cavalry",
+        "attributes": [
+            {
+                "stat": "Cavalry Health",
+                "value": 2.5
+            },
+            {
+                "stat": "Infantry Health",
+                "value": 2.5
+            },
+            {
+                "stat": "March Speed",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 20
+            },
+            {
+                "material": "Iron Ore",
+                "value": 20
+            },
+            {
+                "material": "Gold",
+                "value": 3000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/windswept_boots.png",
+        "alt": "windswept_boots",
+        "name": "Windswept Boots",
+        "slot": "Boots",
+        "rarity": "Elite",
+        "set": "Windswept",
+        "type": "Infantry,Cavalry",
+        "attributes": [
+            {
+                "stat": "Cavalry Health",
+                "value": 2.5
+            },
+            {
+                "stat": "Infantry Defense",
+                "value": 2.5
+            },
+            {
+                "stat": "March Speed",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 20
+            },
+            {
+                "material": "Iron Ore",
+                "value": 20
+            },
+            {
+                "material": "Gold",
+                "value": 3000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/wolf_helmet.png",
+        "alt": "wolf_helmet",
+        "name": "Fierce Wolf's Helmet",
+        "slot": "Helmet",
+        "rarity": "Legendary",
+        "set": "Lupine Vestments",
+        "type": "Siege",
+        "attributes": [
+            {
+                "stat": "Siege Unit Attack",
+                "value": 14.5
+            },
+            {
+                "stat": "March Speed (Siege Units)",
+                "value": 4
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 20
+            },
+            {
+                "material": "Iron Ore",
+                "value": 20
+            },
+            {
+                "material": "Ebony",
+                "value": 20
+            },
+            {
+                "material": "Gold",
+                "value": 30000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Siege Unit Base Attack",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Siege Health",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 500,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Troops on the Map",
+                "value": 1,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to get 5% skill damage / smite damage bonus, 5 seconds cooldown",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/wolf_chest.png",
+        "alt": "wolf_chest",
+        "name": "Vigilant Wolf's Leather Armor",
+        "slot": "Chest",
+        "rarity": "Legendary",
+        "set": "Lupine Vestments",
+        "type": "Siege",
+        "attributes": [
+            {
+                "stat": "Siege Unit Attack",
+                "value": 14.5
+            },
+            {
+                "stat": "March Speed (Siege Units)",
+                "value": 4
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 20
+            },
+            {
+                "material": "Iron Ore",
+                "value": 20
+            },
+            {
+                "material": "Ebony",
+                "value": 20
+            },
+            {
+                "material": "Gold",
+                "value": 30000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Siege Unit Base Attack",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Enemy Defense Ignored",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 500,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Troops on the Map",
+                "value": 1,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to get 5% counterattack bonus, for 2 seconds 5 seconds cooldown",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/wolf_gloves.png",
+        "alt": "wolf_gloves",
+        "name": "Wailing Wolf's Gauntlets",
+        "slot": "Gloves",
+        "rarity": "Legendary",
+        "set": "Lupine Vestments",
+        "type": "Siege",
+        "attributes": [
+            {
+                "stat": "Siege Unit Defense",
+                "value": 10
+            },
+            {
+                "stat": "March Speed (Siege Units)",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 10
+            },
+            {
+                "material": "Iron Ore",
+                "value": 15
+            },
+            {
+                "material": "Ebony",
+                "value": 15
+            },
+            {
+                "material": "Gold",
+                "value": 30000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Siege Unit Base Defense",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Enemy Attack Ignored",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 300,
+                "tier": 3
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 0.5,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to reduce 3% march speed, for 3 seconds, stack up to 3 times",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/wolf_pants.png",
+        "alt": "wolf_pants",
+        "name": "Lone Wolf's Leather Tassets",
+        "slot": "Legs",
+        "rarity": "Legendary",
+        "set": "Lupine Vestments",
+        "type": "Siege",
+        "attributes": [
+            {
+                "stat": "Siege Unit Health",
+                "value": 14.5
+            },
+            {
+                "stat": "March Speed (Siege Units)",
+                "value": 4
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 20
+            },
+            {
+                "material": "Iron Ore",
+                "value": 20
+            },
+            {
+                "material": "Ebony",
+                "value": 20
+            },
+            {
+                "material": "Gold",
+                "value": 30000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Siege Unit Base Health",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Enemy Health Ignored",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 500,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Troops on the Map",
+                "value": 1,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to reduce 5% skill damage taken, 5 seconds cooldown",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/wolf_boots.png",
+        "alt": "wolf_boots",
+        "name": "Roaring Wolf's Claws",
+        "slot": "Boots",
+        "rarity": "Legendary",
+        "set": "Lupine Vestments",
+        "type": "Siege",
+        "attributes": [
+            {
+                "stat": "Siege Unit Defense",
+                "value": 10
+            },
+            {
+                "stat": "March Speed (Siege Units)",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 15
+            },
+            {
+                "material": "Iron Ore",
+                "value": 10
+            },
+            {
+                "material": "Ebony",
+                "value": 15
+            },
+            {
+                "material": "Gold",
+                "value": 30000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Siege Unit Base Defense",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Siege Unit Attack",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 300,
+                "tier": 3
+            },
+            {
+                "stat": "March Speed",
+                "value": 5,
+                "tier": 4
+            },
+            {
+                "stat": "Gain 5% March Speed and 1% Defense outside alliance territory.",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/ww_helmet.png",
+        "alt": "ww_helmet",
+        "name": "Witch's Deadwood Crown",
+        "slot": "Helmet",
+        "rarity": "Legendary",
+        "set": "Witch's Wardrobe",
+        "type": "Siege",
+        "attributes": [
+            {
+                "stat": "Gathering Speed",
+                "value": 12
+            },
+            {
+                "stat": "Siege Unit Attack",
+                "value": 4
+            },
+            {
+                "stat": "March Speed (Siege Units)",
+                "value": 2
+            }
+        ],
+        "materials": [
+            {
+                "material": "Animal Bone",
+                "value": 25
+            },
+            {
+                "material": "Gold",
+                "value": 20000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Siege Unit Base Attack",
+                "value": 3,
+                "tier": 1
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/ww_chest.png",
+        "alt": "ww_chest",
+        "name": "Witch's Hexed Cloak",
+        "slot": "Chest",
+        "rarity": "Legendary",
+        "set": "Witch's Wardrobe",
+        "type": "Siege",
+        "attributes": [
+            {
+                "stat": "Gathering Speed",
+                "value": 12
+            },
+            {
+                "stat": "Siege Unit Defense",
+                "value": 4
+            },
+            {
+                "stat": "March Speed (Siege Units)",
+                "value": 2
+            }
+        ],
+        "materials": [
+            {
+                "material": "Animal Bone",
+                "value": 25
+            },
+            {
+                "material": "Gold",
+                "value": 20000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Siege Unit Base Defense",
+                "value": 3,
+                "tier": 1
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/ww_weapon.png",
+        "alt": "ww_weapon",
+        "name": "Witch's Feathered Staff",
+        "slot": "Weapon",
+        "rarity": "Legendary",
+        "set": "Witch's Wardrobe",
+        "type": "Siege",
+        "attributes": [
+            {
+                "stat": "Gathering Speed",
+                "value": 15
+            },
+            {
+                "stat": "Siege Unit Defense",
+                "value": 6
+            },
+            {
+                "stat": "March Speed (Siege Units)",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Animal Bone",
+                "value": 35
+            },
+            {
+                "material": "Gold",
+                "value": 20000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Siege Unit Base Defense",
+                "value": 2
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/ww_gloves.png",
+        "alt": "ww_gloves",
+        "name": "Witch's Crimson Bracers",
+        "slot": "Gloves",
+        "rarity": "Legendary",
+        "set": "Witch's Wardrobe",
+        "type": "Siege",
+        "attributes": [
+            {
+                "stat": "Gathering Speed",
+                "value": 8
+            },
+            {
+                "stat": "Siege Unit Health",
+                "value": 3
+            },
+            {
+                "stat": "March Speed (Siege Units)",
+                "value": 2
+            }
+        ],
+        "materials": [
+            {
+                "material": "Animal Bone",
+                "value": 15
+            },
+            {
+                "material": "Gold",
+                "value": 20000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Siege Unit Base Health",
+                "value": 3,
+                "tier": 1
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/ww_pants.png",
+        "alt": "ww_pants",
+        "name": "Witch's Ornamented Pants",
+        "slot": "Legs",
+        "rarity": "Legendary",
+        "set": "Witch's Wardrobe",
+        "type": "Siege",
+        "attributes": [
+            {
+                "stat": "Gathering Speed",
+                "value": 12
+            },
+            {
+                "stat": "Siege Unit Health",
+                "value": 4
+            },
+            {
+                "stat": "March Speed (Siege Units)",
+                "value": 2
+            }
+        ],
+        "materials": [
+            {
+                "material": "Animal Bone",
+                "value": 25
+            },
+            {
+                "material": "Gold",
+                "value": 20000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Siege Unit Health",
+                "value": 3,
+                "tier": 1
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/ww_boots.png",
+        "alt": "ww_boots",
+        "name": "Witch's Mire-Waders",
+        "slot": "Boots",
+        "rarity": "Legendary",
+        "set": "Witch's Wardrobe",
+        "type": "Siege",
+        "attributes": [
+            {
+                "stat": "Gathering Speed",
+                "value": 8
+            },
+            {
+                "stat": "Siege Unit Attack",
+                "value": 3
+            },
+            {
+                "stat": "March Speed (Siege Units)",
+                "value": 2
+            }
+        ],
+        "materials": [
+            {
+                "material": "Animal Bone",
+                "value": 15
+            },
+            {
+                "material": "Gold",
+                "value": 20000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Siege Unit Base Health",
+                "value": 3,
+                "tier": 1
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/accessory_bards.png",
+        "alt": "bards_accessory",
+        "name": "The Bard's Pendant",
+        "slot": "Accessory",
+        "rarity": "Epic",
+        "attributes": [
+            {
+                "stat": "Resource Gathered Bonus",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Animal Bone",
+                "value": 80
+            },
+            {
+                "material": "Gold",
+                "value": 8000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/accessory_call.png",
+        "alt": "call_accessory",
+        "name": "Call of the Loyal",
+        "slot": "Accessory",
+        "rarity": "Elite",
+        "attributes": [
+            {
+                "stat": "March Speed",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Iron Ore",
+                "value": 35
+            },
+            {
+                "material": "Ebony",
+                "value": 35
+            },
+            {
+                "material": "Gold",
+                "value": 4000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/accessory_concealed.png",
+        "alt": "concealed_accessory",
+        "name": "Concealed Dagger",
+        "slot": "Accessory",
+        "rarity": "Legendary",
+        "attributes": [
+            {
+                "stat": "30% chance to reduce target troop's health by 5%, can stack to 3 times for 3 seconds each.",
+                "value": 0
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 40
+            },
+            {
+                "material": "Iron Ore",
+                "value": 40
+            },
+            {
+                "material": "Ebony",
+                "value": 40
+            },
+            {
+                "material": "Gold",
+                "value": 50000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Troop Base Health",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Troop Health",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 1.5,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Rallied Armies/Garrisons",
+                "value": 2,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to gain: 1. 5% normal damage bonus and 5$ less normal damage taken or 2. 5% skill damage bonus and 5% less skill damage taken, for 2 seconds, cooldown 5 seconds",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/accessory_crimson.png",
+        "alt": "crimson_accessory",
+        "name": "Crimson Ring",
+        "slot": "Accessory",
+        "rarity": "Epic",
+        "attributes": [
+            {
+                "stat": "EXP Gain",
+                "value": 15
+            }
+        ],
+        "materials": [
+            {
+                "material": "Animal Bone",
+                "value": 80
+            },
+            {
+                "material": "Gold",
+                "value": 8000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/accessory_delanes.png",
+        "alt": "delane_accessory",
+        "name": "Delane's Amulet",
+        "slot": "Accessory",
+        "rarity": "Epic",
+        "attributes": [
+            {
+                "stat": "Counterattack Damage Taken",
+                "value": -5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 30
+            },
+            {
+                "material": "Ebony",
+                "value": 20
+            },
+            {
+                "material": "Iron Ore",
+                "value": 20
+            },
+            {
+                "material": "Gold",
+                "value": 8000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/accessory_eternal.png",
+        "alt": "eternal_accessory",
+        "name": "Pendant of Eternal Night",
+        "slot": "Accessory",
+        "rarity": "Legendary",
+        "attributes": [
+            {
+                "stat": "Skill Damage",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 40
+            },
+            {
+                "material": "Iron Ore",
+                "value": 40
+            },
+            {
+                "material": "Ebony",
+                "value": 40
+            },
+            {
+                "material": "Gold",
+                "value": 50000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Troop Base Health",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Troop Health",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 1.5,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Rallied Armies/Garrisons",
+                "value": 2,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to gain: 1. 5% normal damage bonus and 5$ less normal damage taken or 2. 5% skill damage bonus and 5% less skill damage taken, for 2 seconds, cooldown 5 seconds",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/accessory_greatest.png",
+        "alt": "greatest_accessory",
+        "name": "Greatest Glory",
+        "slot": "Accessory",
+        "rarity": "Legendary",
+        "attributes": [
+            {
+                "stat": "Normal Attack Damage",
+                "value": 5
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 40
+            },
+            {
+                "material": "Iron Ore",
+                "value": 40
+            },
+            {
+                "material": "Ebony",
+                "value": 40
+            },
+            {
+                "material": "Gold",
+                "value": 50000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Troop Base Health",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Troop Health",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 1.5,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Rallied Armies/Garrisons",
+                "value": 2,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to gain: 1. 5% normal damage bonus and 5$ less normal damage taken or 2. 5% skill damage bonus and 5% less skill damage taken, for 2 seconds, cooldown 5 seconds",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/accessory_horn.png",
+        "alt": "horn_accessory",
+        "name": "Horn of Fury",
+        "slot": "Accessory",
+        "rarity": "Legendary",
+        "attributes": [
+            {
+                "stat": "Basic Attack have a 30% chance to gain 50 Rage",
+                "value": 0
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 40
+            },
+            {
+                "material": "Iron Ore",
+                "value": 40
+            },
+            {
+                "material": "Ebony",
+                "value": 40
+            },
+            {
+                "material": "Gold",
+                "value": 50000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Troop Base Health",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Troop Health",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 1.5,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Rallied Armies/Garrisons",
+                "value": 2,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to gain: 1. 5% normal damage bonus and 5$ less normal damage taken or 2. 5% skill damage bonus and 5% less skill damage taken, for 2 seconds, cooldown 5 seconds",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/accessory_immo.png",
+        "alt": "immo_accessory",
+        "name": "Immolating Plume",
+        "slot": "Accessory",
+        "rarity": "Legendary",
+        "attributes": [
+            {
+                "stat": "Ranged attacks/smite has 50% chance to increase damage by 30%. Cooldown: 5 seconds",
+                "value": 0
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 40
+            },
+            {
+                "material": "Iron Ore",
+                "value": 40
+            },
+            {
+                "material": "Ebony",
+                "value": 40
+            },
+            {
+                "material": "Gold",
+                "value": 50000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Troop Base Health",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Troop Health",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 1.5,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Rallied Armies/Garrisons",
+                "value": 2,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to gain: 1. 5% normal damage bonus and 5$ less normal damage taken or 2. 5% skill damage bonus and 5% less skill damage taken, for 2 seconds, cooldown 5 seconds",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/accessory_lohar.png",
+        "alt": "lohar_accessory",
+        "name": "Lohar's Bone Necklace",
+        "slot": "Accessory",
+        "rarity": "Elite",
+        "attributes": [
+            {
+                "stat": "EXP Gain",
+                "value": 10
+            }
+        ],
+        "materials": [
+            {
+                "material": "Animal Bone",
+                "value": 70
+            },
+            {
+                "material": "Gold",
+                "value": 4000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/accessory_lucky.png",
+        "alt": "lucky_accessory",
+        "name": "Scola's Lucky Coin",
+        "slot": "Accessory",
+        "rarity": "Legendary",
+        "attributes": [
+            {
+                "stat": "10% chance to get shield (Damage Factor 500) for 2 seconds. Trigger once every 5 seconds.",
+                "value": 0
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 40
+            },
+            {
+                "material": "Iron Ore",
+                "value": 40
+            },
+            {
+                "material": "Ebony",
+                "value": 40
+            },
+            {
+                "material": "Gold",
+                "value": 50000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Troop Base Health",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Troop Health",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 1.5,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Rallied Armies/Garrisons",
+                "value": 2,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to gain: 1. 5% normal damage bonus and 5$ less normal damage taken or 2. 5% skill damage bonus and 5% less skill damage taken, for 2 seconds, cooldown 5 seconds",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/accessory_moras.png",
+        "alt": "moras_accessory",
+        "name": "Mora's Web",
+        "slot": "Accessory",
+        "rarity": "Legendary",
+        "attributes": [
+            {
+                "stat": "Has 30% chance to reduce target's defence by 4% and march speed of cavalry units by 8%. 3 stacks for 3 seconds each.",
+                "value": 0
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 40
+            },
+            {
+                "material": "Iron Ore",
+                "value": 40
+            },
+            {
+                "material": "Ebony",
+                "value": 40
+            },
+            {
+                "material": "Gold",
+                "value": 50000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Troop Base Health",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Troop Health",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 1.5,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Rallied Armies/Garrisons",
+                "value": 2,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to gain: 1. 5% normal damage bonus and 5$ less normal damage taken or 2. 5% skill damage bonus and 5% less skill damage taken, for 2 seconds, cooldown 5 seconds",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/accessory_peters.png",
+        "alt": "peter_accessory",
+        "name": "Peter's Sickle",
+        "slot": "Accessory",
+        "rarity": "Epic",
+        "attributes": [
+            {
+                "stat": "Gathering Speed",
+                "value": 10
+            }
+        ],
+        "materials": [
+            {
+                "material": "Animal Bone",
+                "value": 80
+            },
+            {
+                "material": "Gold",
+                "value": 8000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/accessory_ring.png",
+        "alt": "ring_accessory",
+        "name": "Ring of Doom",
+        "slot": "Accessory",
+        "rarity": "Legendary",
+        "attributes": [
+            {
+                "stat": "Basic Attack has 10% chance to gain 50% bonus damage for 2 seconds. Can trigger once every 5 seconds.",
+                "value": 0
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 40
+            },
+            {
+                "material": "Iron Ore",
+                "value": 40
+            },
+            {
+                "material": "Ebony",
+                "value": 40
+            },
+            {
+                "material": "Gold",
+                "value": 50000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Troop Base Health",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Troop Health",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 1.5,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Rallied Armies/Garrisons",
+                "value": 2,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to gain: 1. 5% normal damage bonus and 5$ less normal damage taken or 2. 5% skill damage bonus and 5% less skill damage taken, for 2 seconds, cooldown 5 seconds",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/accessory_scars.png",
+        "alt": "scars_accessory",
+        "name": "Wind Scars",
+        "slot": "Accessory",
+        "rarity": "Epic",
+        "attributes": [
+            {
+                "stat": "March Speed (Infantry)",
+                "value": 8
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 30
+            },
+            {
+                "material": "Ebony",
+                "value": 20
+            },
+            {
+                "material": "Iron Ore",
+                "value": 20
+            },
+            {
+                "material": "Gold",
+                "value": 8000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/accessory_seths.png",
+        "alt": "seths_accessory",
+        "name": "Seth's Call",
+        "slot": "Accessory",
+        "rarity": "Legendary",
+        "attributes": [
+            {
+                "stat": "Has 10% chance to get +10% Attack to itself and 2 nearby allied troops for 3 seconds",
+                "value": 0
+            }
+        ],
+        "materials": [
+            {
+                "material": "Ebony",
+                "value": 40
+            },
+            {
+                "material": "Leather",
+                "value": 30
+            },
+            {
+                "material": "Iron Ore",
+                "value": 30
+            },
+            {
+                "material": "Gold",
+                "value": 50000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Troop Base Health",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Troop Health",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 1.5,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Rallied Armies/Garrisons",
+                "value": 2,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to gain: 1. 5% normal damage bonus and 5$ less normal damage taken or 2. 5% skill damage bonus and 5% less skill damage taken, for 2 seconds, cooldown 5 seconds",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/accessory_silent.png",
+        "alt": "silent_accessory",
+        "name": "Silent Trial",
+        "slot": "Accessory",
+        "rarity": "Epic",
+        "attributes": [
+            {
+                "stat": "Basic Attack can decrease the target's rage by 10 points",
+                "value": 0
+            }
+        ],
+        "materials": [
+            {
+                "material": "Ebony",
+                "value": 30
+            },
+            {
+                "material": "Leather",
+                "value": 20
+            },
+            {
+                "material": "Iron Ore",
+                "value": 20
+            },
+            {
+                "material": "Gold",
+                "value": 8000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/accessory_strategems.png",
+        "alt": "strategems_accessory",
+        "name": "Ancient Strategems",
+        "slot": "Accessory",
+        "rarity": "Epic",
+        "attributes": [
+            {
+                "stat": "Unit Capacity",
+                "value": 3
+            }
+        ],
+        "materials": [
+            {
+                "material": "Ebony",
+                "value": 30
+            },
+            {
+                "material": "Leather",
+                "value": 20
+            },
+            {
+                "material": "Iron Ore",
+                "value": 20
+            },
+            {
+                "material": "Gold",
+                "value": 8000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/accessory_totem.png",
+        "alt": "totem_accessory",
+        "name": "Savage Totem",
+        "slot": "Accessory",
+        "rarity": "Elite",
+        "attributes": [
+            {
+                "stat": "DMG to Barbarians",
+                "value": 10
+            }
+        ],
+        "materials": [
+            {
+                "material": "Animal Bone",
+                "value": 70
+            },
+            {
+                "material": "Gold",
+                "value": 4000000
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/accessory_vengeance.png",
+        "alt": "vengeance_accessory",
+        "name": "Vengeance",
+        "slot": "Accessory",
+        "rarity": "Legendary",
+        "attributes": [
+            {
+                "stat": "Counterattack Damage",
+                "value": 8
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 40
+            },
+            {
+                "material": "Iron Ore",
+                "value": 40
+            },
+            {
+                "material": "Ebony",
+                "value": 40
+            },
+            {
+                "material": "Gold",
+                "value": 50000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Troop Base Health",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Troop Health",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 1.5,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Rallied Armies/Garrisons",
+                "value": 2,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to gain: 1. 5% normal damage bonus and 5$ less normal damage taken or 2. 5% skill damage bonus and 5% less skill damage taken, for 2 seconds, cooldown 5 seconds",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    },
+    {
+        "src": "/icons/equipment/accessory_wardrum.png",
+        "alt": "wardrum_accessory",
+        "name": "Karuak's War Drums",
+        "slot": "Accessory",
+        "rarity": "Legendary",
+        "attributes": [
+            {
+                "stat": "Has 10% chance to get 50 rage to itself and 2 nearby troops for 3 seconds",
+                "value": 0
+            }
+        ],
+        "materials": [
+            {
+                "material": "Leather",
+                "value": 30
+            },
+            {
+                "material": "Iron Ore",
+                "value": 40
+            },
+            {
+                "material": "Ebony",
+                "value": 30
+            },
+            {
+                "material": "Gold",
+                "value": 50000000
+            }
+        ],
+        "iconic": [
+            {
+                "stat": "Troop Base Health",
+                "value": 3,
+                "tier": 1
+            },
+            {
+                "stat": "Troop Health",
+                "value": 1,
+                "tier": 2
+            },
+            {
+                "stat": "Unit Capacity",
+                "value": 1.5,
+                "tier": 3
+            },
+            {
+                "stat": "Damage to Rallied Armies/Garrisons",
+                "value": 2,
+                "tier": 4
+            },
+            {
+                "stat": "10% chance to gain: 1. 5% normal damage bonus and 5$ less normal damage taken or 2. 5% skill damage bonus and 5% less skill damage taken, for 2 seconds, cooldown 5 seconds",
+                "value": 0,
+                "tier": 5
+            }
+        ]
+    }
+]
