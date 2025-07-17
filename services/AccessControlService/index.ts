@@ -167,6 +167,11 @@ export class AccessControlService {
   }
 }
 
+export const generateSystemSignature = (body: string) => {
+  const secret = process.env.SYSTEM_API_SECRET!;
+  return crypto.createHmac('sha256', secret).update(body).digest('hex');
+}
+
 // --- Default Export for Standard Admin Usage ---
 const defaultAccessRoles = new AccessControlService([UserRole.ADMIN, UserRole.SYSTEM]);
 export default defaultAccessRoles;
