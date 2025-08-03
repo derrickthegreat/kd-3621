@@ -1,4 +1,4 @@
-import { NavSectionProps } from "@/components/nav-section";
+import { NavSectionProps } from "@/components/admin-panel/nav-section";
 import { SquareTerminal, Bot, BookOpen, Settings2, Frame, PieChart } from "lucide-react";
 
 export const ADMIN_PANEL: NavSectionProps[] = [

@@ -1,16 +1,6 @@
 "use client"
-
 import * as React from "react"
-import {
-  BookOpen,
-  Bot,
-  Frame,
-  PieChart,
-  Settings2,
-  SquareTerminal,
-} from "lucide-react"
-
-import { NavUser } from "@/components/nav-user"
+import { NavUser } from "@/components/admin-panel/nav-user"
 import {
   Sidebar,
   SidebarContent,
@@ -19,8 +9,8 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import Link from "next/link"
-import NavSection, { NavSectionProps } from "./nav-section"
 import { ADMIN_PANEL } from "@/lib/navigation"
+import NavSection, { NavSectionProps } from "./nav-section"
 
 const DEFAULT_NAVIGATION: NavSectionProps[] = ADMIN_PANEL;
 
@@ -32,7 +22,7 @@ export interface NavUserProps {
 
 export interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   title: string
-  user?: NavUserProps,
+  user?: NavUserProps | null,
   navigation?: NavSectionProps[]
 }
 
@@ -43,9 +33,9 @@ export function AppSidebar({ title, user, navigation = DEFAULT_NAVIGATION, ...pr
         <Link href="/admin/"><h1 className="text-sm font-bold text-center">{ title }</h1></Link>
       </SidebarHeader>
       <SidebarContent>
-        {navigation.map(section => {
+        {navigation.map((section, id) => {
           const { sectionTitle: title, items } = section;
-          return (<NavSection sectionTitle={title} items={items} />)
+          return (<NavSection sectionTitle={title} items={items} key={id}/>)
         })}
       </SidebarContent>
       <SidebarFooter>
