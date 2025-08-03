@@ -37,9 +37,9 @@ const NavSection = ({ sectionTitle, items}: NavSectionProps) => {
     <SidebarGroup>
       <SidebarGroupLabel>{sectionTitle}</SidebarGroupLabel>
       <SidebarMenu>
-        {items.map((item) => (
+        {items.map((item, id) => (
           <Collapsible
-            key={item.title}
+            key={id}
             asChild
             defaultOpen={item.isActive}
             className="group/collapsible"

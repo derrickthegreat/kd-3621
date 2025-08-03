@@ -1,5 +1,5 @@
 import { NavSectionProps } from "@/components/admin-panel/nav-section";
-import { SquareTerminal, Bot, BookOpen, Settings2, Frame, PieChart } from "lucide-react";
+import { SquareTerminal, Bot, BookOpen, Settings2, Frame, PieChart, SearchIcon } from "lucide-react";
 
 export const ADMIN_PANEL: NavSectionProps[] = [
   {
@@ -78,7 +78,7 @@ export const ADMIN_PANEL: NavSectionProps[] = [
         },
         {
           title: "Upload Scan",
-          url: "#",
+          url: "/admin/settings/upload-scan"
         },
         {
           title: "Initiate Bot Scan",
@@ -96,7 +96,12 @@ export const ADMIN_PANEL: NavSectionProps[] = [
     sectionTitle: 'Bot Commands',
     items: [
     {
-      title: "Initiate New Kingdom Scan",
+      title: "Find a Player",
+      url: "#",
+      icon: SearchIcon,
+    },
+    {
+      title: "Initiate Kingdom Scan",
       url: "#",
       icon: Frame,
     },

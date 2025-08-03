@@ -18,10 +18,10 @@ export function AppBreadcrumbs({ items }: AppBreadcrumbsProps) {
             className={index < items.length - 1 ? "hidden md:block" : ""}
           >
             {item.href && index < items.length - 1 ? (
-              <>
+              <div className='flex items-center gap-2'>
                 <BreadcrumbLink href={item.href}>{item.title}</BreadcrumbLink>
                 <BreadcrumbSeparator className="hidden md:block" />
-              </>
+              </div>
             ) : (
               <BreadcrumbPage>{item.title}</BreadcrumbPage>
             )}

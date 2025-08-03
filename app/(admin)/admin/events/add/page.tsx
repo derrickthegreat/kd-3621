@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import Link from 'next/link'
+import { AppBreadcrumbs } from '../../(components)/layout/AppBeadcrumbs'
 
 type Event = {
   id: string
@@ -55,6 +56,8 @@ export default function EventListPage() {
   }, [getToken])
 
   return (
+    <>
+    <AppBreadcrumbs items={[{title: "Admin", href: "/admin" }, { title: "Events", href: "/admin/events" }, { title: "Add Event" }]} />
     <div className="max-w-4xl mx-auto py-10">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
@@ -105,5 +108,6 @@ export default function EventListPage() {
         </CardContent>
       </Card>
     </div>
+    </>
   )
 }

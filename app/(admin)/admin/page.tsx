@@ -2,6 +2,7 @@
 
 import { useAuth } from '@clerk/nextjs';
 import { useEffect, useState } from 'react';
+import { AppBreadcrumbs } from './(components)/layout/AppBeadcrumbs';
 
 export default function AdminPage() {
     const { userId, getToken } = useAuth();
@@ -39,7 +40,7 @@ export default function AdminPage() {
 
     return (
         <>
-            <h1>Admin Page</h1>
+            <AppBreadcrumbs items={[{title: "Admin" }]} />
             <div className="h-full w-full flex flex-col gap-4 items-center">
                 <h2 className="text-xl font-bold">Current Admin</h2>
                 {userdata ? (

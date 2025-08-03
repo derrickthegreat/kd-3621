@@ -3,8 +3,8 @@
 import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar, NavUserProps } from "@/components/admin-panel/app-sidebar"
 import { ReactNode, useEffect, useState } from "react"
-import { ADMIN_PANEL } from "@/lib/navigation"
 import { useAuth } from "@clerk/nextjs"
+import { AppBreadcrumbs } from "./AppBeadcrumbs"
 
 interface AppLayoutProps {
   children: ReactNode
