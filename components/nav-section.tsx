@@ -18,23 +18,25 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
 
-export function NavMain({
-  items,
-}: {
-  items: {
-    title: string
-    url: string
-    icon?: LucideIcon
-    isActive?: boolean
-    items?: {
-      title: string
-      url: string
-    }[]
-  }[]
-}) {
+export interface NavItem {
+  title: string
+  url: string
+  icon?: LucideIcon
+  isActive?: boolean
+  items?: NavItem[]
+}
+
+export interface NavSectionProps {
+  sectionTitle: string,
+  url?: string
+  items: NavItem[]
+}
+
+const NavSection = (navProps: NavSectionProps) => {
+  const { sectionTitle, url, items } = navProps;
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Menu</SidebarGroupLabel>
+      <SidebarGroupLabel>{sectionTitle}</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
           <Collapsible
@@ -71,3 +73,5 @@ export function NavMain({
     </SidebarGroup>
   )
 }
+
+export default NavSection;

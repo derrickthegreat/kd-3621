@@ -1,0 +1,106 @@
+import { NavSectionProps } from "@/components/nav-section";
+import { SquareTerminal, Bot, BookOpen, Settings2, Frame, PieChart } from "lucide-react";
+
+export const ADMIN_PANEL: NavSectionProps[] = [
+  {
+    sectionTitle: 'Menu',
+    items: [
+    {
+      title: "Kingdom Management",
+      url: "/admin/governors",
+      icon: SquareTerminal,
+      isActive: true,
+      items: [
+        {
+          title: "Rankings",
+          url: "#",
+        },
+        {
+          title: "DKP List",
+          url: "#",
+        },
+        {
+          title: "Applications",
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: "Events",
+      url: "#",
+      icon: Bot,
+      items: [
+        {
+          title: "Add Event",
+          url: "/admin/events/add",
+        },
+        {
+          title: "Manage Event",
+          url: "#",
+        },
+        {
+          title: "Archived Events",
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: "User Management",
+      url: "#",
+      icon: BookOpen,
+      items: [
+        {
+          title: "Verify User Governor",
+          url: "#",
+        },
+        {
+          title: "Lock/Unlock User Account",
+          url: "#",
+        },
+        {
+          title: "Manage Governor",
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: "Settings",
+      url: "#",
+      icon: Settings2,
+      items: [
+        {
+          title: "General",
+          url: "#",
+        },
+        {
+          title: "Upload Scan",
+          url: "#",
+        },
+        {
+          title: "Initiate Bot Scan",
+          url: "#",
+        },
+        {
+          title: "Edit DKP Goals",
+          url: "#",
+        },
+      ],
+    },
+  ],
+  },
+  {
+    sectionTitle: 'Bot Commands',
+    items: [
+    {
+      title: "Initiate New Kingdom Scan",
+      url: "#",
+      icon: Frame,
+    },
+    {
+      title: "Initiate Fort Tracker Scan",
+      url: "#",
+      icon: PieChart,
+    },
+  ],
+  }
+]
