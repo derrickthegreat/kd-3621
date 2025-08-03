@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useAuth } from '@clerk/nextjs'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { format } from 'date-fns'
@@ -20,7 +20,6 @@ type Event = {
 export default function EventDetailPage() {
   const { id } = useParams()
   const { getToken } = useAuth()
-  const router = useRouter()
 
   const [event, setEvent] = useState<Event | null>(null)
   const [loading, setLoading] = useState(true)
@@ -83,9 +82,9 @@ export default function EventDetailPage() {
               <div>
                 <h2 className="text-xl font-semibold">{event.name}</h2>
                 <p className="text-sm text-muted-foreground">
-                  {format(new Date(event.startDate), 'PPpp')} →{' '}
+                  {format(new Date(event.startDate), 'PPp')} →{' '}
                   {event.endDate
-                    ? format(new Date(event.endDate), 'PPpp')
+                    ? format(new Date(event.endDate), 'PPp')
                     : '—'}
                 </p>
               </div>

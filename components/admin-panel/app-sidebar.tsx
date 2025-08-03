@@ -22,15 +22,16 @@ export interface NavUserProps {
 
 export interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   title: string
+  homeUrl: string
   user?: NavUserProps | null,
   navigation?: NavSectionProps[]
 }
 
-export function AppSidebar({ title, user, navigation = DEFAULT_NAVIGATION, ...props }: AppSidebarProps) {
+export function AppSidebar({ title, homeUrl, user, navigation = DEFAULT_NAVIGATION, ...props }: AppSidebarProps) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <Link href="/admin/"><h1 className="text-sm font-bold text-center">{ title }</h1></Link>
+        <Link href={homeUrl}><h1 className="text-sm font-bold text-center">{ title }</h1></Link>
       </SidebarHeader>
       <SidebarContent>
         {navigation.map((section, id) => {

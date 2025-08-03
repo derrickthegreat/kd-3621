@@ -27,9 +27,13 @@ export const ADMIN_PANEL: NavSectionProps[] = [
     },
     {
       title: "Events",
-      url: "#",
+      url: "/admin/events",
       icon: Bot,
       items: [
+        {
+          title: "View All Events",
+          url: "/admin/events/",
+        },
         {
           title: "Add Event",
           url: "/admin/events/add",
@@ -51,7 +55,7 @@ export const ADMIN_PANEL: NavSectionProps[] = [
       items: [
         {
           title: "Verify User Governor",
-          url: "#",
+          url: "/admin/users/verify-governor",
         },
         {
           title: "Lock/Unlock User Account",

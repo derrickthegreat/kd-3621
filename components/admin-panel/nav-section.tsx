@@ -17,6 +17,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
+import Link from "next/link"
 
 export interface NavItem {
   title: string
@@ -28,12 +29,10 @@ export interface NavItem {
 
 export interface NavSectionProps {
   sectionTitle: string,
-  url?: string
   items: NavItem[]
 }
 
-const NavSection = (navProps: NavSectionProps) => {
-  const { sectionTitle, url, items } = navProps;
+const NavSection = ({ sectionTitle, items}: NavSectionProps) => {
   return (
     <SidebarGroup>
       <SidebarGroupLabel>{sectionTitle}</SidebarGroupLabel>
@@ -58,9 +57,9 @@ const NavSection = (navProps: NavSectionProps) => {
                   {item.items?.map((subItem) => (
                     <SidebarMenuSubItem key={subItem.title}>
                       <SidebarMenuSubButton asChild>
-                        <a href={subItem.url}>
+                        <Link href={subItem.url}>
                           <span>{subItem.title}</span>
-                        </a>
+                        </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                   ))}

@@ -54,7 +54,7 @@ export function AppLayout({ children }: AppLayoutProps) {
   }, [getToken])
   return (
     <SidebarProvider>
-      <AppSidebar title="KD 3621" navigation={ADMIN_PANEL} user={user} />
+      <AppSidebar title="KD 3621" homeUrl="/admin" user={user} />
       {children}
     </SidebarProvider>
   )
