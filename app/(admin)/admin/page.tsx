@@ -1,6 +1,6 @@
 'use client'
 
-import { useAuth } from '@clerk/nextjs';
+import { useAuth, SignIn } from '@clerk/nextjs';
 import { useEffect, useState } from 'react';
 import { AppBreadcrumbs } from './(components)/layout/AppBeadcrumbs';
 
@@ -36,20 +36,17 @@ export default function AdminPage() {
         console.log(userdata)
     }, [userId]);
 
-    if (!userId) return <div>You must be signed in.</div>;
+    if (!userId) return <SignIn path="/admin" routing="path" />;
 
     return (
         <>
-            <AppBreadcrumbs items={[{title: "Admin" }]} />
+            <AppBreadcrumbs items={[{ title: "Admin" }]} />
             <div className="h-full w-full flex flex-col gap-4 items-center">
                 <h2 className="text-xl font-bold">Current Admin</h2>
                 {userdata ? (
                     <>
                         <p>Name: {userdata.user?.firstName} {userdata.user?.lastName}</p>
                         <p>Role: {userdata.user?.publicMetadata?.role || 'N/A'}</p>
-                        <p>Governor Name: {userdata.governors?.[0]?.name || 'N/A'}</p>
-                        <p>Governor ID: {userdata.governors?.[0]?.rokId || 'N/A'}</p>
-                        <p>Alliance: {userdata.governors?.[0].alliance.name}</p>
                     </>
                 ) : (
                     <p>Loading user data...</p>

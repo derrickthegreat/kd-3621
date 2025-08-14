@@ -1,14 +1,16 @@
 import { ReactNode } from "react"
+import { ClerkProvider } from '@clerk/nextjs';
 import { AppContent } from "./(components)/layout/AppContent"
 import { AppLayout } from "./(components)/layout/AppLayout"
 
 export default function Layout({ children }: { children: ReactNode }) {
-
   return (
-        <AppLayout>
+    <ClerkProvider>
+      <AppLayout>
         <AppContent>
-            {children}
+          {children}
         </AppContent>
-        </AppLayout>
+      </AppLayout>
+    </ClerkProvider>
   )
 }

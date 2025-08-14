@@ -1,9 +1,8 @@
+import { clerkMiddleware } from '@clerk/nextjs/server';
 import { NextRequest, NextResponse } from 'next/server'
 
-// Temporarily disable Clerk middleware for testing
-export default function middleware(req: NextRequest) {
-  return NextResponse.next()
-}
+// Enable Clerk middleware for authentication
+export default clerkMiddleware();
 
 export const config = {
   matcher: [
@@ -11,5 +10,7 @@ export const config = {
     '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
     // Always run for API routes
     '/(api|trpc)(.*)',
+    // Protect all admin routes
+    '/admin(.*)',
   ],
 }
