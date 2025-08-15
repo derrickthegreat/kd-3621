@@ -9,6 +9,8 @@ import { Skeleton } from '@/components/ui/skeleton'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { AppBreadcrumbs } from '../(components)/layout/AppBeadcrumbs'
+import { Toaster } from "@/components/ui/sonner"
+import { toast } from "sonner"
 
 type Event = {
   id: string
@@ -16,6 +18,7 @@ type Event = {
   startDate: string
   endDate?: string | null
   description?: string | null
+  archived?: boolean
 }
 
 export default function EventListPage() {
@@ -58,59 +61,75 @@ export default function EventListPage() {
     fetchEvents()
   }, [getToken])
 
+  const handleDelete = async (id: string) => {
+    if (!confirm('Are you sure you want to delete this event?')) return;
+    setLoading(true);
+    setError(null);
+    try {
+      const token = await getToken();
+      const res = await fetch(`/api/v1/events?id=${id}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        toast(data.message || 'Failed to delete event');
+        throw new Error(data.message || 'Failed to delete event');
+      }
+      setEvents(events.filter(e => e.id !== id));
+      toast('Event deleted');
+    } catch (err: any) {
+      setError(err.message);
+      toast(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
-    <AppBreadcrumbs items={[{title: "Admin", href: "/admin" }, { title: "Events" }]} />
-    <div className="max-w-4xl mx-auto py-10">
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle>Events</CardTitle>
-          <Button asChild>
+      <Toaster />
+      <AppBreadcrumbs items={[{title: "Admin", href: "/admin" }, { title: "Events" }]} />
+      <div className="max-w-6xl mx-auto my-10">
+        <div className="flex items-center justify-between mb-6">
+          <h1 className="text-2xl font-bold">Events</h1>
+          <Button asChild className="cursor-pointer">
             <Link href="/admin/events/add">Add Event</Link>
           </Button>
-        </CardHeader>
-        <CardContent>
-          {loading && (
-            <div className="space-y-4">
-              <Skeleton className="h-8 w-full" />
-              <Skeleton className="h-8 w-full" />
-              <Skeleton className="h-8 w-full" />
-            </div>
-          )}
-
-          {error && <p className="text-red-600 text-sm">{error}</p>}
-
-          {!loading && !error && events.length === 0 && (
-            <p className="text-muted-foreground">No events found.</p>
-          )}
-
-          {!loading && !error && events.length > 0 && (
-            <div className="space-y-4">
-              {events.map((event) => (
-                <div
-                  key={event.id}
-                  className="border rounded-lg p-4 hover:bg-muted transition-colors"
-                  onClick={() => router.push(`/admin/events/${event.id}`)}
-                >
-                  <div className="text-lg font-medium">{event.name}</div>
-                  <div className="text-sm text-muted-foreground">
-                    {format(new Date(event.startDate), 'PPpp')} →{' '}
-                    {event.endDate
-                      ? format(new Date(event.endDate), 'PPpp')
-                      : '—'}
+        </div>
+        {loading ? (
+          <Skeleton className="h-32 w-full" />
+        ) : error ? (
+          <p className="text-red-500">{error}</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {events.filter(e => !e.archived).map(event => (
+              <Card key={event.id} className="flex flex-col justify-between h-full">
+                <CardHeader>
+                  <CardTitle className="truncate">{event.name}</CardTitle>
+                  <div className="text-xs text-muted-foreground mt-1">
+                    {format(event.startDate, 'yyyy-MM-dd')}
+                    {event.endDate && ` - ${format(event.endDate, 'yyyy-MM-dd')}`}
                   </div>
-                  {event.description && (
-                    <p className="mt-2 text-sm text-muted-foreground">
-                      {event.description}
-                    </p>
-                  )}
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground mb-2 line-clamp-3">{event.description || 'No description.'}</p>
+                </CardContent>
+                <div className="flex gap-2 px-6 pb-4">
+                  <Link href={`/admin/events/${event.id}`} className="flex-1">
+                    <Button size="sm" className="w-full cursor-pointer">View / Edit</Button>
+                  </Link>
+                  <Button size="sm" variant="destructive" className="cursor-pointer" onClick={() => handleDelete(event.id)}>
+                    Delete
+                  </Button>
                 </div>
-              ))}
-            </div>
-          )}
-        </CardContent>
-      </Card>
-    </div>
+              </Card>
+            ))}
+          </div>
+        )}
+      </div>
     </>
   )
 }
