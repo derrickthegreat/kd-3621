@@ -2,15 +2,14 @@
 
 import { useEffect, useState } from 'react'
 import { useAuth } from '@clerk/nextjs'
-import { format } from 'date-fns'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { AppBreadcrumbs } from '../(components)/layout/AppBeadcrumbs'
 import { Toaster } from "@/components/ui/sonner"
 import { toast } from "sonner"
+import { EventCard } from '@/components/admin-panel/event-card'
 
 type Event = {
   id: string
@@ -106,26 +105,16 @@ export default function EventListPage() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {events.filter(e => !e.archived).map(event => (
-              <Card key={event.id} className="flex flex-col justify-between h-full">
-                <CardHeader>
-                  <CardTitle className="truncate">{event.name}</CardTitle>
-                  <div className="text-xs text-muted-foreground mt-1">
-                    {format(event.startDate, 'yyyy-MM-dd')}
-                    {event.endDate && ` - ${format(event.endDate, 'yyyy-MM-dd')}`}
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-2 line-clamp-3">{event.description || 'No description.'}</p>
-                </CardContent>
-                <div className="flex gap-2 px-6 pb-4">
-                  <Link href={`/admin/events/${event.id}`} className="flex-1">
-                    <Button size="sm" className="w-full cursor-pointer">View / Edit</Button>
-                  </Link>
-                  <Button size="sm" variant="destructive" className="cursor-pointer" onClick={() => handleDelete(event.id)}>
-                    Delete
-                  </Button>
-                </div>
-              </Card>
+              <EventCard
+                key={event.id}
+                id={event.id}
+                name={event.name}
+                startDate={event.startDate}
+                endDate={event.endDate}
+                description={event.description}
+                isArchived={event.archived}
+                onDelete={handleDelete}
+              />
             ))}
           </div>
         )}

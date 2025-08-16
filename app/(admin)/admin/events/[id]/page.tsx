@@ -12,6 +12,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Toaster } from 'sonner'
 import { toast } from 'sonner'
+import { EventDetailsCard } from '@/components/admin-panel/event-detail-card'
 
 type Event = {
   id: string
@@ -181,65 +182,27 @@ export default function EventDetailPage() {
     <>
       <Toaster />
       <div className="max-w-2xl mx-auto my-10">
-        <Card>
-          <CardHeader>
-            <CardTitle>Event Details</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {editMode ? (
-              <form onSubmit={handleUpdate} className="flex flex-col gap-6">
-                <div className="grid grid-cols-1 gap-4">
-                  <Input type="text" value={name} onChange={e => setName(e.target.value)} required placeholder="Event Name" />
-                  <div className="flex gap-4">
-                    <Input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} required placeholder="Start Date" />
-                    <Input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} placeholder="End Date" />
-                  </div>
-                  <Textarea value={description} onChange={e => setDescription(e.target.value)} placeholder="Description" rows={3} />
-                </div>
-                {error && <p className="text-red-500">{error}</p>}
-                <div className="flex gap-2 justify-end">
-                  <Button type="submit" disabled={loading} className="cursor-pointer">{loading ? 'Saving...' : 'Save Changes'}</Button>
-                  <Button type="button" variant="secondary" className="cursor-pointer" onClick={() => setEditMode(false)}>
-                    Cancel
-                  </Button>
-                </div>
-              </form>
-            ) : (
-              <div className="flex flex-col gap-4">
-                <div className="grid grid-cols-2 gap-2 mb-2">
-                  <span className="font-semibold">Name:</span>
-                  <span>{event.name || 'N/A'}</span>
-                  <span className="font-semibold">Start Date:</span>
-                  <span>{event.startDate ? event.startDate.slice(0, 10) : 'N/A'}</span>
-                  <span className="font-semibold">End Date:</span>
-                  <span>{event.endDate ? event.endDate.slice(0, 10) : 'N/A'}</span>
-                  <span className="font-semibold">Description:</span>
-                  <span>{event.description || 'N/A'}</span>
-                </div>
-                <div className="flex gap-2 justify-end">
-                  <Button className="cursor-pointer" onClick={() => setEditMode(true)}>Edit</Button>
-                  {event.isArchived ? (
-                    <Button
-                      className="cursor-pointer bg-green-500 hover:bg-green-600 text-white"
-                      onClick={handleUnarchive}
-                    >
-                      Unarchive
-                    </Button>
-                  ) : (
-                    <Button
-                      className="cursor-pointer bg-yellow-500 hover:bg-yellow-600 text-white"
-                      onClick={handleArchive}
-                    >
-                      Archive
-                    </Button>
-                  )}
-                  <Button variant="destructive" className="cursor-pointer" onClick={() => handleDelete(event.id)}>Delete</Button>
-                  <Button variant="secondary" className="cursor-pointer" onClick={() => router.push('/admin/events')}>Back</Button>
-                </div>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+        <EventDetailsCard
+          event={event}
+          editMode={editMode}
+          name={name}
+          startDate={startDate}
+          endDate={endDate}
+          description={description}
+          loading={loading}
+          error={error}
+          onEdit={() => setEditMode(true)}
+          onCancelEdit={() => setEditMode(false)}
+          onSave={handleUpdate}
+          onDelete={handleDelete}
+          onBack={() => router.push('/admin/events')}
+          onChangeName={setName}
+          onChangeStartDate={setStartDate}
+          onChangeEndDate={setEndDate}
+          onChangeDescription={setDescription}
+          onArchive={handleArchive}
+          onUnarchive={handleUnarchive}
+        />
       </div>
     </>
   )

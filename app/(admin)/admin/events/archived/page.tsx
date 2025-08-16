@@ -13,6 +13,8 @@ import { Toaster } from "@/components/ui/sonner"
 import { toast } from "sonner"
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import { EventCard } from '@/components/admin-panel/event-card'
+import { EventDetailsCard } from '@/components/admin-panel/event-detail-card'
 
 type Event = {
   id: string
@@ -181,79 +183,39 @@ export default function ArchivedEventsPage() {
           <p className="text-red-500">{error}</p>
         ) : selected ? (
           <div className="max-w-2xl mx-auto">
-            <Card>
-              <CardHeader>
-                <CardTitle>Archived Event Details</CardTitle>
-              </CardHeader>
-              <CardContent>
-                {editMode ? (
-                  <form onSubmit={handleUpdate} className="flex flex-col gap-6">
-                    <div className="grid grid-cols-1 gap-4">
-                      <Input type="text" value={name} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)} required placeholder="Event Name" />
-                      <div className="flex gap-4">
-                        <Input type="date" value={startDate} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setStartDate(e.target.value)} required placeholder="Start Date" />
-                        <Input type="date" value={endDate} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEndDate(e.target.value)} placeholder="End Date" />
-                      </div>
-                      <Textarea value={description} onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)} placeholder="Description" rows={3} />
-                    </div>
-                    <div className="flex gap-2 justify-end">
-                      <Button type="submit" className="cursor-pointer">Save Changes</Button>
-                      <Button type="button" variant="secondary" className="cursor-pointer" onClick={() => setEditMode(false)}>Cancel</Button>
-                    </div>
-                  </form>
-                ) : (
-                  <div className="flex flex-col gap-4">
-                    <div className="grid grid-cols-2 gap-2 mb-2">
-                      <span className="font-semibold">Name:</span>
-                      <span>{selected.name || 'N/A'}</span>
-                      <span className="font-semibold">Start Date:</span>
-                      <span>{selected.startDate ? selected.startDate.slice(0, 10) : 'N/A'}</span>
-                      <span className="font-semibold">End Date:</span>
-                      <span>{selected.endDate ? selected.endDate.slice(0, 10) : 'N/A'}</span>
-                      <span className="font-semibold">Description:</span>
-                      <span>{selected.description || 'N/A'}</span>
-                    </div>
-                    <div className="flex gap-2 justify-end">
-                      <Button className="cursor-pointer" onClick={() => setEditMode(true)}>Edit</Button>
-                      <Link href={`/admin/events/${selected.id}`} className="flex-1">
-                        <Button size="sm" className="w-full cursor-pointer">View / Edit</Button>
-                      </Link>
-                      <Button variant="destructive" className="cursor-pointer" onClick={() => handleDelete(selected.id)}>Delete</Button>
-                      <Button variant="secondary" className="cursor-pointer" onClick={() => setSelected(null)}>Back</Button>
-                    </div>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+            <EventDetailsCard
+              event={selected}
+              editMode={editMode}
+              name={name}
+              startDate={startDate}
+              endDate={endDate}
+              description={description}
+              loading={loading}
+              error={error}
+              onEdit={() => setEditMode(true)}
+              onCancelEdit={() => setEditMode(false)}
+              onSave={handleUpdate}
+              onDelete={handleDelete}
+              onBack={() => setSelected(null)}
+              onChangeName={setName}
+              onChangeStartDate={setStartDate}
+              onChangeEndDate={setEndDate}
+              onChangeDescription={setDescription}
+            />
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {events.filter(e => e.isArchived).map(event => (
-              <Card key={event.id} className="flex flex-col justify-between h-full">
-                <CardHeader>
-                  <CardTitle className="truncate">{event.name}</CardTitle>
-                  <div className="text-xs text-muted-foreground mt-1">
-                    {format(event.startDate, 'yyyy-MM-dd')}
-                    {event.endDate && ` - ${format(event.endDate, 'yyyy-MM-dd')}`}
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-2 line-clamp-3">{event.description || 'No description.'}</p>
-                </CardContent>
-                <div className="flex gap-2 px-6 pb-4">
-                  <Link href={`/admin/events/${event.id}`} className="flex-1">
-                    <Button size="sm" className="w-full cursor-pointer">View / Edit</Button>
-                  </Link>
-                  <Button
-                    size="sm"
-                    variant="destructive"
-                    className="cursor-pointer"
-                    onClick={() => handleDelete(event.id)}
-                  >
-                    Delete
-                  </Button>
-                </div>
-              </Card>
+              <EventCard
+                key={event.id}
+                id={event.id}
+                name={event.name}
+                startDate={event.startDate}
+                endDate={event.endDate}
+                description={event.description}
+                isArchived={event.isArchived}
+                onDelete={handleDelete}
+              />
             ))}
           </div>
         )}
