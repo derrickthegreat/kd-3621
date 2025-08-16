@@ -19,6 +19,7 @@ type Event = {
   startDate: string
   endDate?: string | null
   description?: string | null
+  isArchived?: boolean
 }
 
 export default function EventDetailPage() {
@@ -102,42 +103,59 @@ export default function EventDetailPage() {
     }
   }
 
-  const handleClose = async () => {
-    if (!confirm('Are you sure you want to archive this event?')) return
-    setLoading(true)
-    setError(null)
+  const handleArchive = async () => {
+    if (!event) return;
     try {
-      const token = await getToken()
-      const res = await fetch(`/api/v1/events?id=${id}`, {
+      const token = await getToken();
+      const res = await fetch(`/api/v1/events?id=${event.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ isArchived: true }),
-      })
+        body: JSON.stringify({ isArchived: true, closedAt: new Date().toISOString() }),
+      });
       if (!res.ok) {
-        const data = await res.json()
-        toast(data.message || 'Failed to archive event', { position: 'top-center' })
-        throw new Error(data.message || 'Failed to archive event')
+        const data = await res.json();
+        toast(data.message || 'Failed to archive event', { position: 'top-center' });
+        return;
       }
-      toast('Event has been archived', { position: 'top-center' })
-      router.push('/admin/events/archived')
+      toast('Event has been archived', { position: 'top-center' });
+      router.push('/admin/events/archived');
     } catch (err: any) {
-      setError(err.message)
-      toast(err.message, { position: 'top-center' })
-    } finally {
-      setLoading(false)
+      toast('Failed to archive event', { position: 'top-center' });
     }
-  }
+  };
 
-  const handleDelete = async () => {
-    if (!confirm('Are you sure you want to permanently delete this event?')) return
-    setLoading(true)
-    setError(null)
+  const handleUnarchive = async () => {
+    if (!event) return;
+    try {
+      const token = await getToken();
+      const res = await fetch(`/api/v1/events?id=${event.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ isArchived: false, closedAt: null }),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        toast(data.message || 'Failed to unarchive event', { position: 'top-center' });
+        return;
+      }
+      toast('Event has been unarchived', { position: 'top-center' });
+      router.push('/admin/events');
+    } catch (err: any) {
+      toast('Failed to unarchive event', { position: 'top-center' });
+    }
+  };
+
+  const handleDelete = async (eventId?: string) => {
+    if (!eventId) return
     try {
       const token = await getToken()
-      const res = await fetch(`/api/v1/events?id=${id}`, {
+      const res = await fetch(`/api/v1/events?id=${eventId}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -200,11 +218,23 @@ export default function EventDetailPage() {
                 </div>
                 <div className="flex gap-2 justify-end">
                   <Button className="cursor-pointer" onClick={() => setEditMode(true)}>Edit</Button>
-                  <Button className="cursor-pointer bg-yellow-400 hover:bg-yellow-500 text-black" onClick={handleClose}>Archive</Button>
-                  <Button variant="destructive" className="cursor-pointer" onClick={handleDelete}>Delete</Button>
-                  <Link href="/admin/events">
-                    <Button variant="secondary" className="cursor-pointer">Back</Button>
-                  </Link>
+                  {event.isArchived ? (
+                    <Button
+                      className="cursor-pointer bg-green-500 hover:bg-green-600 text-white"
+                      onClick={handleUnarchive}
+                    >
+                      Unarchive
+                    </Button>
+                  ) : (
+                    <Button
+                      className="cursor-pointer bg-yellow-500 hover:bg-yellow-600 text-white"
+                      onClick={handleArchive}
+                    >
+                      Archive
+                    </Button>
+                  )}
+                  <Button variant="destructive" className="cursor-pointer" onClick={() => handleDelete(event.id)}>Delete</Button>
+                  <Button variant="secondary" className="cursor-pointer" onClick={() => router.push('/admin/events')}>Back</Button>
                 </div>
               </div>
             )}

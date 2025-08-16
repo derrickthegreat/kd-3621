@@ -105,12 +105,11 @@ export default function ArchivedEventsPage() {
     }
   }
 
-  const handleDelete = async () => {
-    if (!selected) return
-    if (!confirm('Are you sure you want to permanently delete this event?')) return
+  const handleDelete = async (id: string) => {
+    if (!id) return
     try {
       const token = await getToken()
-      const res = await fetch(`/api/v1/events?id=${selected.id}`, {
+      const res = await fetch(`/api/v1/events?id=${id}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
       })
@@ -216,8 +215,10 @@ export default function ArchivedEventsPage() {
                     </div>
                     <div className="flex gap-2 justify-end">
                       <Button className="cursor-pointer" onClick={() => setEditMode(true)}>Edit</Button>
-                      <Button className="cursor-pointer bg-green-500 hover:bg-green-600 text-white" onClick={handleUnarchive}>Unarchive</Button>
-                      <Button variant="destructive" className="cursor-pointer" onClick={handleDelete}>Delete</Button>
+                      <Link href={`/admin/events/${selected.id}`} className="flex-1">
+                        <Button size="sm" className="w-full cursor-pointer">View / Edit</Button>
+                      </Link>
+                      <Button variant="destructive" className="cursor-pointer" onClick={() => handleDelete(selected.id)}>Delete</Button>
                       <Button variant="secondary" className="cursor-pointer" onClick={() => setSelected(null)}>Back</Button>
                     </div>
                   </div>
@@ -240,8 +241,17 @@ export default function ArchivedEventsPage() {
                   <p className="text-sm text-muted-foreground mb-2 line-clamp-3">{event.description || 'No description.'}</p>
                 </CardContent>
                 <div className="flex gap-2 px-6 pb-4">
-                  <Button size="sm" className="w-full cursor-pointer" onClick={() => setSelected(event)}>View / Edit</Button>
-                  <Button size="sm" variant="destructive" className="w-full cursor-pointer" onClick={() => { setSelected(event); setEditMode(false); handleDelete(); }}>Delete</Button>
+                  <Link href={`/admin/events/${event.id}`} className="flex-1">
+                    <Button size="sm" className="w-full cursor-pointer">View / Edit</Button>
+                  </Link>
+                  <Button
+                    size="sm"
+                    variant="destructive"
+                    className="cursor-pointer"
+                    onClick={() => handleDelete(event.id)}
+                  >
+                    Delete
+                  </Button>
                 </div>
               </Card>
             ))}
