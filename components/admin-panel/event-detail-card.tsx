@@ -31,6 +31,7 @@ export type EventDetailsCardProps = {
   onChangeDescription: (v: string) => void;
   onArchive?: () => void;
   onUnarchive?: () => void;
+  showActions?: boolean;
 };
 
 export function EventDetailsCard({
@@ -53,6 +54,7 @@ export function EventDetailsCard({
   onChangeDescription,
   onArchive,
   onUnarchive,
+  showActions = true,
 }: EventDetailsCardProps) {
   return (
     <Card>
@@ -88,20 +90,22 @@ export function EventDetailsCard({
               <span className="font-semibold">Description:</span>
               <span>{event.description || 'N/A'}</span>
             </div>
-            <div className="flex gap-2 justify-end">
-              <Button className="cursor-pointer" onClick={onEdit}>Edit</Button>
-              {event.isArchived ? (
-                <Button className="cursor-pointer bg-green-500 hover:bg-green-600 text-white" onClick={onUnarchive}>
-                  Unarchive
-                </Button>
-              ) : (
-                <Button className="cursor-pointer bg-yellow-500 hover:bg-yellow-600 text-white" onClick={onArchive}>
-                  Archive
-                </Button>
-              )}
-              <Button variant="destructive" className="cursor-pointer" onClick={() => onDelete(event.id)}>Delete</Button>
-              <Button variant="secondary" className="cursor-pointer" onClick={onBack}>Back</Button>
-            </div>
+            {showActions && (
+              <div className="flex gap-2 justify-end">
+                <Button className="cursor-pointer" onClick={onEdit}>Edit</Button>
+                {event.isArchived ? (
+                  <Button className="cursor-pointer bg-green-500 hover:bg-green-600 text-white" onClick={onUnarchive}>
+                    Unarchive
+                  </Button>
+                ) : (
+                  <Button className="cursor-pointer bg-yellow-500 hover:bg-yellow-600 text-white" onClick={onArchive}>
+                    Archive
+                  </Button>
+                )}
+                <Button variant="destructive" className="cursor-pointer" onClick={() => onDelete(event.id)}>Delete</Button>
+                <Button variant="secondary" className="cursor-pointer" onClick={onBack}>Back</Button>
+              </div>
+            )}
           </div>
         )}
       </CardContent>

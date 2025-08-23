@@ -29,7 +29,6 @@ export const ADMIN_PANEL: NavSectionProps[] = [
         icon: Calendar,
         items: [
           { title: "All Events", url: "/admin/events" },
-          { title: "Add Event", url: "/admin/events/add" },
           { title: "Applications", url: "/admin/applications" },
           { title: "Archived", url: "/admin/events/archived" },
         ],

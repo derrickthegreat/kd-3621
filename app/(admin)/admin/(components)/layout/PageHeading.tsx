@@ -7,7 +7,7 @@ import { useEntityTitle } from "./useEntityTitle"
 
 export function PageHeading() {
   const pathname = usePathname()
-  const { title: entityTitle } = useEntityTitle()
+  const { title: entityTitle, description: entityDescription } = useEntityTitle()
 
   const { title, description } = useMemo(() => {
     const segs = pathname?.split("/").filter(Boolean) ?? []
@@ -36,10 +36,12 @@ export function PageHeading() {
     const prettyFromKey = (key?: string) =>
       key ? ROUTE_TITLE_MAP[key] || key.replace(/[-_]+/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()) : "Admin"
 
-    const title = entityTitle || meta?.title || prettyFromKey(metaKey)
-    const description = meta?.description
-    return { title, description }
-  }, [pathname, entityTitle])
+  const title = entityTitle || meta?.title || prettyFromKey(metaKey)
+  // If we resolved an entity title, prefer its description and do NOT fall back to generic route description
+  const cleanedEntityDesc = typeof entityDescription === "string" ? entityDescription.trim() : entityDescription
+  const description = entityTitle ? (cleanedEntityDesc || null) : (meta?.description)
+  return { title, description }
+  }, [pathname, entityTitle, entityDescription])
 
   return (
     <div className="px-4 py-4">

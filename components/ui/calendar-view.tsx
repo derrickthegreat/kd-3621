@@ -16,6 +16,8 @@ import {
   startOfWeek,
   isWithinInterval,
   differenceInCalendarDays,
+  startOfDay,
+  endOfDay,
 } from "date-fns"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -47,6 +49,7 @@ export interface CalendarViewProps {
   view?: 'month' | 'week'
   onViewChange?: (view: 'month' | 'week') => void
   showViewToggle?: boolean
+  density?: 'comfortable' | 'compact'
 }
 
 export function CalendarView({
@@ -65,6 +68,7 @@ export function CalendarView({
   view: controlledView,
   onViewChange,
   showViewToggle = true,
+  density = 'comfortable',
 }: CalendarViewProps) {
   const [month, setMonth] = React.useState<Date>(initialMonth ?? new Date())
   const [uncontrolledView, setUncontrolledView] = React.useState<'month' | 'week'>(controlledView ?? 'month')
@@ -160,28 +164,38 @@ export function CalendarView({
   type WeekSegment = { startCol: number; endCol: number; line: number; ev: CalendarEvent }
 
   function computeWeekSegments(weekDays: Date[]): WeekSegment[] {
-    const weekStart = weekDays[0]
-    const weekEnd = weekDays[6]
+    const weekStart = startOfDay(weekDays[0])
+    const weekEnd = endOfDay(weekDays[6])
     // events that overlap this week
-    const overlapping = normalizedEvents.filter((e) => {
-      const s = e.start as Date
-      const eend = (e.end as Date | null) ?? s
+  // Keep order stable by not sorting normalizedEvents; we will use createdAt/idx if available
+  const overlapping = normalizedEvents.filter((e) => {
+      const s = startOfDay(e.start as Date)
+      const eend = endOfDay(((e.end as Date | null) ?? (e.start as Date)))
       return s <= weekEnd && eend >= weekStart
     })
 
     // Prepare segments clipped to the week boundaries
-    const raw = overlapping
+      // Sort overlapping by createdAt asc if provided, else maintain insertion order using data.idx
+      const ordered = [...overlapping].sort((a, b) => {
+        const ac = (a as any).data?.createdAt
+        const bc = (b as any).data?.createdAt
+        if (ac && bc) return new Date(ac).getTime() - new Date(bc).getTime()
+        const ai = (a as any).data?.idx ?? 0
+        const bi = (b as any).data?.idx ?? 0
+        return ai - bi
+      })
+
+      const raw = ordered
       .map((e) => {
-        const s = e.start as Date
-        const eend = (e.end as Date | null) ?? s
+        const s = startOfDay(e.start as Date)
+        const eend = startOfDay(((e.end as Date | null) ?? (e.start as Date)))
         const segStart = s > weekStart ? s : weekStart
         const segEnd = eend < weekEnd ? eend : weekEnd
         const startCol = Math.max(0, Math.min(6, differenceInCalendarDays(segStart, weekStart)))
         const endCol = Math.max(startCol, Math.min(6, differenceInCalendarDays(segEnd, weekStart)))
         return { startCol, endCol, ev: e }
       })
-      // sort by start then by length descending to improve packing
-      .sort((a, b) => a.startCol - b.startCol || (b.endCol - b.startCol) - (a.endCol - a.startCol))
+        // Note: don't sort; keep original order to control vertical stacking
 
     // Greedy packing into lines
     const lines: boolean[][] = []
@@ -272,8 +286,13 @@ export function CalendarView({
                 </div>
 
                 {/* Events overlay for this week */}
-                {/* overlay uses small gutters so bars don't touch cell borders */}
-                <div className="pointer-events-none absolute inset-x-0 top-[1.75rem] bottom-2 grid grid-cols-7 gap-1 px-3">
+                <div
+                  className={cn(
+                    "pointer-events-none absolute inset-x-0 grid grid-cols-7 px-3",
+                    density === 'compact' ? 'gap-px bottom-1' : 'gap-1 bottom-2'
+                  )}
+                  style={{ top: density === 'compact' ? '1.6rem' : '1.75rem' }}
+                >
                   {segments.map((seg, idx) => {
                     const span = seg.endCol - seg.startCol + 1
                     const ev = seg.ev
@@ -282,22 +301,24 @@ export function CalendarView({
                       <button
                         key={`${wi}-${idx}-${ev.id}`}
                         className={cn(
-                          "pointer-events-auto h-6 overflow-hidden rounded-md border text-left text-[11px] leading-6",
+                          "pointer-events-auto overflow-hidden rounded-md border text-left text-[11px]",
                           textColor === 'white' ? 'text-white' : textColor === 'black' ? 'text-black' : 'text-foreground'
                         , badgeClassName?.(ev)
                         )}
                         style={{
                           gridColumn: `${seg.startCol + 1} / span ${span}`,
-                          marginTop: seg.line * 24,
+                          marginTop: seg.line * (density === 'compact' ? 16 : 24),
                           marginLeft: seg.startCol === 0 ? 2 : 0,
                           marginRight: seg.endCol === 6 ? 2 : 0,
                           backgroundColor: (ev as any).color || undefined,
                           borderColor: (ev as any).color || undefined,
+                          height: density === 'compact' ? 18 : 24,
+                          lineHeight: `${density === 'compact' ? 18 : 24}px`,
                         }}
                         onClick={(e) => { e.stopPropagation(); onEventClick?.(ev) }}
                         aria-label={typeof ev.title === 'string' ? ev.title : 'Event'}
                       >
-                        <span className="inline-flex items-center gap-2 px-2">
+                        <span className={cn("inline-flex items-center", density === 'compact' ? 'gap-1 px-1.5' : 'gap-2 px-2')}>
                           <span className="truncate">{renderEventChip ? renderEventChip(ev) : ev.title}</span>
                         </span>
                       </button>
