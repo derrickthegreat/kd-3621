@@ -4,7 +4,7 @@ import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar, NavUserProps } from "@/components/admin-panel/app-sidebar"
 import { ReactNode, useEffect, useState } from "react"
 import { useAuth } from "@clerk/nextjs"
-import { AppBreadcrumbs } from "./AppBeadcrumbs"
+import { HeaderActionsProvider } from "./HeaderActions"
 
 interface AppLayoutProps {
   children: ReactNode
@@ -32,14 +32,13 @@ export function AppLayout({ children }: AppLayoutProps) {
         })
 
         const data = await res.json()
-        console.log(data)
+        const primaryEmail = data.user?.emailAddresses?.[0]?.emailAddress || ""
         const user: NavUserProps = {
-          name: data.user.firstName,
-          email: data.user.emailAddresses[0].emailAddresses,
-          avatar: data.user.imageUrl
+          name: `${data.user?.firstName ?? ''} ${data.user?.lastName ?? ''}`.trim(),
+          email: primaryEmail,
+          avatar: data.user?.imageUrl ?? ""
         }
         setUser(user);
-        console.log(user)
         if (!res.ok) {
           throw new Error(data.message || 'Failed to fetch user')
         }
@@ -55,7 +54,9 @@ export function AppLayout({ children }: AppLayoutProps) {
   return (
     <SidebarProvider>
       <AppSidebar title="KD 3621" homeUrl="/admin" user={user} />
-      {children}
+      <HeaderActionsProvider>
+        {children}
+      </HeaderActionsProvider>
     </SidebarProvider>
   )
 }

@@ -1,4 +1,4 @@
-export default function ProductPage() {
+export default function VerifyGovernorPage() {
   const productName = "Players"
 
   return (

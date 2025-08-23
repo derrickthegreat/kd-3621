@@ -40,7 +40,7 @@ export default function AdminPage() {
 
     return (
         <>
-            <AppBreadcrumbs items={[{ title: "Admin" }]} />
+            <AppBreadcrumbs />
             <div className="h-full w-full flex flex-col gap-4 items-center">
                 <h2 className="text-xl font-bold">Current Admin</h2>
                 {userdata ? (

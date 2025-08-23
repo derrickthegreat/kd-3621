@@ -58,7 +58,6 @@ export default function AddEventPage() {
 
   return (
     <>
-      <AppBreadcrumbs items={[{title: "Admin", href: "/admin" }, { title: "Events", href: "/admin/events" }, { title: "Add Event" }]} />
       <div className="max-w-2xl mx-auto my-10">
         <Card>
           <CardHeader>

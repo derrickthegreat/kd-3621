@@ -3,16 +3,9 @@
 
 import { useEffect, useState } from 'react'
 import { useAuth } from '@clerk/nextjs'
-import { format } from 'date-fns'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
-import Link from 'next/link'
-import { AppBreadcrumbs } from '../../(components)/layout/AppBeadcrumbs'
 import { Toaster } from "@/components/ui/sonner"
 import { toast } from "sonner"
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
 import { EventCard } from '@/components/admin-panel/event-card'
 import { EventDetailsCard } from '@/components/admin-panel/event-detail-card'
 
@@ -174,9 +167,7 @@ export default function ArchivedEventsPage() {
   return (
     <>
       <Toaster />
-      <AppBreadcrumbs items={[{title: "Admin", href: "/admin" }, { title: "Events", href: "/admin/events" }, { title: "Archived Events" }]} />
-      <div className="max-w-6xl mx-auto my-10">
-        <h1 className="text-2xl font-bold mb-6">Archived Events</h1>
+  <div className="max-w-6xl mx-auto my-6">
         {loading ? (
           <Skeleton className="h-32 w-full" />
         ) : error ? (
