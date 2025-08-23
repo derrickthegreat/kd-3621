@@ -8,6 +8,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import Link from 'next/link'
 import { AppBreadcrumbs } from '../../(components)/layout/AppBeadcrumbs'
+import { useRouter } from 'next/navigation'
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 
 type Event = {
   id: string
@@ -17,97 +20,69 @@ type Event = {
   description?: string | null
 }
 
-export default function EventListPage() {
-  const { getToken } = useAuth()
-  const [events, setEvents] = useState<Event[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+export default function AddEventPage() {
+  const { getToken } = useAuth();
+  const [name, setName] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [description, setDescription] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const token = await getToken()
-        if (!token) {
-          setError('Unauthorized')
-          return
-        }
-
-        const res = await fetch('/api/v1/events', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-
-        const data = await res.json()
-
-        if (!res.ok) {
-          throw new Error(data.message || 'Failed to fetch events')
-        }
-
-        setEvents(data)
-      } catch (err: any) {
-        setError(err.message)
-      } finally {
-        setLoading(false)
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+    try {
+      const token = await getToken();
+      const res = await fetch('/api/v1/events', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ name, startDate, endDate, description }),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.message || 'Failed to create event');
       }
+      router.push('/admin/events');
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
-
-    fetchEvents()
-  }, [getToken])
+  };
 
   return (
     <>
-    <AppBreadcrumbs items={[{title: "Admin", href: "/admin" }, { title: "Events", href: "/admin/events" }, { title: "Add Event" }]} />
-    <div className="max-w-4xl mx-auto py-10">
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle>Events</CardTitle>
-          <Button asChild>
-            <Link href="/admin/events/add">Add Event</Link>
-          </Button>
-        </CardHeader>
-        <CardContent>
-          {loading && (
-            <div className="space-y-4">
-              <Skeleton className="h-8 w-full" />
-              <Skeleton className="h-8 w-full" />
-              <Skeleton className="h-8 w-full" />
-            </div>
-          )}
-
-          {error && <p className="text-red-600 text-sm">{error}</p>}
-
-          {!loading && !error && events.length === 0 && (
-            <p className="text-muted-foreground">No events found.</p>
-          )}
-
-          {!loading && !error && events.length > 0 && (
-            <div className="space-y-4">
-              {events.map((event) => (
-                <Link
-                  href={`/admin/events/${event.id}`}
-                  key={event.id}
-                  className="block border rounded-lg p-4 hover:bg-muted transition-colors"
-                >
-                  <div className="text-lg font-medium">{event.name}</div>
-                  <div className="text-sm text-muted-foreground">
-                    {format(new Date(event.startDate), 'PPpp')} →{' '}
-                    {event.endDate
-                      ? format(new Date(event.endDate), 'PPpp')
-                      : '—'}
-                  </div>
-                  {event.description && (
-                    <p className="mt-2 text-sm text-muted-foreground">
-                      {event.description}
-                    </p>
-                  )}
-                </Link>
-              ))}
-            </div>
-          )}
-        </CardContent>
-      </Card>
-    </div>
+      <AppBreadcrumbs items={[{title: "Admin", href: "/admin" }, { title: "Events", href: "/admin/events" }, { title: "Add Event" }]} />
+      <div className="max-w-2xl mx-auto my-10">
+        <Card>
+          <CardHeader>
+            <CardTitle>Add Event</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+              <div className="grid grid-cols-1 gap-4">
+                <Input type="text" placeholder="Event Name" value={name} onChange={e => setName(e.target.value)} required />
+                <div className="flex gap-4">
+                  <Input type="date" placeholder="Start Date" value={startDate} onChange={e => setStartDate(e.target.value)} required />
+                  <Input type="date" placeholder="End Date" value={endDate} onChange={e => setEndDate(e.target.value)} />
+                </div>
+                <Textarea placeholder="Description" value={description} onChange={e => setDescription(e.target.value)} rows={3} />
+              </div>
+              {error && <p className="text-red-500">{error}</p>}
+              <div className="flex gap-2 justify-end">
+                <Button type="submit" disabled={loading}>{loading ? 'Creating...' : 'Create Event'}</Button>
+                <Link href="/admin/events"><Button variant="secondary" type="button">Cancel</Button></Link>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
     </>
-  )
+  );
 }

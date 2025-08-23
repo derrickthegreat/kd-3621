@@ -1,78 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-
-// Mock database events data (simulating what would come from the database)
-const mockDatabaseEvents = [
-  {
-    id: '1',
-    name: 'MGE Week 1',
-    startDate: '2025-01-15T00:00:00Z',
-    endDate: '2025-01-21T23:59:59Z',
-    description: 'Mightiest Governor Event - Week 1',
-    color: '#3a94ee',
-    createdAt: '2025-01-01T00:00:00Z',
-    updatedAt: '2025-01-01T00:00:00Z',
-    createdBy: 'system',
-    updatedBy: 'system',
-    closedAt: null,
-    isArchived: false,
-  },
-  {
-    id: '2',
-    name: 'Wheel of Fortune',
-    startDate: '2025-01-22T00:00:00Z',
-    endDate: '2025-01-24T23:59:59Z',
-    description: 'Wheel of Fortune Event',
-    color: '#f99806',
-    createdAt: '2025-01-01T00:00:00Z',
-    updatedAt: '2025-01-01T00:00:00Z',
-    createdBy: 'system',
-    updatedBy: 'system',
-    closedAt: null,
-    isArchived: false,
-  },
-  {
-    id: '3',
-    name: 'Ark of Osiris',
-    startDate: '2025-01-25T00:00:00Z',
-    endDate: '2025-01-29T23:59:59Z',
-    description: 'Ark of Osiris Event',
-    color: '#339933',
-    createdAt: '2025-01-01T00:00:00Z',
-    updatedAt: '2025-01-01T00:00:00Z',
-    createdBy: 'system',
-    updatedBy: 'system',
-    closedAt: null,
-    isArchived: false,
-  },
-  {
-    id: '4',
-    name: 'More Than Gems',
-    startDate: '2025-02-01T00:00:00Z',
-    endDate: '2025-02-02T23:59:59Z',
-    description: 'More Than Gems Event',
-    color: '#FF5733',
-    createdAt: '2025-01-01T00:00:00Z',
-    updatedAt: '2025-01-01T00:00:00Z',
-    createdBy: 'system',
-    updatedBy: 'system',
-    closedAt: null,
-    isArchived: false,
-  },
-  {
-    id: '5',
-    name: 'KvK Training',
-    startDate: '2025-02-10T00:00:00Z',
-    endDate: '2025-02-10T23:59:59Z',
-    description: 'Kingdom vs Kingdom Training Event',
-    color: '#ff0066',
-    createdAt: '2025-01-01T00:00:00Z',
-    updatedAt: '2025-01-01T00:00:00Z',
-    createdBy: 'system',
-    updatedBy: 'system',
-    closedAt: null,
-    isArchived: false,
-  },
-];
+import prisma from './prisma';
 
 /**
  * Mock API Endpoint: /api/v1/events
@@ -81,11 +8,24 @@ const mockDatabaseEvents = [
  */
 export async function GET(request: NextRequest) {
   try {
-    // Simulate database query with ordering by startDate
-    const events = mockDatabaseEvents
-      .filter(event => !event.isArchived)
-      .sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
-    
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+    if (id) {
+      const event = await prisma.event.findUnique({ where: { id } });
+      if (!event) return NextResponse.json({ message: 'Event not found' }, { status: 404 });
+      return NextResponse.json(event, { status: 200 });
+    }
+    const archived = searchParams.get('archived');
+    let where: any = {};
+    if (archived === 'true') {
+      where.isArchived = true;
+    } else {
+      where.isArchived = false;
+    }
+    const events = await prisma.event.findMany({
+      where,
+      orderBy: { startDate: 'desc' },
+    });
     return NextResponse.json(events, { status: 200 });
   } catch (error: any) {
     console.error('GET /api/v1/events error:', error);
@@ -94,6 +34,68 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  // For now, just return a message that POST is not implemented in mock mode
-  return NextResponse.json({ message: 'POST not implemented in mock mode' }, { status: 501 });
+  try {
+    const body = await request.json();
+    const event = await prisma.event.create({
+      data: {
+        name: body.name,
+        startDate: new Date(body.startDate),
+        endDate: body.endDate ? new Date(body.endDate) : null,
+        description: body.description || null,
+        color: body.color || null,
+        createdBy: body.createdBy || 'system',
+      },
+    });
+    return NextResponse.json(event, { status: 201 });
+  } catch (error: any) {
+    console.error('POST /api/v1/events error:', error);
+    return NextResponse.json({ message: 'Failed to create event', error: error.message }, { status: 500 });
+  }
+}
+
+export async function PUT(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+    if (!id) return NextResponse.json({ message: 'Missing event id' }, { status: 400 });
+    const body = await request.json();
+    let updateData: any = {};
+    if (typeof body.archived !== 'undefined' || typeof body.isArchived !== 'undefined') {
+      updateData.isArchived = body.archived ?? body.isArchived;
+      if (updateData.isArchived) {
+        updateData.closedAt = new Date();
+      }
+    }
+    if (body.name) updateData.name = body.name;
+    if (body.startDate) updateData.startDate = new Date(body.startDate);
+    if (body.endDate) updateData.endDate = new Date(body.endDate);
+    if (body.description) updateData.description = body.description;
+    if (body.color) updateData.color = body.color;
+    if (body.updatedBy) updateData.updatedBy = body.updatedBy;
+    // Only update if there is something to update
+    if (Object.keys(updateData).length === 0) {
+      return NextResponse.json({ message: 'No valid fields to update' }, { status: 400 });
+    }
+    const event = await prisma.event.update({
+      where: { id },
+      data: updateData,
+    });
+    return NextResponse.json(event, { status: 200 });
+  } catch (error: any) {
+    console.error('PUT /api/v1/events error:', error);
+    return NextResponse.json({ message: 'Failed to update event', error: error.message }, { status: 500 });
+  }
+}
+
+export async function DELETE(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+    if (!id) return NextResponse.json({ message: 'Missing event id' }, { status: 400 });
+    await prisma.event.delete({ where: { id } });
+    return NextResponse.json({ message: 'Event deleted' }, { status: 200 });
+  } catch (error: any) {
+    console.error('DELETE /api/v1/events error:', error);
+    return NextResponse.json({ message: 'Failed to delete event', error: error.message }, { status: 500 });
+  }
 }

@@ -39,12 +39,8 @@ export const ADMIN_PANEL: NavSectionProps[] = [
           url: "/admin/events/add",
         },
         {
-          title: "Manage Event",
-          url: "#",
-        },
-        {
           title: "Archived Events",
-          url: "#",
+          url: "/admin/events/archived",
         },
       ],
     },
