@@ -1,9 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
 import AccessControlService from '@/lib/db/accessControlService';
-
-
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/db/prismaUtils';
 
 /**
  * API Endpoint: /api/events/[id]/ranking
@@ -57,12 +54,17 @@ export async function GET(
     return NextResponse.json(rankings, { status: 200 });
   } catch (error: any) {
     console.error('GET /api/events/[id]/ranking error:', error);
+    const code = error?.code || (typeof error?.message === 'string' && error.message.includes("Can't reach database server") ? 'P1001' : undefined)
+    if (code === 'P1001') {
+      return NextResponse.json(
+        { message: 'Database unavailable', hint: 'Check DATABASE_URL and database availability.' },
+        { status: 503 }
+      );
+    }
     return NextResponse.json(
       { message: 'Failed to fetch rankings', error: error.message },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }
 
@@ -142,11 +144,16 @@ export async function POST(
     );
   } catch (error: any) {
     console.error('POST /api/events/[id]/ranking error:', error);
+    const code = error?.code || (typeof error?.message === 'string' && error.message.includes("Can't reach database server") ? 'P1001' : undefined)
+    if (code === 'P1001') {
+      return NextResponse.json(
+        { message: 'Database unavailable', hint: 'Check DATABASE_URL and database availability.' },
+        { status: 503 }
+      );
+    }
     return NextResponse.json(
       { message: 'Failed to save rankings', error: error.message },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }

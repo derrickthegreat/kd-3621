@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
 import AccessControlService from '@/lib/db/accessControlService';
-
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/db/prismaUtils';
 
 /**
  * API Endpoint: /api/events/[id]/close
@@ -50,11 +48,16 @@ export async function POST(
     return NextResponse.json({ message: 'Event closed', event: updatedEvent }, { status: 200 });
   } catch (error: any) {
     console.error('POST /api/events/[id]/close error:', error);
+    const code = error?.code || (typeof error?.message === 'string' && error.message.includes("Can't reach database server") ? 'P1001' : undefined)
+    if (code === 'P1001') {
+      return NextResponse.json(
+        { message: 'Database unavailable', hint: 'Check DATABASE_URL and database availability.' },
+        { status: 503 }
+      );
+    }
     return NextResponse.json(
       { message: 'Failed to close event', error: error.message },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }

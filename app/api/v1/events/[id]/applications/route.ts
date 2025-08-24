@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient, Status } from '@prisma/client';
+import { Status } from '@prisma/client';
 import AccessControlService from '@/lib/db/accessControlService';
-
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/db/prismaUtils';
 
 /**
- * API Endpoint: /api/events/[id]/application
+ * API Endpoint: /api/v1/events/[id]/applications
  *
  * Supports:
  *
@@ -44,12 +43,11 @@ export interface EventsParams {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }>}
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const unauthorizedResponse = await AccessControlService.requireReadAccess(request)
   if(unauthorizedResponse) return unauthorizedResponse;
-
-  const { id } = await params;
+  const { id } = await params
   const { searchParams } = new URL(request.url);
   const status = searchParams.get('status') as Status | null;
   try {
@@ -70,13 +68,15 @@ export async function GET(
 
     return NextResponse.json(applications, { status: 200 });
   } catch (error: any) {
-    console.error('GET /api/events/[id]/application error:', error);
-    return NextResponse.json(
-      { message: 'Failed to fetch applications', error: error.message },
-      { status: 500 }
-    );
-  } finally {
-    await prisma.$disconnect();
+    console.error('GET /api/events/[id]/applications error:', error);
+    const code = error?.code || (typeof error?.message === 'string' && error.message.includes("Can't reach database server") ? 'P1001' : undefined)
+    if (code === 'P1001') {
+      return NextResponse.json(
+        { message: 'Database unavailable', hint: 'Check DATABASE_URL and database availability.' },
+        { status: 503 }
+      )
+    }
+    return NextResponse.json({ message: 'Failed to fetch applications', error: error.message }, { status: 500 });
   }
 }
 
@@ -84,7 +84,7 @@ export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = await params;
+  const { id } = await params
   const session = await AccessControlService.getSessionInfo(request);
   if(!session) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
@@ -189,12 +189,14 @@ export async function POST(
       { status: 200 }
     );
   } catch (error: any) {
-    console.error('POST /api/events/[id]/application error:', error);
-    return NextResponse.json(
-      { message: 'Failed to submit application', error: error.message },
-      { status: 500 }
-    );
-  } finally {
-    await prisma.$disconnect();
+    console.error('POST /api/v1/events/[id]/applications error:', error);
+    const code = error?.code || (typeof error?.message === 'string' && error.message.includes("Can't reach database server") ? 'P1001' : undefined)
+    if (code === 'P1001') {
+      return NextResponse.json(
+        { message: 'Database unavailable', hint: 'Check DATABASE_URL and database availability.' },
+        { status: 503 }
+      )
+    }
+    return NextResponse.json({ message: 'Failed to submit application', error: error.message }, { status: 500 });
   }
 }

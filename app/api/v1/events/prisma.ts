@@ -1,4 +1,2 @@
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
-export default prisma;
+// Deprecated: prefer importing `prisma` from '@/lib/db/prismaUtils'
+export { prisma as default } from '@/lib/db/prismaUtils';

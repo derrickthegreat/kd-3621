@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import prisma from './prisma';
+import { prisma } from '@/lib/db/prismaUtils';
 
 /**
  * Mock API Endpoint: /api/v1/events
@@ -29,6 +29,10 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(events, { status: 200 });
   } catch (error: any) {
     console.error('GET /api/v1/events error:', error);
+    const code = error?.code || (typeof error?.message === 'string' && error.message.includes("Can't reach database server") ? 'P1001' : undefined)
+    if (code === 'P1001') {
+      return NextResponse.json({ message: 'Database unavailable', hint: 'Check DATABASE_URL and database availability.' }, { status: 503 })
+    }
     return NextResponse.json({ message: 'Failed to fetch events', error: error.message }, { status: 500 });
   }
 }
@@ -49,6 +53,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(event, { status: 201 });
   } catch (error: any) {
     console.error('POST /api/v1/events error:', error);
+    const code = error?.code || (typeof error?.message === 'string' && error.message.includes("Can't reach database server") ? 'P1001' : undefined)
+    if (code === 'P1001') {
+      return NextResponse.json({ message: 'Database unavailable', hint: 'Check DATABASE_URL and database availability.' }, { status: 503 })
+    }
     return NextResponse.json({ message: 'Failed to create event', error: error.message }, { status: 500 });
   }
 }
@@ -83,6 +91,10 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json(event, { status: 200 });
   } catch (error: any) {
     console.error('PUT /api/v1/events error:', error);
+    const code = error?.code || (typeof error?.message === 'string' && error.message.includes("Can't reach database server") ? 'P1001' : undefined)
+    if (code === 'P1001') {
+      return NextResponse.json({ message: 'Database unavailable', hint: 'Check DATABASE_URL and database availability.' }, { status: 503 })
+    }
     return NextResponse.json({ message: 'Failed to update event', error: error.message }, { status: 500 });
   }
 }
@@ -96,6 +108,10 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json({ message: 'Event deleted' }, { status: 200 });
   } catch (error: any) {
     console.error('DELETE /api/v1/events error:', error);
+    const code = error?.code || (typeof error?.message === 'string' && error.message.includes("Can't reach database server") ? 'P1001' : undefined)
+    if (code === 'P1001') {
+      return NextResponse.json({ message: 'Database unavailable', hint: 'Check DATABASE_URL and database availability.' }, { status: 503 })
+    }
     return NextResponse.json({ message: 'Failed to delete event', error: error.message }, { status: 500 });
   }
 }
