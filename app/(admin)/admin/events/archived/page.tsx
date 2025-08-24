@@ -1,13 +1,22 @@
 // Archived Events Page
+// Archived Events Page
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useAuth } from '@clerk/nextjs'
-import { Skeleton } from '@/components/ui/skeleton'
+import Link from 'next/link'
+import { format } from 'date-fns'
 import { Toaster } from "@/components/ui/sonner"
 import { toast } from "sonner"
-import { EventCard } from '@/components/admin-panel/event-card'
-import { EventDetailsCard } from '@/components/admin-panel/event-detail-card'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
+import { Skeleton } from '@/components/ui/skeleton'
+import { DataTable } from '@/components/ui/data-table'
+import type { ColumnDef } from '@tanstack/react-table'
+import { HeaderActions } from "../../(components)/layout/HeaderActions"
+import { EventQuickDialog } from '../EventQuickDialog'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import { Eye, RotateCcw, Trash2, Calendar as CalendarIcon } from 'lucide-react'
 
 type Event = {
   id: string
@@ -16,6 +25,7 @@ type Event = {
   endDate?: string | null
   description?: string | null
   isArchived?: boolean
+  color?: string | null
 }
 
 export default function ArchivedEventsPage() {
@@ -23,193 +33,188 @@ export default function ArchivedEventsPage() {
   const [events, setEvents] = useState<Event[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [quickOpen, setQuickOpen] = useState(false)
   const [selected, setSelected] = useState<Event | null>(null)
-  const [editMode, setEditMode] = useState(false)
-  const [name, setName] = useState('')
-  const [startDate, setStartDate] = useState('')
-  const [endDate, setEndDate] = useState('')
-  const [description, setDescription] = useState('')
 
   useEffect(() => {
-    if (selected) {
-      setName(selected.name)
-      setStartDate(selected.startDate?.slice(0, 10) || '')
-      setEndDate(selected.endDate?.slice(0, 10) || '')
-      setDescription(selected.description || '')
-    }
-  }, [selected])
-
-  useEffect(() => {
-    const fetchEvents = async () => {
+    let cancel = false
+    async function fetchEvents() {
       try {
         const token = await getToken()
         if (!token) {
-          setError('Unauthorized')
+          if (!cancel) setError('Unauthorized')
           toast('Unauthorized')
           return
         }
         const res = await fetch('/api/v1/events?archived=true', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         })
-        const data = await res.json()
-        if (!res.ok) {
-          throw new Error(data.message || 'Failed to fetch events')
-        }
-        setEvents(data)
+        const data = await res.json().catch(() => [])
+        if (!res.ok) throw new Error(data?.message || 'Failed to fetch events')
+        if (!cancel) setEvents(data)
       } catch (err: any) {
-        setError(err.message)
+        if (!cancel) setError(err.message)
         toast(err.message)
       } finally {
-        setLoading(false)
+        if (!cancel) setLoading(false)
       }
     }
     fetchEvents()
+    return () => { cancel = true }
   }, [getToken])
 
-  const handleUnarchive = async () => {
-    if (!selected) return
+  async function unarchiveById(id: string) {
     try {
       const token = await getToken()
-      const res = await fetch(`/api/v1/events?id=${selected.id}`, {
+      const res = await fetch(`/api/v1/events?id=${id}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ isArchived: false, closedAt: null }),
       })
-      if (!res.ok) {
-        const data = await res.json()
-        toast(data.message || 'Failed to unarchive event', { position: 'top-center' })
-        return
-      }
-      toast('Event has been unarchived', { position: 'top-center' })
-      setSelected(null)
-      setEditMode(false)
-      setLoading(true)
-      // Refresh only archived events
-      const res2 = await fetch('/api/v1/events?archived=true', {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      setEvents(await res2.json())
-      setLoading(false)
-    } catch (err: any) {
-      toast(err.message, { position: 'top-center' })
+      const body = await res.json().catch(() => ({}))
+      if (!res.ok) throw new Error(body.message || 'Failed to unarchive event')
+      toast('Event unarchived')
+      setEvents((prev) => prev.filter((e) => e.id !== id))
+    } catch (e: any) {
+      toast(e.message || 'Error unarchiving event')
     }
   }
 
-  const handleDelete = async (id: string) => {
-    if (!id) return
+  async function handleDelete(id: string) {
     try {
       const token = await getToken()
       const res = await fetch(`/api/v1/events?id=${id}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
       })
-      if (!res.ok) {
-        const data = await res.json()
-        toast(data.message || 'Failed to delete event', { position: 'top-center' })
-        return
-      }
-      toast('Event has been deleted', { position: 'top-center' })
-      setSelected(null)
-      setEditMode(false)
-      setLoading(true)
-      // Refresh only archived events
-      const res2 = await fetch('/api/v1/events?archived=true', {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      setEvents(await res2.json())
-      setLoading(false)
-    } catch (err: any) {
-      toast(err.message, { position: 'top-center' })
+      const body = await res.json().catch(() => ({}))
+      if (!res.ok) throw new Error(body.message || 'Failed to delete event')
+      toast('Event deleted')
+      setEvents((prev) => prev.filter((e) => e.id !== id))
+    } catch (e: any) {
+      toast(e.message || 'Error deleting event')
     }
   }
 
-  const handleUpdate = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!selected) return
-    setLoading(true)
-    try {
-      const token = await getToken()
-      const res = await fetch(`/api/v1/events?id=${selected.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ name, startDate, endDate, description }),
-      })
-      if (!res.ok) {
-        const data = await res.json()
-        toast(data.message || 'Failed to update event', { position: 'top-center' })
-        setLoading(false)
-        return
-      }
-      toast('Event has been updated', { position: 'top-center' })
-      setEditMode(false)
-      setSelected(null)
-      setLoading(true)
-      // Refresh only archived events
-      const res2 = await fetch('/api/v1/events?archived=true', {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      setEvents(await res2.json())
-      setLoading(false)
-    } catch (err: any) {
-      toast(err.message, { position: 'top-center' })
-      setLoading(false)
-    }
-  }
+  const columns = useMemo<ColumnDef<Event>[]>(() => [
+    {
+      accessorKey: 'name',
+      header: 'Name',
+      cell: ({ row }) => (
+        <button
+          className="text-left hover:underline flex items-center gap-2"
+          onClick={() => { setSelected(row.original); setQuickOpen(true) }}
+        >
+          <CalendarIcon className="size-4 text-muted-foreground" />
+          {row.original.name}
+        </button>
+      ),
+    },
+    {
+      id: 'start',
+      header: 'Start',
+      accessorFn: (row) => row.startDate,
+      cell: ({ getValue }) => {
+        const v = getValue() as string
+        return v ? format(new Date(v), 'PPp') : ''
+      },
+    },
+    {
+      id: 'end',
+      header: 'End',
+      accessorFn: (row) => row.endDate,
+      cell: ({ getValue }) => {
+        const v = getValue() as string | null | undefined
+        return v ? format(new Date(v), 'PPp') : ''
+      },
+    },
+    {
+      accessorKey: 'description',
+      header: 'Description',
+      cell: ({ getValue }) => (
+        <span className="line-clamp-1 text-muted-foreground text-sm">{String(getValue() || '')}</span>
+      ),
+    },
+    {
+      id: 'actions',
+      header: 'Actions',
+      enableSorting: false,
+      cell: ({ row }) => (
+        <div className="flex items-center justify-end gap-2">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button variant="ghost" size="icon" asChild aria-label="View">
+                <Link href={`/admin/events/${row.original.id}`}>
+                  <Eye className="size-4" />
+                </Link>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>View</TooltipContent>
+          </Tooltip>
+
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button variant="ghost" size="icon" aria-label="Unarchive" onClick={() => unarchiveById(row.original.id)}>
+                <RotateCcw className="size-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Unarchive</TooltipContent>
+          </Tooltip>
+
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button variant="ghost" size="icon" aria-label="Delete" onClick={() => handleDelete(row.original.id)}>
+                <Trash2 className="size-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Delete</TooltipContent>
+          </Tooltip>
+        </div>
+      ),
+    },
+  ], [])
 
   return (
     <>
       <Toaster />
-  <div className="max-w-6xl mx-auto my-6">
+      <HeaderActions>
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-muted-foreground">Showing archived events</span>
+        </div>
+      </HeaderActions>
+      <div className="w-full my-4 space-y-4 px-4 md:px-6 lg:px-8">
         {loading ? (
-          <Skeleton className="h-32 w-full" />
+          <Skeleton className="h-64 w-full" />
         ) : error ? (
           <p className="text-red-500">{error}</p>
-        ) : selected ? (
-          <div className="max-w-2xl mx-auto">
-            <EventDetailsCard
-              event={selected}
-              editMode={editMode}
-              name={name}
-              startDate={startDate}
-              endDate={endDate}
-              description={description}
-              loading={loading}
-              error={error}
-              onEdit={() => setEditMode(true)}
-              onCancelEdit={() => setEditMode(false)}
-              onSave={handleUpdate}
-              onDelete={handleDelete}
-              onBack={() => setSelected(null)}
-              onChangeName={setName}
-              onChangeStartDate={setStartDate}
-              onChangeEndDate={setEndDate}
-              onChangeDescription={setDescription}
-            />
-          </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {events.filter(e => e.isArchived).map(event => (
-              <EventCard
-                key={event.id}
-                id={event.id}
-                name={event.name}
-                startDate={event.startDate}
-                endDate={event.endDate}
-                description={event.description}
-                isArchived={event.isArchived}
-                onDelete={handleDelete}
+          <Card>
+            <CardContent className="p-0">
+              <DataTable<Event>
+                data={events}
+                columns={columns}
+                loading={loading}
+                error={error}
+                pageSize={10}
+                searchable
+                searchKeys={["name", "description"]}
+                searchPlaceholder="Search by name or description"
+                excludeFromVisibilityToggle={["actions"]}
+                initialSorting={[{ id: 'start', desc: true }]}
               />
-            ))}
-          </div>
+            </CardContent>
+          </Card>
         )}
+
+        <EventQuickDialog
+          open={quickOpen}
+          onOpenChange={setQuickOpen}
+          event={selected}
+          canEdit={true}
+          onUpdated={(updated) => {
+            setEvents((prev) => prev.map((e) => (e.id === updated.id ? { ...e, ...updated } : e)))
+          }}
+        />
       </div>
     </>
   )

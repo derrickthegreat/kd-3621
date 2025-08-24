@@ -26,7 +26,7 @@ export const ROUTE_TITLE_MAP: Record<string, string> = {
 }
 
 export const ROUTE_PAGE_META: Record<string, { title: string; description?: string }> = {
-  admin: { title: "Admin", description: "Administrative overview and tools." },
+  admin: { title: "Admin Dashboard", description: "Administrative overview and tools." },
   players: { title: "Players", description: "Manage player roster, stats, and links." },
   alliances: { title: "Alliances", description: "Manage alliances and snapshots." },
   events: { title: "Events", description: "Create, manage, and archive events." },

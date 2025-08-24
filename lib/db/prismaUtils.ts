@@ -5,6 +5,7 @@ type PrismaDelegate = {
   update: (args: any) => Promise<any>;
   upsert?: (args: any) => Promise<any>;
   findUnique?: (args: any) => Promise<any>;
+  findFirst?: (args: any) => Promise<any>;
 };
 
 interface CreateOrUpdateOptions {
@@ -38,28 +39,50 @@ export async function prepareCreateOrUpdate<T extends Record<string, any>>(
     createdBy: userId,
   };
 
+  // Prepare update data (never attempt to set the id field on update)
+  const { [idField]: _omitId, ...dataWithoutId } = data;
+
   // Case 1: ID-based update
   if (data[idField]) {
-    return model.update({
-      where: { [idField]: data[idField] },
-      data: {
-        ...data,
-        ...commonFields,
-      },
-    });
+    try {
+      return await model.update({
+        where: { [idField]: data[idField] },
+        data: {
+          ...dataWithoutId,
+          ...commonFields,
+        },
+      });
+    } catch (err: any) {
+      // If the record doesn't exist (P2025), optionally fall back to matchField or create
+      if (err?.code === 'P2025') {
+        if (matchField && data[matchField]) {
+          const existing = await (model.findFirst?.({ where: { [matchField]: data[matchField] } })
+            ?? model.findUnique?.({ where: { [matchField]: data[matchField] } }));
+          if (existing) {
+            return model.update({
+              // Update by unique id of the found record, not by non-unique fields
+              where: { [idField]: existing[idField] },
+              data: { ...dataWithoutId, ...commonFields },
+            });
+          }
+        }
+        return model.create({ data: { ...data, ...commonFields, ...createFields } });
+      }
+      throw err;
+    }
   }
 
   // Case 2: Custom matchField (like 'tag') — treat as upsert
   if (matchField && data[matchField]) {
-    const existing = await model.findUnique?.({
-      where: { [matchField]: data[matchField] },
-    });
+    const existing = await (model.findFirst?.({ where: { [matchField]: data[matchField] } })
+      ?? model.findUnique?.({ where: { [matchField]: data[matchField] } }));
 
     if (existing) {
       return model.update({
-        where: { [matchField]: data[matchField] },
+        // Update by unique id to satisfy Prisma's WhereUniqueInput
+        where: { [idField]: existing[idField] },
         data: {
-          ...data,
+          ...dataWithoutId,
           ...commonFields,
         },
       });

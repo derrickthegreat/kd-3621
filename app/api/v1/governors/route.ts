@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
+import { clerkClient } from '@clerk/nextjs/server';
 import AccessControlService from '@/lib/db/accessControlService';
 import { prepareCreateOrUpdate } from '@/lib/db/prismaUtils';
 
@@ -102,11 +103,38 @@ export async function GET(request: NextRequest) {
             commanders: true,
           },
         },
+        UserPlayers: { include: { user: true } },
       },
       orderBy: { createdAt: 'desc' },
     });
 
-    const sanitizedPlayers = players.map(sanitizePlayer);
+    // Build a map of clerkId -> imageUrl for linked users (first link per player)
+    const clerkIds = Array.from(new Set(
+      players
+        .map((p) => p.UserPlayers?.[0]?.user?.clerkId)
+        .filter((id): id is string => !!id)
+    ));
+    const avatarMap = new Map<string, string>();
+    try {
+      const clerk = await clerkClient();
+      await Promise.all(
+        clerkIds.map(async (cid) => {
+          try {
+            const u = await clerk.users.getUser(cid);
+            if (u?.imageUrl) avatarMap.set(cid, u.imageUrl);
+          } catch {}
+        })
+      );
+    } catch {}
+
+    const sanitizedPlayers = players.map((p) => {
+      const sp: any = sanitizePlayer({ ...p });
+      const cid = p.UserPlayers?.[0]?.user?.clerkId;
+      sp.userAvatar = cid ? avatarMap.get(cid) || null : null;
+      // drop relation noise
+      delete sp.UserPlayers;
+      return sp;
+    });
     return NextResponse.json(sanitizedPlayers, { status: 200 });
   } catch (error: any) {
     console.error('GET /api/governor error:', error);

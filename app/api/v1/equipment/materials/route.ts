@@ -154,3 +154,32 @@ export async function POST(request: NextRequest) {
     await prisma.$disconnect();
   }
 }
+
+// === DELETE /api/equipment/materials ===
+// Delete a material by id or name. Also removes equipment material links.
+export async function DELETE(request: NextRequest) {
+  const session = await AccessControlService.getSessionInfo(request);
+  if(!session) return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  if(!AccessControlService.canWrite(session.role)) return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
+
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get('id');
+  const name = searchParams.get('name');
+
+  try {
+    const existing = await prisma.material.findFirst({ where: id ? { id } : { name: name! } });
+    if (!existing) return NextResponse.json({ message: 'Material not found' }, { status: 404 });
+
+    await prisma.$transaction([
+      prisma.equipmentMaterial.deleteMany({ where: { materialId: existing.id } }),
+      prisma.material.delete({ where: { id: existing.id } }),
+    ]);
+
+    return NextResponse.json({ message: 'Material deleted' }, { status: 200 });
+  } catch (error: any) {
+    console.error('DELETE /api/equipment/materials error:', error);
+    return NextResponse.json({ message: 'Failed to delete material', error: error.message }, { status: 500 });
+  } finally {
+    await prisma.$disconnect();
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "attributesOrder": ["Attack", "Defense", "Health"],
+  "iconicAttributesOrder": ["Attack", "Defense", "Health"],
+  "materialsOrder": ["Leather", "Iron Ore", "Animal Bone", "Ebony", "Gold"]
+}

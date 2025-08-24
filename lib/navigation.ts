@@ -34,7 +34,7 @@ export const ADMIN_PANEL: NavSectionProps[] = [
         ],
       },
       {
-        title: "Military Assets",
+        title: "Assets & Config",
         url: "/admin/commanders",
         icon: Swords,
         items: [

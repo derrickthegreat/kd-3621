@@ -1,0 +1,7 @@
+[
+  {"id":"5118fbde-e8bc-40ee-8d68-befe4728c8dc","name":"Leather","src":"/icons/materials/leather_normal.png","description":"Common leather"},
+  {"id":"fd75c6e0-6b4b-4c96-a3d0-314fc41a3e3b","name":"Iron Ore","src":"/icons/materials/iron_ore_normal.png","description":""},
+  {"id":"ec818cc2-d2b1-4885-aa0e-64140adead0f","name":"Ebony","src":"/icons/materials/ebony_normal.png","description":""},
+  {"id":"0bc9a788-2542-44db-a597-d41e78fc4d31","name":"Animal Bone","src":"/icons/materials/animal_bone_normal.png","description":""},
+  {"id":"ca299521-d51d-43e6-a468-bef99cef1a75","name":"Gold","src":"/icons/materials/gold.png","description":""}
+]

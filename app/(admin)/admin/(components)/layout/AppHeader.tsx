@@ -22,7 +22,10 @@ export function AppHeader({ titleOverride }: AppHeaderProps) {
     if (titleOverride) return titleOverride
     const segs = pathname?.split("/").filter(Boolean) ?? []
     const last = segs[segs.length - 1] ?? ""
-    const pretty = ROUTE_TITLE_MAP[last] || last.replace(/[-_]+/g, " ").replace(/\b\w/g, c => c.toUpperCase())
+    const pretty = ROUTE_TITLE_MAP[last] || last.replace(/[-_]+/g, c => c.toUpperCase())
+    // Special-case the admin root so the page heading reads Admin Dashboard
+    const isAdminRoot = segs.join("/") === "app/(admin)/admin" || (segs.length === 2 && segs[0] === "admin")
+    if (isAdminRoot) return "Admin Dashboard"
     return entityTitle || pretty || "Admin"
   }, [pathname, titleOverride, entityTitle])
 

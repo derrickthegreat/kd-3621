@@ -10,6 +10,7 @@ const navLinks = [
     { href: '/players', label: 'Players' },
     { href: '/alliances', label: 'Alliances' },
     { href: '/calendar', label: 'Calendar' },
+    { href: '/commanders', label: 'Commander' },
     { href: '/equipments', label: 'Equipments' },
     { href: '/builds', label: 'Builds' },
 ];

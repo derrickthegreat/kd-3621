@@ -8,6 +8,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 // removed create dialog imports
 import { Label } from "@/components/ui/label"
 import { ColumnDef } from "@tanstack/react-table"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Input } from "@/components/ui/input"
 import { CheckIcon, XIcon } from "lucide-react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -92,12 +93,28 @@ export default function ApplicationsPage() {
       id: "player",
       header: "Player",
       accessorFn: (row) => `${row.player?.name ?? ''}`,
-      cell: ({ row }) => (
-        <div className="flex flex-col">
-          <span className="font-medium">{row.original.player?.name}</span>
-          <span className="text-xs text-muted-foreground">ID: {row.original.player?.rokId}</span>
-        </div>
-      )
+      cell: ({ row }) => {
+        const p = row.original.player
+        const initials = (p?.name || "?")
+          .split(/\s+/)
+          .filter(Boolean)
+          .slice(0, 2)
+          .map((w) => w[0]?.toUpperCase())
+          .join("") || "?"
+        const avatar = (p as any)?.userAvatar as string | undefined
+        return (
+          <div className="flex items-center gap-3">
+            <Avatar className="h-7 w-7">
+              <AvatarImage src={avatar} alt={p?.name || 'Player'} />
+              <AvatarFallback></AvatarFallback>
+            </Avatar>
+            <div className="flex flex-col">
+              <span className="font-medium">{p?.name}</span>
+              <span className="text-xs text-muted-foreground">ID: {p?.rokId}</span>
+            </div>
+          </div>
+        )
+      }
     },
     {
       accessorKey: "status",

@@ -18,7 +18,7 @@ import { DataTable } from '@/components/ui/data-table'
 import type { ColumnDef } from '@tanstack/react-table'
 import { format } from 'date-fns'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
-import { Pencil, Archive } from 'lucide-react'
+import { Pencil, Archive, Calendar as CalendarIcon } from 'lucide-react'
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 
 type Event = {
@@ -138,13 +138,14 @@ export default function EventListPage() {
       header: 'Name',
       cell: ({ row }) => (
         <button
-          className="text-left hover:underline"
+          className="text-left hover:underline flex items-center gap-2"
           onClick={() => {
             const found = events.find((e) => e.id === row.original.id) || null
             setSelected(found)
             setQuickOpen(true)
           }}
         >
+          <CalendarIcon className="size-4 text-muted-foreground" />
           {row.original.name}
         </button>
       )

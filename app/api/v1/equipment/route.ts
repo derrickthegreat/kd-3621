@@ -194,9 +194,116 @@ export async function POST(request: NextRequest) {
     // Normalize input to always be an array for easier processing
     const equipments = Array.isArray(data) ? data : [data];
 
-    const results = [];
+    // Caches to avoid repeated DB lookups per name
+    const attributeCache = new Map<string, string>() // key: lower(name) => id
+  const materialCache = new Map<string, string>() // key: lower(name) => id
+  const materialIdNameCache = new Map<string, string>() // key: id => lower(name)
 
-    for (const equipmentData of equipments) {
+    async function getOrCreateAttributeByName(name: string, isIconic: boolean): Promise<string | null> {
+      const key = String(name || '').trim().toLowerCase()
+      if (!key) return null
+      if (attributeCache.has(key)) return attributeCache.get(key)!
+      const existing = await prisma.attribute.findFirst({ where: { name: { equals: name, mode: 'insensitive' } } })
+      if (existing) { attributeCache.set(key, existing.id); return existing.id }
+      const created = await prisma.attribute.create({ data: { name: name.trim(), isIconic } })
+      attributeCache.set(key, created.id)
+      return created.id
+    }
+
+    async function getOrCreateMaterialByName(name: string): Promise<string | null> {
+      const key = String(name || '').trim().toLowerCase()
+      if (!key) return null
+      if (materialCache.has(key)) return materialCache.get(key)!
+      const existing = await prisma.material.findFirst({ where: { name: { equals: name, mode: 'insensitive' } } })
+      if (existing) { materialCache.set(key, existing.id); materialIdNameCache.set(existing.id, key); return existing.id }
+      const created = await prisma.material.create({ data: { name: name.trim() } })
+      materialCache.set(key, created.id)
+      materialIdNameCache.set(created.id, key)
+      return created.id
+    }
+
+    function normalizeRarity(input: any): Rarity | null {
+      const s = String(input || '').trim().toUpperCase()
+      const map: Record<string, Rarity> = {
+        COMMON: 'COMMON', NORMAL: 'COMMON',
+        UNCOMMON: 'UNCOMMON', ADVANCED: 'UNCOMMON',
+        RARE: 'RARE', ELITE: 'RARE',
+        EPIC: 'EPIC',
+        LEGENDARY: 'LEGENDARY',
+      }
+      return (map as any)[s] ?? null
+    }
+
+  async function resolveAttributesArray(raw: any, options: { iconic?: boolean }): Promise<{ attributeId: string; value?: string | null; tier?: number | null }[]> {
+      const iconic = !!options.iconic
+      const out: { attributeId: string; value?: string | null; tier?: number | null }[] = []
+      const arrs: any[] = []
+      if (Array.isArray(raw?.attributes)) arrs.push({ data: raw.attributes, iconic: false })
+      if (Array.isArray(raw?.attributesByName)) arrs.push({ data: raw.attributesByName, iconic: false })
+      if (Array.isArray(raw?.iconic)) arrs.push({ data: raw.iconic, iconic: true })
+      if (Array.isArray(raw?.iconicByName)) arrs.push({ data: raw.iconicByName, iconic: true })
+
+      // Choose only the arrays matching requested iconic flag
+      const chosen = arrs.filter(a => a.iconic === iconic)
+      for (const bucket of chosen) {
+        for (const item of bucket.data) {
+          const val = item?.value
+          const valueStr = val === undefined || val === null ? null : String(val)
+          if (item?.attributeId) {
+            out.push({ attributeId: item.attributeId, value: valueStr, tier: item?.tier ?? null })
+            continue
+          }
+          // Accept multiple input keys for attribute name (name, attributeName, stat)
+          const name = item?.name ?? item?.attributeName ?? item?.stat
+          const id = await getOrCreateAttributeByName(name, iconic)
+          if (!id) continue
+          out.push({ attributeId: id, value: valueStr, tier: item?.tier ?? null })
+        }
+      }
+      return out
+    }
+
+  async function resolveMaterialsArray(raw: any): Promise<{ materialId: string; rarity?: Rarity | null; quantity?: number }[]> {
+      const out: { materialId: string; rarity?: Rarity | null; quantity?: number }[] = []
+      const arrays: any[] = []
+      if (Array.isArray(raw?.materials)) arrays.push(raw.materials)
+      if (Array.isArray(raw?.materialsByName)) arrays.push(raw.materialsByName)
+      for (const arr of arrays) {
+        for (const item of arr) {
+          let materialId: string | null = null
+          let nameLower: string | null = null
+          if (item?.materialId) {
+            materialId = String(item.materialId)
+            nameLower = materialIdNameCache.get(materialId) || null
+            if (!nameLower) {
+              const m = await prisma.material.findUnique({ where: { id: materialId } })
+              if (m?.name) { nameLower = m.name.trim().toLowerCase(); materialIdNameCache.set(materialId, nameLower) }
+            }
+          } else {
+            // Accept multiple input keys for material name (name, materialName, material)
+            const name = item?.name ?? item?.materialName ?? item?.material
+            const id = await getOrCreateMaterialByName(name)
+            materialId = id
+            nameLower = String(name || '').trim().toLowerCase() || null
+          }
+          if (!materialId) continue
+
+          let rarity = normalizeRarity(item?.rarity)
+          const qty = item?.quantity ?? item?.value ?? 1
+          // Auto-default rarity for non-gold materials when not specified
+          if (!rarity) {
+            const isGold = !!nameLower && nameLower === 'gold'
+            if (!isGold) {
+              rarity = normalizeRarity(raw?.rarity) // equipment rarity
+            }
+          }
+          out.push({ materialId: materialId!, rarity: rarity ?? null, quantity: qty })
+        }
+      }
+      return out
+    }
+
+    async function processOne(equipmentData: any) {
       const {
         id,
         name,
@@ -204,36 +311,37 @@ export async function POST(request: NextRequest) {
         rarity,
         src,
         alt,
-        attributes = [],
-        iconic = [],
-        materials = [],
+        // pass-through; we'll resolve to IDs below, supporting name-based inputs too
+        attributes,
+        iconic,
+        materials,
       } = equipmentData;
 
-      // Basic validation
       if (!name || !slot || !rarity || !src) {
-        return NextResponse.json(
-          { message: 'Missing required fields: name, slot, rarity, src' },
-          { status: 400 }
-        );
+        throw new Error('Missing required fields: name, slot, rarity, src')
       }
 
-      let result;
+      // Resolve nested arrays to ID-based references, auto-creating masters when needed
+      const resolvedAttributes = await resolveAttributesArray(equipmentData, { iconic: false })
+      const resolvedIconic = await resolveAttributesArray(equipmentData, { iconic: true })
+      const resolvedMaterials = await resolveMaterialsArray(equipmentData)
 
       if (id) {
-        // Update existing equipment by ID
-        const attributesData = attributes.map((attr: { attributeId: any; value: any; }) => ({
+        const hasAttrsInput = Array.isArray((equipmentData as any)?.attributes) || Array.isArray((equipmentData as any)?.attributesByName)
+        const hasIconicInput = Array.isArray((equipmentData as any)?.iconic) || Array.isArray((equipmentData as any)?.iconicByName)
+        const hasMaterialsInput = Array.isArray((equipmentData as any)?.materials) || Array.isArray((equipmentData as any)?.materialsByName)
+
+        const attributesData = resolvedAttributes.map((attr) => ({
           where: { equipmentId_attributeId: { equipmentId: id, attributeId: attr.attributeId } },
           create: { attributeId: attr.attributeId, value: attr.value ?? null },
           update: { value: attr.value ?? null },
         }));
-
-        const iconicData = iconic.map((iconicAttr: { attributeId: any; value: any; tier: any; }) => ({
+  const iconicData = resolvedIconic.map((iconicAttr) => ({
           where: { equipmentId_attributeId: { equipmentId: id, attributeId: iconicAttr.attributeId } },
           create: { attributeId: iconicAttr.attributeId, value: iconicAttr.value ?? null, tier: iconicAttr.tier ?? null },
           update: { value: iconicAttr.value ?? null, tier: iconicAttr.tier ?? null },
         }));
-
-        const materialsData = materials.map((material: { materialId: any; rarity: any; quantity: any; }) => ({
+  const materialsData = resolvedMaterials.map((material) => ({
           where: { equipmentId_materialId: { equipmentId: id, materialId: material.materialId } },
           create: {
             materialId: material.materialId,
@@ -246,7 +354,27 @@ export async function POST(request: NextRequest) {
           },
         }));
 
-        result = await prisma.equipment.update({
+        const relationUpdates: any = {}
+        if (hasAttrsInput) {
+          relationUpdates.attributes = {
+            upsert: attributesData,
+            deleteMany: { attributeId: { notIn: resolvedAttributes.map((a) => a.attributeId) } },
+          }
+        }
+        if (hasIconicInput) {
+          relationUpdates.iconic = {
+            upsert: iconicData,
+            deleteMany: { attributeId: { notIn: resolvedIconic.map((i) => i.attributeId) } },
+          }
+        }
+        if (hasMaterialsInput) {
+          relationUpdates.materials = {
+            upsert: materialsData,
+            deleteMany: { materialId: { notIn: resolvedMaterials.map((m) => m.materialId) } },
+          }
+        }
+
+        return prisma.equipment.update({
           where: { id },
           data: {
             name,
@@ -255,127 +383,111 @@ export async function POST(request: NextRequest) {
             src,
             alt,
             updatedAt: new Date(),
-            attributes: {
-              upsert: attributesData,
-              deleteMany: {
-                attributeId: { notIn: attributes.map((a: { attributeId: any; }) => a.attributeId) },
-              },
-            },
-            iconic: {
-              upsert: iconicData,
-              deleteMany: {
-                attributeId: { notIn: iconic.map((i: { attributeId: any; }) => i.attributeId) },
-              },
-            },
-            materials: {
-              upsert: materialsData,
-              deleteMany: {
-                materialId: { notIn: materials.map((m: { materialId: any; }) => m.materialId) },
-              },
-            },
+            ...relationUpdates,
           },
         });
       } else {
-        // Create new equipment and nested relations
-        // Before creating, check if an equipment with the same name already exists
-        // This is to prevent creating duplicates if 'name' is a unique field in your schema
         const existingEquipmentByName = await prisma.equipment.findFirst({ where: { name } });
-
         if (existingEquipmentByName) {
-          // If equipment with this name exists, update it instead of creating a duplicate
-          result = await prisma.equipment.update({
-            where: { id: existingEquipmentByName.id }, // Update by ID of the existing record
+          const hasAttrsInput = Array.isArray((equipmentData as any)?.attributes) || Array.isArray((equipmentData as any)?.attributesByName)
+          const hasIconicInput = Array.isArray((equipmentData as any)?.iconic) || Array.isArray((equipmentData as any)?.iconicByName)
+          const hasMaterialsInput = Array.isArray((equipmentData as any)?.materials) || Array.isArray((equipmentData as any)?.materialsByName)
+
+          const relationUpdates: any = {}
+          if (hasAttrsInput) {
+            relationUpdates.attributes = {
+              upsert: resolvedAttributes.map((attr) => ({
+                where: { equipmentId_attributeId: { equipmentId: existingEquipmentByName.id, attributeId: attr.attributeId } },
+                create: { attributeId: attr.attributeId, value: attr.value ?? null },
+                update: { value: attr.value ?? null },
+              })),
+              deleteMany: { attributeId: { notIn: resolvedAttributes.map((a) => a.attributeId) } },
+            }
+          }
+          if (hasIconicInput) {
+            relationUpdates.iconic = {
+              upsert: resolvedIconic.map((iconicAttr) => ({
+                where: { equipmentId_attributeId: { equipmentId: existingEquipmentByName.id, attributeId: iconicAttr.attributeId } },
+                create: { attributeId: iconicAttr.attributeId, value: iconicAttr.value ?? null, tier: iconicAttr.tier ?? null },
+                update: { value: iconicAttr.value ?? null, tier: iconicAttr.tier ?? null },
+              })),
+              deleteMany: { attributeId: { notIn: resolvedIconic.map((i) => i.attributeId) } },
+            }
+          }
+          if (hasMaterialsInput) {
+            relationUpdates.materials = {
+              upsert: resolvedMaterials.map((material) => ({
+                where: { equipmentId_materialId: { equipmentId: existingEquipmentByName.id, materialId: material.materialId } },
+                create: {
+                  materialId: material.materialId,
+                  rarity: material.rarity ?? null,
+                  quantity: material.quantity ?? 1,
+                },
+                update: {
+                  rarity: material.rarity ?? null,
+                  quantity: material.quantity ?? 1,
+                },
+              })),
+              deleteMany: { materialId: { notIn: resolvedMaterials.map((m) => m.materialId) } },
+            }
+          }
+
+          return prisma.equipment.update({
+            where: { id: existingEquipmentByName.id },
             data: {
               slot,
               rarity,
               src,
               alt,
               updatedAt: new Date(),
-              attributes: {
-                upsert: attributes.map((attr: { attributeId: any; value: any; }) => ({
-                  where: { equipmentId_attributeId: { equipmentId: existingEquipmentByName.id, attributeId: attr.attributeId } },
-                  create: { attributeId: attr.attributeId, value: attr.value ?? null },
-                  update: { value: attr.value ?? null },
-                })),
-                deleteMany: {
-                  attributeId: { notIn: attributes.map((a: { attributeId: any; }) => a.attributeId) },
-                },
-              },
-              iconic: {
-                upsert: iconic.map((iconicAttr: { attributeId: any; value: any; tier: any; }) => ({
-                  where: { equipmentId_attributeId: { equipmentId: existingEquipmentByName.id, attributeId: iconicAttr.attributeId } },
-                  create: { attributeId: iconicAttr.attributeId, value: iconicAttr.value ?? null, tier: iconicAttr.tier ?? null },
-                  update: { value: iconicAttr.value ?? null, tier: iconicAttr.tier ?? null },
-                })),
-                deleteMany: {
-                  attributeId: { notIn: iconic.map((i: { attributeId: any; }) => i.attributeId) },
-                },
-              },
-              materials: {
-                upsert: materials.map((material: { materialId: any; rarity: any; quantity: any; }) => ({
-                  where: { equipmentId_materialId: { equipmentId: existingEquipmentByName.id, materialId: material.materialId } },
-                  create: {
-                    materialId: material.materialId,
-                    rarity: material.rarity ?? null,
-                    quantity: material.quantity ?? 1,
-                  },
-                  update: {
-                    rarity: material.rarity ?? null,
-                    quantity: material.quantity ?? 1,
-                  },
-                })),
-                deleteMany: {
-                  materialId: { notIn: materials.map((m: { materialId: any; }) => m.materialId) },
-                },
-              },
-            },
-          });
-        } else {
-          // No existing equipment with this name, so create a new one
-          result = await prisma.equipment.create({
-            data: {
-              name,
-              slot,
-              rarity,
-              src,
-              alt,
-              attributes: {
-                create: attributes.map((a: { attributeId: any; value: any; }) => ({
-                  attribute: { connect: { id: a.attributeId } },
-                  value: a.value ?? null,
-                })),
-              },
-              iconic: {
-                create: iconic.map((i: { attributeId: any; value: any; tier: any; }) => ({
-                  attribute: { connect: { id: i.attributeId } },
-                  value: i.value ?? null,
-                  tier: i.tier ?? null,
-                })),
-              },
-              materials: {
-                create: materials.map((m: { materialId: any; rarity: any; quantity: any; }) => ({
-                  material: { connect: { id: m.materialId } },
-                  rarity: m.rarity ?? null,
-                  quantity: m.quantity ?? 1,
-                })),
-              },
+              ...relationUpdates,
             },
           });
         }
+        return prisma.equipment.create({
+          data: {
+            name,
+            slot,
+            rarity,
+            src,
+            alt,
+            attributes: {
+              create: resolvedAttributes.map((a) => ({
+                attribute: { connect: { id: a.attributeId } },
+                value: a.value ?? null,
+              })),
+            },
+            iconic: {
+              create: resolvedIconic.map((i) => ({
+                attribute: { connect: { id: i.attributeId } },
+                value: i.value ?? null,
+                tier: i.tier ?? null,
+              })),
+            },
+            materials: {
+              create: resolvedMaterials.map((m) => ({
+                material: { connect: { id: m.materialId } },
+                rarity: m.rarity ?? null,
+                quantity: m.quantity ?? 1,
+              })),
+            },
+          },
+        });
       }
+    }
 
-      // Ensure 'result' is assigned before pushing, especially if using a complex if/else structure
-      if (result) {
-        results.push(result);
-      }
+    const results: any[] = [];
+    const serverBatch = 5;
+    for (let i = 0; i < equipments.length; i += serverBatch) {
+      const slice = equipments.slice(i, i + serverBatch);
+      const sliceResults = await Promise.all(slice.map((e) => processOne(e)));
+      results.push(...sliceResults.filter(Boolean));
     }
 
     // Return a single object if input was single, else array of results
     return NextResponse.json(
       {
-        message: results.length === 1 ?
-          (results[0].id ? 'Equipment updated' : 'Equipment created') :
-          `${results.length} equipment items processed`,
+  message: results.length === 1 ? 'Equipment saved' : `${results.length} equipment items processed`,
         equipment: results.length === 1 ? results[0] : results,
       },
       { status: 200 }
@@ -387,6 +499,41 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: 'Equipment name must be unique' }, { status: 409 });
     }
     return NextResponse.json({ message: 'Failed to save equipment', error: error.message }, { status: 500 });
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
+// === DELETE: Remove equipment and dependent relations ===
+export async function DELETE(request: NextRequest) {
+  const session = await AccessControlService.getSessionInfo(request);
+  if (!session) return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  if (!AccessControlService.canWrite(session.role)) return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
+
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get('id');
+  const name = searchParams.get('name');
+
+  try {
+    // Resolve equipment by id or name
+    const existing = await prisma.equipment.findFirst({ where: id ? { id } : { name: name! } });
+    if (!existing) {
+      return NextResponse.json({ message: 'Equipment not found' }, { status: 404 });
+    }
+
+    await prisma.$transaction([
+      prisma.equipmentAttribute.deleteMany({ where: { equipmentId: existing.id } }),
+      prisma.equipmentIconicAttribute.deleteMany({ where: { equipmentId: existing.id } }),
+      prisma.equipmentMaterial.deleteMany({ where: { equipmentId: existing.id } }),
+      prisma.playerEquipment.deleteMany({ where: { equipmentId: existing.id } }),
+      prisma.applicationEquipment.deleteMany({ where: { equipmentId: existing.id } }),
+      prisma.equipment.delete({ where: { id: existing.id } }),
+    ]);
+
+    return NextResponse.json({ message: 'Equipment deleted' }, { status: 200 });
+  } catch (error: any) {
+    console.error('DELETE /api/equipment error:', error);
+    return NextResponse.json({ message: 'Failed to delete equipment', error: error.message }, { status: 500 });
   } finally {
     await prisma.$disconnect();
   }

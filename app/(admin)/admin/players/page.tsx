@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { ColumnDef } from "@tanstack/react-table"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { DataTable } from "@/components/ui/data-table"
 import { HeaderActions } from "../(components)/layout/HeaderActions"
 
@@ -22,6 +23,7 @@ type PlayerRow = PlayerListItem & {
   latestPower: number
   allianceTag?: string
   allianceName?: string
+  userAvatar?: string | null
 }
 
 export default function PlayersPage() {
@@ -42,7 +44,7 @@ export default function PlayersPage() {
           headers: { Authorization: `Bearer ${token}` },
         })
         const body = await res.json().catch(() => ([]))
-        if (!res.ok) throw new Error(body?.message || "Failed to load players")
+  if (!res.ok) throw new Error(body?.message || "Failed to load players")
         if (!cancelled) setData(body as PlayerListItem[])
       } catch (e: any) {
         if (!cancelled) setError(e.message || "Error")
@@ -69,8 +71,32 @@ export default function PlayersPage() {
   }, [data])
 
   const columns = useMemo<ColumnDef<PlayerRow>[]>(() => [
-    { accessorKey: "name", header: "Name" },
-  { accessorKey: "rokId", header: "ID" },
+    {
+      id: "player",
+      header: "Player",
+      accessorFn: (r) => r.name,
+      cell: ({ row }) => {
+        const r = row.original
+        const initials = (r.name || "?")
+          .split(/\s+/)
+          .filter(Boolean)
+          .slice(0, 2)
+          .map((w) => w[0]?.toUpperCase())
+          .join("") || "?"
+        return (
+          <div className="flex items-center gap-3">
+            <Avatar className="h-8 w-8">
+              <AvatarImage src={r.userAvatar || undefined} alt={r.name} />
+              <AvatarFallback></AvatarFallback>
+            </Avatar>
+            <div className="flex flex-col">
+              <span className="font-medium">{r.name}</span>
+              <span className="text-xs text-muted-foreground">ID: {r.rokId}</span>
+            </div>
+          </div>
+        )
+      },
+    },
     {
       id: "alliance",
       header: "Alliance",
@@ -78,10 +104,13 @@ export default function PlayersPage() {
       cell: ({ row }) => {
         const r = row.original
         return (
-          <span>
-            {r.allianceTag ? `[${r.allianceTag}] ` : ""}
-            {r.allianceName || "-"}
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="h-2.5 w-2.5 rounded-full border" style={{ backgroundColor: r.allianceTag ? '#f59e0b' : '#9ca3af' }} />
+            <span>
+              {r.allianceTag ? `[${r.allianceTag}] ` : ""}
+              {r.allianceName || "-"}
+            </span>
+          </div>
         )
       },
     },

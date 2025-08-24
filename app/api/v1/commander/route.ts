@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient, TroopType } from '@prisma/client';
+import { PrismaClient, TroopType, Rarity, Prisma } from '@prisma/client';
 import AccessControlService from '@/lib/db/accessControlService';
 import { prepareCreateOrUpdate } from '@/lib/db/prismaUtils';
 
 const prisma = new PrismaClient();
+const HAS_RARITY = !!(Prisma as any)?.dmmf?.datamodel?.models?.some((m: any) => m.name === 'Commander' && m.fields?.some((f: any) => f.name === 'rarity'))
 
 /**
  * API Endpoint: /api/commander
@@ -102,42 +103,74 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const commanders = Array.isArray(body) ? body : [body];
 
-    const results = [];
+  const results: any[] = [];
+  const errors: { name?: string; id?: string; message: string }[] = [];
 
     for (const commander of commanders) {
-      const { id, name, iconUrl, speciality } = commander;
+      try {
+  const { id, name, iconUrl, speciality, rarity } = commander;
+  const normName = String(name).trim();
+  const normIcon = String(iconUrl).trim();
 
-      if (!name || !iconUrl || !Array.isArray(speciality)) {
+  if (!normName || !normIcon || !Array.isArray(speciality)) {
         return NextResponse.json(
           { message: 'Missing required fields: name, iconUrl, speciality[]' },
           { status: 400 }
         );
       }
 
-      const payload = {
-        id,
-        name,
-        iconUrl,
-        speciality: speciality as TroopType[],
-      };
+      // Normalize speciality: uppercase, unique, validate against TroopType, enforce max 3
+      const normalized = Array.from(new Set((speciality as string[]).map((s) => String(s).toUpperCase())));
+      const valid = normalized.filter((s): s is TroopType => Object.keys(TroopType).includes(s));
+      if (valid.length > 3) {
+        return NextResponse.json({ message: 'A commander can have at most 3 specialities' }, { status: 400 });
+      }
 
-      const result = await prepareCreateOrUpdate(prisma.commander, payload, {
-        userId: session.userId,
-      });
+      // Normalize rarity if provided
+      let rar: Rarity | undefined = undefined;
+      if (typeof rarity === 'string' && rarity.trim()) {
+        const up = rarity.trim().toUpperCase();
+        if ((Object.keys(Rarity) as string[]).includes(up)) {
+          rar = up as Rarity;
+        } else {
+          return NextResponse.json({ message: `Invalid rarity: ${rarity}` }, { status: 400 });
+        }
+      }
+
+      // If id provided, update by id; otherwise upsert by unique name
+      let result;
+      if (id) {
+  const data: any = { name: normName, iconUrl: normIcon, speciality: { set: valid as TroopType[] } };
+  if (rar && HAS_RARITY) data.rarity = rar;
+        result = await prisma.commander.update({ where: { id }, data });
+      } else {
+        const existing = await prisma.commander.findFirst({ where: { name: { equals: normName, mode: 'insensitive' } } })
+        if (existing) {
+          const data: any = { name: normName, iconUrl: normIcon, speciality: { set: valid as TroopType[] } };
+          if (rar && HAS_RARITY) data.rarity = rar;
+          result = await prisma.commander.update({ where: { id: existing.id }, data })
+        } else {
+          const data: any = { name: normName, iconUrl: normIcon, speciality: valid as TroopType[], createdBy: session.userId };
+          if (rar && HAS_RARITY) data.rarity = rar;
+          result = await prisma.commander.create({ data })
+        }
+      }
 
       results.push(result);
+      } catch (e: any) {
+        errors.push({ id: commander.id, name: commander.name, message: e?.message || 'Unknown error' })
+      }
     }
 
-    return NextResponse.json(
-      {
-        message:
-          results.length === 1
-            ? (results[0]?.id ? 'Commander updated' : 'Commander created')
-            : `${results.length} commanders processed`,
-        commander: results.length === 1 ? results[0] : results,
-      },
-      { status: 200 }
-    );
+    if (results.length === 0 && errors.length > 0) {
+      return NextResponse.json({ message: 'No commanders saved', errors }, { status: 400 })
+    }
+
+    return NextResponse.json({
+      message: `${results.length} commander${results.length === 1 ? '' : 's'} processed${errors.length ? `, ${errors.length} failed` : ''}`,
+      commander: results,
+      errors,
+    }, { status: 200 });
   } catch (error: any) {
     console.error('POST /api/commander error:', error);
     return NextResponse.json(
@@ -146,5 +179,40 @@ export async function POST(request: NextRequest) {
     );
   } finally {
     await prisma.$disconnect();
+  }
+}
+
+export async function PUT(request: NextRequest) {
+  const session = await AccessControlService.getSessionInfo(request);
+  if (!session) return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  if (!AccessControlService.canWrite(session.role)) return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
+
+  const { searchParams } = new URL(request.url)
+  const id = searchParams.get('id')
+  if (!id) return NextResponse.json({ message: 'Missing commander id' }, { status: 400 })
+
+  try {
+    const body = await request.json().catch(() => ({}))
+    const data: any = {}
+    if (typeof body.isArchived === 'boolean') data.isArchived = body.isArchived
+    if (typeof body.name === 'string' && body.name.trim()) data.name = body.name.trim()
+    if (typeof body.iconUrl === 'string' && body.iconUrl.trim()) data.iconUrl = body.iconUrl.trim()
+    if (Array.isArray(body.speciality)) data.speciality = body.speciality
+  if (typeof body.rarity === 'string' && body.rarity.trim() && HAS_RARITY) {
+      const up = body.rarity.trim().toUpperCase()
+      if ((Object.keys(Rarity) as string[]).includes(up)) data.rarity = up
+      else return NextResponse.json({ message: `Invalid rarity: ${body.rarity}` }, { status: 400 })
+    }
+    if (Object.keys(data).length === 0) {
+      return NextResponse.json({ message: 'No valid fields to update' }, { status: 400 })
+    }
+    data.updatedBy = session.userId
+    const updated = await prisma.commander.update({ where: { id }, data })
+    return NextResponse.json(updated, { status: 200 })
+  } catch (error: any) {
+    console.error('PUT /api/commander error:', error)
+    return NextResponse.json({ message: 'Failed to update commander', error: error.message }, { status: 500 })
+  } finally {
+    await prisma.$disconnect()
   }
 }
