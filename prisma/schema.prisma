@@ -412,6 +412,7 @@ model EventRanking {
   updatedBy     String?
 
   @@unique([eventId, applicationId]) // This is now valid
+  @@unique([eventId, rank]) // Enforce unique rank per event
 }
 
 model ApplicationCommander {

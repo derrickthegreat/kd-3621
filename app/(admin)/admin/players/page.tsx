@@ -70,7 +70,7 @@ export default function PlayersPage() {
 
   const columns = useMemo<ColumnDef<PlayerRow>[]>(() => [
     { accessorKey: "name", header: "Name" },
-    { accessorKey: "rokId", header: "RoK ID" },
+  { accessorKey: "rokId", header: "ID" },
     {
       id: "alliance",
       header: "Alliance",
@@ -128,7 +128,7 @@ export default function PlayersPage() {
             initialSorting={[{ id: "power", desc: true }]}
             searchable
             searchKeys={["name", "rokId", "allianceTag", "allianceName"]}
-            searchPlaceholder="Search by name, RoK ID, or alliance"
+            searchPlaceholder="Search by name, ID, or alliance"
             excludeFromVisibilityToggle={["actions"]}
           />
         </CardContent>

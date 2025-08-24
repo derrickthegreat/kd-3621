@@ -37,7 +37,7 @@ export default function PlayerDetailPage() {
 
   return (
     <div className="p-4 space-y-2">
-      <div className="text-sm text-muted-foreground">RoK ID: {data.rokId}</div>
+  <div className="text-sm text-muted-foreground">ID: {data.rokId}</div>
       {data.alliance && (
         <div>Alliance: {data.alliance?.name} {data.alliance?.tag ? `(${data.alliance.tag})` : ""}</div>
       )}
