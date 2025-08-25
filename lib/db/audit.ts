@@ -21,7 +21,9 @@ async function resolveUserId(opts: { userId?: string | null; clerkId?: string | 
       const existing = await prisma.user.findUnique({ where: { clerkId } });
       if (existing) return existing.id;
       if (createIfMissing) {
-        const created = await prisma.user.create({ data: { clerkId } });
+        // Minimal placeholder user to satisfy required fields
+        // Username is derived from Clerk ID to ensure uniqueness and allow later update
+        const created = await prisma.user.create({ data: { clerkId, username: `clerk_${clerkId}` } });
         return created.id;
       }
     }

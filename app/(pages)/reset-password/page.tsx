@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSignIn, useAuth } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import StatusMessage from "@/components/ui/status-message";
 
-export default function ResetPasswordPage() {
+function ResetPasswordContent() {
   const router = useRouter();
   const qp = useSearchParams();
   const emailFromQuery = qp.get("email") || "";
@@ -81,5 +81,13 @@ export default function ResetPasswordPage() {
         </form>
       </div>
     </div>
+  );
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense fallback={<div className="min-h-[60vh] flex items-center justify-center px-4"><div className="w-full max-w-md p-6">Loading…</div></div>}>
+      <ResetPasswordContent />
+    </Suspense>
   );
 }

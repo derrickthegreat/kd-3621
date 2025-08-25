@@ -83,7 +83,7 @@ export class AccessControlService {
           const cu = await clerk.users.getUser(clerkId);
           imageUrl = cu?.imageUrl ?? null;
         } catch {}
-        user = await prisma.user.create({ data: { clerkId, avatarUrl: imageUrl ?? undefined } });
+  user = await prisma.user.create({ data: { clerkId, username: `clerk_${clerkId}`, avatarUrl: imageUrl ?? undefined } });
       }
       return user;
     } catch (e: any) {
