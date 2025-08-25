@@ -1,0 +1,527 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// --- Enums ------------------------------------------------------
+
+enum UserRole {
+  ADMIN
+  KINGDOM_MEMBER
+  SYSTEM
+}
+
+enum Rarity {
+  COMMON
+  UNCOMMON
+  RARE
+  EPIC
+  LEGENDARY
+}
+
+enum Slot {
+  HEAD
+  CHEST
+  HANDS
+  FEET
+  WEAPON
+  ACCESSORY
+}
+
+enum TroopType {
+  CAVALRY
+  INFANTRY
+  ARCHERY
+  ENGINEERING
+  LEADERSHIP
+  GATHERING
+  PEACEKEEPING
+  ATTACK
+  CONQUERING
+  COMBO
+  DEFENSE
+  GARRISON
+  SKILL
+  SMITE
+  SUPPORT
+  VERSATILITY
+}
+
+enum Status {
+  NEW
+  REVIEWING
+  APPROVED
+  DECLINED
+  CLOSED
+}
+
+enum LinkRequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  CANCELED
+}
+
+// --- User Management ------------------------------------
+model User {
+  id        String   @id @default(uuid())
+  clerkId   String   @unique
+  role      UserRole @default(KINGDOM_MEMBER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Profile fields
+  username            String    @unique
+  displayName         String?   @unique
+  avatarUrl           String?
+  commanderAvatar     Commander? @relation(name: "CommanderAvatar", fields: [commanderAvatarId], references: [id])
+  commanderAvatarId   String?
+  socials             Json?
+
+  @@map("users")
+  governors UserPlayer[]
+  linkRequests LinkRequest[]
+  approvedLinks LinkRequest[] @relation("LinkRequestApprovedBy")
+  linkedLinks   LinkRequest[] @relation("LinkRequestLinkedBy")
+  uploadedProofs LinkRequestProof[]
+}
+
+model UserAuditLog {
+  id         String   @id @default(uuid())
+  userId     String   // ID of the user being modified
+  actorId    String   // Who made the change (admin/system)
+  action     String   // e.g. "Updated role to admin"
+  createdAt  DateTime @default(now())
+
+  @@index([userId])
+  @@map("user_audit_logs")
+}
+
+// --- Alliance & Stats ------------------------------------------
+
+model Alliance {
+  id           String             @id @default(uuid())
+  tag          String             @unique
+  name         String
+  createdAt    DateTime           @default(now())
+  createdBy    String?
+  updatedAt    DateTime           @default(now())
+  updatedBy    String?
+  players      Player[]           @relation("PlayerAlliance")
+  stats        AllianceStats[]
+  applications EventApplication[]
+
+  @@map("alliances")
+}
+
+model AllianceStats {
+  id         String   @id @default(uuid())
+  alliance   Alliance @relation(fields: [allianceId], references: [id])
+  allianceId String
+  snapshot   DateTime @default(now())
+  totalPower Int
+  createdAt    DateTime           @default(now())
+  createdBy    String?
+  updatedAt    DateTime           @updatedAt
+  updatedBy    String?
+
+  @@index([allianceId, snapshot])
+  @@map("alliance_stats")
+}
+
+// --- Players & Snapshots ---------------------------------------
+
+model Player {
+  id              String             @id @default(uuid())
+  rokId           String             @unique
+  name            String
+  alliance        Alliance?          @relation("PlayerAlliance", fields: [allianceId], references: [id])
+  allianceId      String?
+  isMigrant       Boolean            @default(false)
+  dateMigrated    DateTime?
+  dateMigratedOut DateTime?
+  createdAt       DateTime           @default(now())
+  createdBy       String?
+  updatedAt       DateTime           @updatedAt
+  updatedBy       String?
+  stats           PlayerStats[]
+  commanders      PlayerCommander[]
+  equipment       PlayerEquipment[]
+  applications    EventApplication[]
+
+  @@map("players")
+  UserPlayers UserPlayer[]
+  linkRequests LinkRequest[]
+}
+
+model PlayerStats {
+  id         String   @id @default(uuid())
+  player     Player   @relation(fields: [playerId], references: [id])
+  playerId   String
+  snapshot   DateTime @default(now())
+  killPoints Int
+  t4Kills    Int
+  t5Kills    Int
+  t45Kills   Int
+  deaths     Int
+  power      Int
+  createdAt  DateTime @default(now())
+  createdBy  String?
+  updatedAt  DateTime @updatedAt
+  updatedBy  String?
+
+  @@index([playerId, snapshot])
+  @@map("player_stats")
+}
+
+model UserPlayer {
+  id          String    @id @default(uuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  playerId    String
+  player      Player    @relation(fields: [playerId], references: [id])
+  assignedAt  DateTime  @default(now())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([userId, playerId])
+  @@map("users_players")
+}
+
+// --- User ↔ Governor Link Requests ----------------------------
+
+model LinkRequest {
+  id           String             @id @default(uuid())
+  user         User               @relation(fields: [userId], references: [id])
+  userId       String
+  player       Player             @relation(fields: [playerId], references: [id])
+  playerId     String
+  status       LinkRequestStatus  @default(PENDING)
+  note         String?
+  decisionNote String?
+  createdAt    DateTime           @default(now())
+  createdBy    String?
+  updatedAt    DateTime           @updatedAt
+  updatedBy    String?
+  approvedAt   DateTime?
+  approvedBy   User?              @relation("LinkRequestApprovedBy", fields: [approvedById], references: [id])
+  approvedById String?
+  linkedAt     DateTime?
+  linkedBy     User?              @relation("LinkRequestLinkedBy", fields: [linkedById], references: [id])
+  linkedById   String?
+  proofs       LinkRequestProof[]
+
+  @@index([userId])
+  @@index([playerId])
+  @@index([status])
+  @@unique([userId, playerId, status])
+  @@map("link_requests")
+}
+
+model LinkRequestProof {
+  id           String       @id @default(uuid())
+  request      LinkRequest  @relation(fields: [requestId], references: [id])
+  requestId    String
+  url          String
+  type         String?
+  caption      String?
+  uploadedAt   DateTime     @default(now())
+  uploadedBy   User?        @relation(fields: [uploadedById], references: [id])
+  uploadedById String?
+
+  @@index([requestId])
+  @@map("link_request_proofs")
+}
+
+// --- Commanders & Assignments ---------------------------------
+
+model Commander {
+  id                         String                 @id @default(uuid())
+  name                       String                 @unique
+  iconUrl                    String
+  rarity                     Rarity?
+  speciality                 TroopType[]
+  isArchived                 Boolean                @default(false)
+  createdAt                  DateTime               @default(now())
+  createdBy                  String?
+  updatedAt                  DateTime               @updatedAt
+  updatedBy                  String?
+  players                    PlayerCommander[]
+  applications               ApplicationCommander[]
+  primaryCommanderPairings   CommanderPairing[]     @relation(name: "PrimaryPairings")
+  secondaryCommanderPairings CommanderPairing[]     @relation(name: "SecondaryPairings")
+  skillTrees                 CommanderSkillTree[]
+
+  // Backreference for users choosing this commander as their avatar
+  avatarUsers                User[]                 @relation(name: "CommanderAvatar")
+
+  @@map("commanders")
+}
+
+model CommanderSkillTree {
+  id          String   @id @default(uuid())
+  name        String
+  rating      Float?
+  description String?
+  url         String
+  commander   Commander @relation(fields: [commanderId], references: [id])
+  commanderId String
+  createdAt   DateTime @default(now())
+  createdBy   String?
+  updatedAt   DateTime @updatedAt
+  updatedBy   String?
+
+  @@index([commanderId])
+  @@unique([commanderId, name])
+}
+
+model CommanderPairing {
+  id          String    @id @default(uuid())
+  primary     Commander @relation(name: "PrimaryPairings", fields: [primaryid], references: [id])
+  primaryid   String
+  secondary   Commander @relation(name: "SecondaryPairings", fields: [secondaryid], references: [id])
+  secondaryid String
+  createdAt   DateTime  @default(now())
+  createdBy   String?
+  updatedAt   DateTime  @updatedAt
+  updatedBy   String?
+}
+
+model PlayerCommander {
+  id          String    @id @default(uuid())
+  player      Player    @relation(fields: [playerId], references: [id])
+  playerId    String
+  commander   Commander @relation(fields: [commanderId], references: [id])
+  commanderId String
+  level       Int       @default(1)
+  createdAt   DateTime  @default(now())
+  createdBy   String?
+  updatedAt   DateTime  @updatedAt
+  updatedBy   String?
+
+  @@unique([playerId, commanderId])
+  @@map("player_commanders")
+}
+
+// --- Equipment & Assignments ----------------------------------
+
+model Equipment {
+  id        String   @id @default(uuid())
+  name      String
+  slot      Slot
+  rarity    Rarity
+  src       String
+  alt       String?
+  createdAt DateTime @default(now())
+  createdBy String?
+  updatedAt DateTime @updatedAt
+  updatedBy String?
+
+  owners       PlayerEquipment[]
+  applications ApplicationEquipment[]
+  attributes   EquipmentAttribute[]
+  iconic       EquipmentIconicAttribute[]
+  materials    EquipmentMaterial[]
+
+  @@map("equipment")
+}
+
+model PlayerEquipment {
+  id          String    @id @default(uuid())
+  player      Player    @relation(fields: [playerId], references: [id])
+  playerId    String
+  equipment   Equipment @relation(fields: [equipmentId], references: [id])
+  equipmentId String
+  acquiredAt  DateTime  @default(now())
+  createdAt   DateTime  @default(now())
+  createdBy   String?
+  updatedAt   DateTime  @updatedAt
+  updatedBy   String?
+
+  @@unique([playerId, equipmentId])
+  @@map("player_equipment")
+}
+
+// --- Attributes & Their Link to Equipment ---------------------
+
+model Attribute {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  isIconic    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  createdBy   String?
+  updatedAt   DateTime @updatedAt
+  updatedBy   String?
+
+  equipment EquipmentAttribute[]
+  iconics   EquipmentIconicAttribute[]
+
+  @@map("attributes")
+}
+
+model EquipmentAttribute {
+  id          String    @id @default(uuid())
+  equipment   Equipment @relation(fields: [equipmentId], references: [id])
+  equipmentId String
+  attribute   Attribute @relation(fields: [attributeId], references: [id])
+  attributeId String
+  value       String?
+  createdAt   DateTime  @default(now())
+  createdBy   String?
+  updatedAt   DateTime  @updatedAt
+  updatedBy   String?
+
+  @@unique([equipmentId, attributeId])
+  @@map("equipment_attributes")
+}
+
+model EquipmentIconicAttribute {
+  id          String    @id @default(uuid())
+  equipment   Equipment @relation(fields: [equipmentId], references: [id])
+  equipmentId String
+
+  attribute   Attribute @relation(fields: [attributeId], references: [id])
+  attributeId String
+
+  value     String?
+  tier      Int?
+  createdAt DateTime @default(now())
+  createdBy String?
+  updatedAt DateTime @updatedAt
+  updatedBy String?
+
+  @@unique([equipmentId, attributeId])
+  @@map("equipment_iconic_attributes")
+}
+
+// --- Materials & Their Link to Equipment ----------------------
+
+model Material {
+  id          String   @id @default(uuid())
+  name        String
+  src         String?
+  description String?
+  createdAt   DateTime @default(now())
+  createdBy   String?
+  updatedAt   DateTime @updatedAt
+  updatedBy   String?
+
+  equipment EquipmentMaterial[]
+
+  @@map("materials")
+}
+
+model EquipmentMaterial {
+  id          String    @id @default(uuid())
+  equipment   Equipment @relation(fields: [equipmentId], references: [id])
+  equipmentId String
+  material    Material  @relation(fields: [materialId], references: [id])
+  materialId  String
+  rarity      Rarity?
+  quantity    Int       @default(1)
+  createdAt   DateTime  @default(now())
+  createdBy   String?
+  updatedAt   DateTime  @updatedAt
+  updatedBy   String?
+
+  @@unique([equipmentId, materialId])
+  @@map("equipment_materials")
+}
+
+// --- Events & Applications ------------------------------------
+
+model Event {
+  id           String             @id @default(uuid())
+  name         String
+  startDate    DateTime           @default(now())
+  endDate      DateTime?
+  description  String?
+  color        String?
+  createdAt    DateTime           @default(now())
+  createdBy    String?
+  updatedAt    DateTime           @updatedAt
+  updatedBy    String?
+  closedAt     DateTime?
+  isArchived   Boolean            @default(false)
+  applications EventApplication[]
+  EventRanking EventRanking[]
+
+  @@map("events")
+}
+
+model EventApplication {
+  id        String   @id @default(uuid())
+  event     Event    @relation(fields: [eventId], references: [id])
+  eventId   String
+  player    Player   @relation(fields: [playerId], references: [id])
+  playerId  String
+  status    Status   @default(NEW)
+  createdAt DateTime @default(now())
+  createdBy String?
+  updatedAt DateTime @updatedAt
+  updatedBy String?
+
+  commanders   ApplicationCommander[]
+  equipment    ApplicationEquipment[]
+  Alliance     Alliance[]
+  EventRanking EventRanking[]
+
+  @@unique([eventId, playerId])
+  @@map("event_applications")
+}
+
+model EventRanking {
+  id            String           @id @default(uuid())
+  application   EventApplication @relation(fields: [applicationId], references: [id])
+  applicationId String
+  event         Event            @relation(fields: [eventId], references: [id])
+  eventId       String
+  rank          Int
+  max_points    Int?
+  createdAt     DateTime         @default(now())
+  createdBy     String?
+  updatedAt     DateTime         @updatedAt
+  updatedBy     String?
+
+  @@unique([eventId, applicationId]) // This is now valid
+  @@unique([eventId, rank]) // Enforce unique rank per event
+}
+
+model ApplicationCommander {
+  id            String           @id @default(uuid())
+  application   EventApplication @relation(fields: [applicationId], references: [id])
+  applicationId String
+  commander     Commander        @relation(fields: [commanderId], references: [id])
+  commanderId   String
+  createdAt     DateTime         @default(now())
+  createdBy     String?
+  updatedAt     DateTime         @updatedAt
+  updatedBy     String?
+
+  @@unique([applicationId, commanderId])
+  @@map("application_commanders")
+}
+
+model ApplicationEquipment {
+  id            String           @id @default(uuid())
+  application   EventApplication @relation(fields: [applicationId], references: [id])
+  applicationId String
+  equipment     Equipment        @relation(fields: [equipmentId], references: [id])
+  equipmentId   String
+  iconicTier    Int?
+  isCrit        Boolean          @default(false)
+  createdAt     DateTime         @default(now())
+  createdBy     String?
+  updatedAt     DateTime         @updatedAt
+  updatedBy     String?
+
+  @@unique([applicationId, equipmentId])
+  @@map("application_equipment")
+}
+
+

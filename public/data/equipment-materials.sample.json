@@ -1,0 +1,7 @@
+[
+  { "name": "Leather", "src": "/icons/materials/leather_normal.png", "description": "Common leather" },
+  { "name": "Iron Ore", "src": "/icons/materials/iron_ore_normal.png" },
+  { "name": "Ebony", "src": "/icons/materials/ebony_normal.png" },
+  { "name": "Animal Bone", "src": "/icons/materials/animal_bone_normal.png" },
+  { "name": "Gold", "src": "/icons/materials/gold.png" }
+]

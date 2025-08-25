@@ -1,7 +1,7 @@
 [
   {
     "name": "Aethelflaed",
-    "image": "aethelflaed.png",
+    "image": "/icons/commanders/aethelflaed.png",
     "rarity": "Legendary",
     "attributes": [
       "Leadership",
@@ -11,21 +11,21 @@
     "builds": [
       {
         "name": "All in one",
-        "image": "aethelflaed/aethelflaed-all-in-one.png"
+        "image": "/talent-trees/aethelflaed/aethelflaed-all-in-one.png"
       },
       {
         "name": "Barbarian Hunting",
-        "image": "aethelflaed/aethelflaed-barbarian-hunting.png"
+        "image": "/talent-trees/aethelflaed/aethelflaed-barbarian-hunting.png"
       },
       {
         "name": "Open Field",
-        "image": "aethelflaed/aethelflaed-open-field.png"
+        "image": "/talent-trees/aethelflaed/aethelflaed-open-field.png"
       }
     ]
   },
   {
     "name": "Alexander Nevsky",
-    "image": "alexander-nevsky.png",
+    "image": "/icons/commanders/alexander-nevsky.png",
     "rarity": "Legendary",
     "attributes": [
       "Cavalry",
@@ -35,21 +35,21 @@
     "builds": [
       {
         "name": "Nuke",
-        "image": "alexander-nevsky/alexander-nevsky-nuke.png"
+        "image": "/talent-trees/alexander-nevsky/alexander-nevsky-nuke.png"
       },
       {
         "name": "Open Field",
-        "image": "alexander-nevsky/alexander-nevsky-open-field.png"
+        "image": "/talent-trees/alexander-nevsky/alexander-nevsky-open-field.png"
       },
       {
         "name": "1v1",
-        "image": "alexander-nevsky/alexander-nevsky-1-v-1.png"
+        "image": "/talent-trees/alexander-nevsky/alexander-nevsky-1-v-1.png"
       }
     ]
   },
   {
     "name": "Alexander the Great",
-    "image": "alexander-the-great.png",
+    "image": "/icons/commanders/alexander-the-great.png",
     "rarity": "Legendary",
     "attributes": [
       "Infantry",
@@ -59,53 +59,53 @@
     "builds": [
       {
         "name": "Open Field",
-        "image": "alexander-the-great/alexander-the-great-open-field.png"
+        "image": "/talent-trees/alexander-the-great/alexander-the-great-open-field.png"
       }
     ]
   },
   {
     "name": "Amanitore",
-    "image": "amanitore.png",
+    "image": "/icons/commanders/amanitore.png",
     "rarity": "Legendary",
     "attributes": [
-      "Archer",
+  "Archery",
       "Garrison",
       "Support"
     ],
     "builds": [
       {
         "name": "Garrison",
-        "image": "amanitore/amanitore-garrison.png"
+        "image": "/talent-trees/amanitore/amanitore-garrison.png"
       }
     ]
   },
   {
     "name": "Artemisia",
-    "image": "artemisia.png",
+    "image": "/icons/commanders/artemisia.png",
     "rarity": "Legendary",
     "attributes": [
-      "Archer",
+  "Archery",
       "Garrison",
       "Defense"
     ],
     "builds": [
       {
         "name": "Open Field",
-        "image": "artemisia/artemisia-open-field.png"
+        "image": "/talent-trees/artemisia/artemisia-open-field.png"
       },
       {
         "name": "Garrison vs Attila",
-        "image": "artemisia/artemisia-garrison-vs-attila.png"
+        "image": "/talent-trees/artemisia/artemisia-garrison-vs-attila.png"
       },
       {
         "name": "Flags & Passes vs Attila",
-        "image": "artemisia/artemisia-flags-and-passes-vs-attila.png"
+        "image": "/talent-trees/artemisia/artemisia-flags-and-passes-vs-attila.png"
       }
     ]
   },
   {
     "name": "Arthur Pendragon",
-    "image": "arthur-pendragon.png",
+    "image": "/icons/commanders/arthur-pendragon.png",
     "rarity": "Legendary",
     "attributes": [
       "Cavalry",
@@ -115,13 +115,13 @@
     "builds": [
       {
         "name": "Open Field",
-        "image": "arthur-pendragon/arthur-pendragon-open-field.png"
+        "image": "/talent-trees/arthur-pendragon/arthur-pendragon-open-field.png"
       }
     ]
   },
   {
     "name": "Attila",
-    "image": "attila.png",
+    "image": "/icons/commanders/attila.png",
     "rarity": "Legendary",
     "attributes": [
       "Cavalry",
@@ -131,13 +131,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Bai Qi",
-    "image": "bai-qi.png",
+    "image": "/icons/commanders/bai-qi.png",
     "rarity": "Legendary",
     "attributes": [
       "Infantry",
@@ -147,13 +147,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Baibars",
-    "image": "baibars.png",
+    "image": "/icons/commanders/baibars.png",
     "rarity": "Epic",
     "attributes": [
       "",
@@ -163,13 +163,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Belisarius Prime",
-    "image": "belisarius-prime.png",
+    "image": "/icons/commanders/belisarius-prime.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -179,13 +179,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Belisarius",
-    "image": "belisarius.png",
+    "image": "/icons/commanders/belisarius.png",
     "rarity": "Epic",
     "attributes": [
       "",
@@ -195,13 +195,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Bertrand Du Guesclin",
-    "image": "bertrand-du-guesclin.png",
+    "image": "/icons/commanders/bertrand-du-guesclin.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -211,13 +211,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Bjorn Ironside",
-    "image": "bjorn-ironside.png",
+    "image": "/icons/commanders/bjorn-ironside.png",
     "rarity": "Epic",
     "attributes": [
       "",
@@ -227,13 +227,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Boudica Prime",
-    "image": "boudica-prime.png",
+    "image": "/icons/commanders/boudica-prime.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -243,13 +243,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Boudica",
-    "image": "boudica.png",
+    "image": "/icons/commanders/boudica.png",
     "rarity": "Epic",
     "attributes": [
       "",
@@ -259,13 +259,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Cao Cao",
-    "image": "cao-cao.png",
+    "image": "/icons/commanders/cao-cao.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -275,13 +275,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Chandragupta Maurya",
-    "image": "chandragupta-maurya.png",
+    "image": "/icons/commanders/chandragupta-maurya.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -291,13 +291,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Charlemagne",
-    "image": "charlemagne.png",
+    "image": "/icons/commanders/charlemagne.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -307,13 +307,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Charles Martel",
-    "image": "charles-martel.png",
+    "image": "/icons/commanders/charles-martel.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -323,13 +323,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Cheok Jun Gyeong",
-    "image": "cheok-jun-gyeong.png",
+    "image": "/icons/commanders/cheok-jun-gyeong.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -339,13 +339,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Cleopatra",
-    "image": "cleopatra.png",
+    "image": "/icons/commanders/cleopatra.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -355,13 +355,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Constantine",
-    "image": "constantine.png",
+    "image": "/icons/commanders/constantine.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -371,13 +371,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Cyrus The Great",
-    "image": "cyrus-the-great.png",
+    "image": "/icons/commanders/cyrus-the-great.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -387,13 +387,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Diaochan",
-    "image": "diaochan.png",
+    "image": "/icons/commanders/diaochan.png",
     "rarity": "Epic",
     "attributes": [
       "",
@@ -403,13 +403,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Edward",
-    "image": "edward.png",
+    "image": "/icons/commanders/edward.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -419,13 +419,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "El Cid",
-    "image": "el-cid.png",
+    "image": "/icons/commanders/el-cid.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -435,13 +435,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Eulji Mundeok",
-    "image": "eulji-mundeok.png",
+    "image": "/icons/commanders/eulji-mundeok.png",
     "rarity": "Epic",
     "attributes": [
       "",
@@ -451,13 +451,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Flavius Aetius",
-    "image": "flavius-aetius.png",
+    "image": "/icons/commanders/flavius-aetius.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -467,13 +467,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Frederick",
-    "image": "frederick.png",
+    "image": "/icons/commanders/frederick.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -483,13 +483,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Genghis Khan",
-    "image": "genghis-khan.png",
+    "image": "/icons/commanders/genghis-khan.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -499,13 +499,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Gilgamesh",
-    "image": "gilgamesh.png",
+    "image": "/icons/commanders/gilgamesh.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -515,13 +515,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Gorgo",
-    "image": "gorgo.png",
+    "image": "/icons/commanders/gorgo.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -531,13 +531,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Guan Yu",
-    "image": "guan-yu.png",
+    "image": "/icons/commanders/guan-yu.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -547,13 +547,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Hannibal Barca",
-    "image": "hannibal-barca.png",
+    "image": "/icons/commanders/hannibal-barca.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -563,13 +563,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Harald Sigurdsson",
-    "image": "harald-sigurdsson.png",
+    "image": "/icons/commanders/harald-sigurdsson.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -579,13 +579,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Henry",
-    "image": "henry.png",
+    "image": "/icons/commanders/henry.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -595,13 +595,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Hermann Prime",
-    "image": "hermann-prime.png",
+    "image": "/icons/commanders/hermann-prime.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -611,13 +611,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Hermann",
-    "image": "hermann.png",
+    "image": "/icons/commanders/hermann.png",
     "rarity": "Epic",
     "attributes": [
       "",
@@ -627,13 +627,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Honda Tadakatsu",
-    "image": "honda-tadakatsu.png",
+    "image": "/icons/commanders/honda-tadakatsu.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -643,13 +643,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Huo",
-    "image": "huo.png",
+    "image": "/icons/commanders/huo.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -659,13 +659,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Imhotep",
-    "image": "imhotep.png",
+    "image": "/icons/commanders/imhotep.png",
     "rarity": "Epic",
     "attributes": [
       "",
@@ -675,13 +675,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Ishida Mitsunari",
-    "image": "ishida-mitsunari.png",
+    "image": "/icons/commanders/ishida-mitsunari.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -691,13 +691,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Jadwiga",
-    "image": "jadwiga.png",
+    "image": "/icons/commanders/jadwiga.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -707,13 +707,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Jan Zizka",
-    "image": "jan-zizka.png",
+    "image": "/icons/commanders/jan-zizka.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -723,13 +723,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Joan Of Arc Prime",
-    "image": "joan-of-arc-prime.png",
+    "image": "/icons/commanders/joan-of-arc-prime.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -739,13 +739,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Joan Of Arc",
-    "image": "joan-of-arc.png",
+    "image": "/icons/commanders/joan-of-arc.png",
     "rarity": "Epic",
     "attributes": [
       "",
@@ -755,13 +755,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Julius Caesar",
-    "image": "julius-caesar.png",
+    "image": "/icons/commanders/julius-caesar.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -771,13 +771,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Keira",
-    "image": "keira.png",
+    "image": "/icons/commanders/keira.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -787,13 +787,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Kinich Janaab Pakal",
-    "image": "kinich-janaab-pakal.png",
+    "image": "/icons/commanders/kinich-janaab-pakal.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -803,13 +803,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Kusunoki Masashige",
-    "image": "kusunoki-masashige.png",
+    "image": "/icons/commanders/kusunoki-masashige.png",
     "rarity": "Epic",
     "attributes": [
       "",
@@ -819,13 +819,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Leonidas",
-    "image": "leonidas.png",
+    "image": "/icons/commanders/leonidas.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -835,13 +835,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Liu Che",
-    "image": "liu-che.png",
+    "image": "/icons/commanders/liu-che.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -851,13 +851,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Lohar",
-    "image": "lohar.png",
+    "image": "/icons/commanders/lohar.png",
     "rarity": "Epic",
     "attributes": [
       "",
@@ -867,13 +867,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Lu Bu",
-    "image": "lu-bu.png",
+    "image": "/icons/commanders/lu-bu.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -883,13 +883,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Matilda Of Flanders",
-    "image": "matilda-of-flanders.png",
+    "image": "/icons/commanders/matilda-of-flanders.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -899,13 +899,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Mehmed",
-    "image": "mehmed.png",
+    "image": "/icons/commanders/mehmed.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -915,13 +915,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Minamoto No Yoshitsune",
-    "image": "minamoto-no-yoshitsune.png",
+    "image": "/icons/commanders/minamoto-no-yoshitsune.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -931,13 +931,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Moctezuma",
-    "image": "moctezuma.png",
+    "image": "/icons/commanders/moctezuma.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -947,13 +947,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Mulan",
-    "image": "mulan.png",
+    "image": "/icons/commanders/mulan.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -963,13 +963,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Nebuchadnezzar",
-    "image": "nebuchadnezzar.png",
+    "image": "/icons/commanders/nebuchadnezzar.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -979,13 +979,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Osman",
-    "image": "osman.png",
+    "image": "/icons/commanders/osman.png",
     "rarity": "Epic",
     "attributes": [
       "",
@@ -995,13 +995,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Pelagius",
-    "image": "pelagius.png",
+    "image": "/icons/commanders/pelagius.png",
     "rarity": "Epic",
     "attributes": [
       "",
@@ -1011,13 +1011,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Philip",
-    "image": "philip.png",
+    "image": "/icons/commanders/philip.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -1027,13 +1027,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Ragnar Lodbrok",
-    "image": "ragnar-lodbrok.png",
+    "image": "/icons/commanders/ragnar-lodbrok.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -1043,13 +1043,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Ragnar",
-    "image": "ragnar.png",
+    "image": "/icons/commanders/ragnar.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -1059,13 +1059,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Ramesses",
-    "image": "ramesses.png",
+    "image": "/icons/commanders/ramesses.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -1075,13 +1075,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Richard",
-    "image": "richard.png",
+    "image": "/icons/commanders/richard.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -1091,13 +1091,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Saladin",
-    "image": "saladin.png",
+    "image": "/icons/commanders/saladin.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -1107,13 +1107,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Sargon The Great",
-    "image": "sargon-the-great.png",
+    "image": "/icons/commanders/sargon-the-great.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -1123,13 +1123,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Scipio Africanus Prime",
-    "image": "scipio-africanus-prime.png",
+    "image": "/icons/commanders/scipio-africanus-prime.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -1139,13 +1139,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Seondeok",
-    "image": "seondeok.png",
+    "image": "/icons/commanders/seondeok.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -1155,13 +1155,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Shajar",
-    "image": "shajar.png",
+    "image": "/icons/commanders/shajar.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -1171,13 +1171,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Subutai",
-    "image": "subutai.png",
+    "image": "/icons/commanders/subutai.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -1187,13 +1187,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Suleiman",
-    "image": "suleiman.png",
+    "image": "/icons/commanders/suleiman.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -1203,13 +1203,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Sun Tzu",
-    "image": "sun-tzu.png",
+    "image": "/icons/commanders/sun-tzu.png",
     "rarity": "Epic",
     "attributes": [
       "",
@@ -1219,13 +1219,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Takeda Shingen",
-    "image": "takeda-shingen.png",
+    "image": "/icons/commanders/takeda-shingen.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -1235,13 +1235,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Tariq Ibnziyad",
-    "image": "tariq-ibnziyad.png",
+    "image": "/icons/commanders/tariq-ibnziyad.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -1251,13 +1251,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Theodora",
-    "image": "theodora.png",
+    "image": "/icons/commanders/theodora.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -1267,13 +1267,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Thutmose",
-    "image": "thutmose.png",
+    "image": "/icons/commanders/thutmose.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -1283,13 +1283,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Tokugawa Ieyasu",
-    "image": "tokugawa-ieyasu.png",
+    "image": "/icons/commanders/tokugawa-ieyasu.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -1299,13 +1299,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Tomyris",
-    "image": "tomyris.png",
+    "image": "/icons/commanders/tomyris.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -1315,13 +1315,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Trajan",
-    "image": "trajan.png",
+    "image": "/icons/commanders/trajan.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -1331,13 +1331,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "William Wallace",
-    "image": "william-wallace.png",
+    "image": "/icons/commanders/william-wallace.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -1347,13 +1347,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "William",
-    "image": "william.png",
+    "image": "/icons/commanders/william.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -1363,13 +1363,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Wu Zetian",
-    "image": "wu-zetian.png",
+    "image": "/icons/commanders/wu-zetian.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -1379,13 +1379,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Xiang Yu",
-    "image": "xiang-yu.png",
+    "image": "/icons/commanders/xiang-yu.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -1395,13 +1395,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Yi Seong Gye",
-    "image": "yi-seong-gye.png",
+    "image": "/icons/commanders/yi-seong-gye.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -1411,13 +1411,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Yi Sun Sin",
-    "image": "yi-sun-sin.png",
+    "image": "/icons/commanders/yi-sun-sin.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -1427,13 +1427,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Zenobia",
-    "image": "zenobia.png",
+    "image": "/icons/commanders/zenobia.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -1443,13 +1443,13 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   },
   {
     "name": "Zhuge Liang",
-    "image": "zhuge-liang.png",
+    "image": "/icons/commanders/zhuge-liang.png",
     "rarity": "Legendary",
     "attributes": [
       "",
@@ -1459,7 +1459,7 @@
     "builds": [
       {
         "name": "",
-        "image": ""
+        "image": "/talent-trees/"
       }
     ]
   }

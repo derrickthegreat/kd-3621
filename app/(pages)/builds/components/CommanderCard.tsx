@@ -33,10 +33,10 @@ export default function CommanderCard({ commander, expanded, toggleDetails }: Pr
             <div className="flex items-center justify-between flex-wrap gap-2">
                 <div className="flex items-center space-x-3 min-w-[200px]">
                     <Image
-                        src={`/icons/commanders/${commander.image}`}
+                        src={commander.image.startsWith('/') ? commander.image : `/icons/commanders/${commander.image}`}
                         alt={commander.name}
-                        width={50}
-                        height={50}
+                        width={56}
+                        height={56}
                     />
                     <span className="font-semibold text-lg">{commander.name}</span>
                 </div>
@@ -59,7 +59,7 @@ export default function CommanderCard({ commander, expanded, toggleDetails }: Pr
 
                 <div className="flex items-center gap-2 ml-auto">
                     {hasBuilds && (
-                        <Link href={`/builds/${commander.image.replace('.png', '')}`}>
+                        <Link href={`/builds/${getSlug(commander.image)}`}>
                             <button className="cursor-pointer bg-orange-400 hover:bg-orange-500 text-white text-sm font-semibold px-3 py-1.5 rounded-full">
                                 Best Builds & Pairings
                             </button>
@@ -77,4 +77,9 @@ export default function CommanderCard({ commander, expanded, toggleDetails }: Pr
             </div>
         </li>
     );
+}
+
+function getSlug(img: string) {
+    const file = (img || '').split('/').pop() || ''
+    return file.replace(/\.[a-zA-Z0-9]+$/, '')
 }

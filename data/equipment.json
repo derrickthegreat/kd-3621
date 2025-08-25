@@ -1,0 +1,69 @@
+[
+  {
+    "src": "/icons/equipment/retribution.png",
+    "alt": "Shadow Legion's Retribution (Legendary Chest Piece)",
+    "name": "Shadow Legion's Retribution",
+    "slot": "Chest",
+    "rarity": "Legendary",
+    "type": "Cavalry",
+    "attributes": [
+      {
+        "stat": "Cavalry Attack",
+        "value": 12
+      },
+      {
+        "stat": "Infantry Attack",
+        "value": 5
+      },
+      {
+        "stat": "Archer Attack",
+        "value": 5
+      }
+    ],
+    "materials": [
+      {
+        "material": "Leather",
+        "value": 40
+      },
+      {
+        "material": "Iron Ore",
+        "value": 10
+      },
+      {
+        "material": "Ebony",
+        "value": 10
+      },
+      {
+        "material": "Gold",
+        "value": 15000000
+      }
+    ],
+    "iconic": [
+      {
+        "stat": "Cavalry Base Defense",
+        "value": 3,
+        "tier": 1
+      },
+      {
+        "stat": "Enemy Health Ignored",
+        "value": 1,
+        "tier": 2
+      },
+      {
+        "stat": "Unit Capacity",
+        "value": 500,
+        "tier": 3
+      },
+      {
+        "stat": "Damage to Troops on the Map",
+        "value": 1,
+        "tier": 4
+      },
+      {
+        "stat": "10% chance to get 5% counterattack bonus, for 2 seconds 5 seconds cooldown",
+        "value": 0,
+        "tier": 5
+      }
+    ]
+  }
+]
