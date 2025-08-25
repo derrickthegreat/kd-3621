@@ -56,8 +56,14 @@ export function DataTable<TData, TValue = unknown>({
   const filtered = React.useMemo(() => {
     const q = debouncedSearch.trim().toLowerCase()
     if (!q || !searchable || !searchKeys.length) return data
-    return data.filter((row: any) =>
-      searchKeys.some((key) => String(row?.[key as any] ?? "").toLowerCase().includes(q))
+    return data.filter((row: TData) =>
+      searchKeys.some((key) =>
+        (typeof key === "string" && key in row)
+          ? String((row as Record<string, unknown>)[key] ?? "").toLowerCase().includes(q)
+          : (typeof key !== "string"
+              ? String(row[key as keyof TData] ?? "").toLowerCase().includes(q)
+              : false)
+      )
     )
   }, [data, debouncedSearch, searchable, searchKeys])
 
