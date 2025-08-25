@@ -302,7 +302,7 @@ async function deletePairing(id: string) {
     const res = await fetch(`/api/v1/commander/pairing?id=${encodeURIComponent(id)}`, { method: 'DELETE' })
     if (!res.ok) throw new Error('Failed to delete pairing')
     // Note: parent refreshes on dialog onSaved; here we rely on closing/reopen or user action
-  } catch {
-    // swallow
+  } catch (error) {
+    toast.error("Failed to delete pairing. Please try again.");
   }
 }
