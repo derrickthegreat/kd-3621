@@ -1,0 +1,19 @@
+[
+  { "commander": "Aethelflaed", "name": "All in one", "url": "/talent-trees/aethelflaed/aethelflaed-all-in-one.png" },
+  { "commander": "Aethelflaed", "name": "Barbarian Hunting", "url": "/talent-trees/aethelflaed/aethelflaed-barbarian-hunting.png" },
+  { "commander": "Aethelflaed", "name": "Open Field", "url": "/talent-trees/aethelflaed/aethelflaed-open-field.png" },
+
+  { "commander": "Alexander Nevsky", "name": "Nuke", "url": "/talent-trees/alexander-nevsky/alexander-nevsky-nuke.png" },
+  { "commander": "Alexander Nevsky", "name": "Open Field", "url": "/talent-trees/alexander-nevsky/alexander-nevsky-open-field.png" },
+  { "commander": "Alexander Nevsky", "name": "1v1", "url": "/talent-trees/alexander-nevsky/alexander-nevsky-1-v-1.png" },
+
+  { "commander": "Alexander the Great", "name": "Open Field", "url": "/talent-trees/alexander-the-great/alexander-the-great-open-field.png" },
+
+  { "commander": "Amanitore", "name": "Garrison", "url": "/talent-trees/amanitore/amanitore-garrison.png" },
+
+  { "commander": "Artemisia", "name": "Open Field", "url": "/talent-trees/artemisia/artemisia-open-field.png" },
+  { "commander": "Artemisia", "name": "Garrison vs Attila", "url": "/talent-trees/artemisia/artemisia-garrison-vs-attila.png" },
+  { "commander": "Artemisia", "name": "Flags & Passes vs Attila", "url": "/talent-trees/artemisia/artemisia-flags-and-passes-vs-attila.png" },
+
+  { "commander": "Arthur Pendragon", "name": "Open Field", "url": "/talent-trees/arthur-pendragon/arthur-pendragon-open-field.png" }
+]

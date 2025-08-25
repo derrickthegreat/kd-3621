@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
 import AccessControlService from '@/lib/db/accessControlService';
-import { prepareCreateOrUpdate } from '@/lib/db/prismaUtils';
-
-const prisma = new PrismaClient();
+import { prisma, prepareCreateOrUpdate } from '@/lib/db/prismaUtils';
+import { logUserAction } from '@/lib/db/audit';
 
 interface MaterialRequest {
   id?: string;
@@ -63,8 +61,6 @@ export async function GET(request: NextRequest) {
   } catch (error: any) {
     console.error('GET /api/equipment/materials error:', error);
     return NextResponse.json({ message: 'Failed to fetch materials', error: error.message }, { status: 500 });
-  } finally {
-    await prisma.$disconnect();
   }
 }
 
@@ -126,10 +122,11 @@ export async function POST(request: NextRequest) {
         description,
       };
 
-      const result = await prepareCreateOrUpdate(prisma.material, payload, {
+  const result = await prepareCreateOrUpdate(prisma.material, payload, {
         userId: session.userId,
         matchField: 'name', // Match on 'name' when no ID
       });
+  await logUserAction({ action: `${id ? 'Updated' : 'Created'} material ${name}`, actorClerkId: session.userId })
 
       results.push(result);
     }
@@ -150,7 +147,33 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: 'Material name must be unique' }, { status: 409 });
     }
     return NextResponse.json({ message: 'Failed to save materials', error: error.message }, { status: 500 });
-  } finally {
-    await prisma.$disconnect();
+  }
+}
+
+// === DELETE /api/equipment/materials ===
+// Delete a material by id or name. Also removes equipment material links.
+export async function DELETE(request: NextRequest) {
+  const session = await AccessControlService.getSessionInfo(request);
+  if(!session) return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  if(!AccessControlService.canWrite(session.role)) return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
+
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get('id');
+  const name = searchParams.get('name');
+
+  try {
+    const existing = await prisma.material.findFirst({ where: id ? { id } : { name: name! } });
+    if (!existing) return NextResponse.json({ message: 'Material not found' }, { status: 404 });
+
+  await prisma.$transaction([
+      prisma.equipmentMaterial.deleteMany({ where: { materialId: existing.id } }),
+      prisma.material.delete({ where: { id: existing.id } }),
+    ]);
+  await logUserAction({ action: `Deleted material ${existing.name} (${existing.id})`, actorClerkId: session.userId })
+
+    return NextResponse.json({ message: 'Material deleted' }, { status: 200 });
+  } catch (error: any) {
+    console.error('DELETE /api/equipment/materials error:', error);
+    return NextResponse.json({ message: 'Failed to delete material', error: error.message }, { status: 500 });
   }
 }

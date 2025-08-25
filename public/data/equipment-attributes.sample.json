@@ -1,0 +1,6 @@
+[
+  { "name": "Infantry Attack", "description": "+4.5% infantry attack" },
+  { "name": "Cavalry Health", "description": "+3% cavalry health" },
+  { "name": "Archer Defense", "description": "+5% archer defense" },
+  { "name": "Iconic: Infantry Attack", "description": "+2% infantry attack (iconic)", "isIconic": true }
+]

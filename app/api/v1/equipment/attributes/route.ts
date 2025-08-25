@@ -37,11 +37,9 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
 import AccessControlService from '@/lib/db/accessControlService';
-import { prepareCreateOrUpdate } from '@/lib/db/prismaUtils';
-
-const prisma = new PrismaClient();
+import { prisma, prepareCreateOrUpdate } from '@/lib/db/prismaUtils';
+import { logUserAction } from '@/lib/db/audit';
 
 interface AttributeRequest {
   id?: string;
@@ -83,8 +81,6 @@ export async function GET(request: NextRequest) {
       { message: 'Failed to fetch attributes', error: error.message },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }
 
@@ -120,10 +116,11 @@ export async function POST(request: NextRequest) {
         isIconic: isIconic ?? false,
       };
 
-      const result = await prepareCreateOrUpdate(prisma.attribute, payload, {
+  const result = await prepareCreateOrUpdate(prisma.attribute, payload, {
         userId: session.userId,
         matchField: 'name',
       });
+  await logUserAction({ action: `${id ? 'Updated' : 'Created'} attribute ${name}`, actorClerkId: session.userId })
 
       results.push(result);
     }
@@ -150,7 +147,38 @@ export async function POST(request: NextRequest) {
       { message: 'Failed to save attribute', error: error.message },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
+  }
+}
+
+// === DELETE /api/equipment/attributes ===
+// Delete an attribute by id or name. Also removes linked equipment attribute/iconic rows.
+export async function DELETE(request: NextRequest) {
+  const session = await AccessControlService.getSessionInfo(request);
+  if (!session) {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  }
+  if (!AccessControlService.canWrite(session.role)) {
+    return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
+  }
+
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get('id');
+  const name = searchParams.get('name');
+
+  try {
+    const existing = await prisma.attribute.findFirst({ where: id ? { id } : { name: name! } });
+    if (!existing) return NextResponse.json({ message: 'Attribute not found' }, { status: 404 });
+
+  await prisma.$transaction([
+      prisma.equipmentAttribute.deleteMany({ where: { attributeId: existing.id } }),
+      prisma.equipmentIconicAttribute.deleteMany({ where: { attributeId: existing.id } }),
+      prisma.attribute.delete({ where: { id: existing.id } }),
+    ]);
+  await logUserAction({ action: `Deleted attribute ${existing.name} (${existing.id})`, actorClerkId: session.userId })
+
+    return NextResponse.json({ message: 'Attribute deleted' }, { status: 200 });
+  } catch (error: any) {
+    console.error('DELETE /api/equipment/attributes error:', error);
+    return NextResponse.json({ message: 'Failed to delete attribute', error: error.message }, { status: 500 });
   }
 }

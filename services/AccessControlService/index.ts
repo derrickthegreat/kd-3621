@@ -26,7 +26,7 @@
  * ```
  */
 
-import { auth } from '@clerk/nextjs/server';
+import { auth, clerkClient } from '@clerk/nextjs/server';
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { prisma } from '@/lib/db/prismaUtils';
@@ -71,20 +71,41 @@ export class AccessControlService {
 
   // --- Helper: Create DB user if not found ---
   private async getOrCreateLocalUser(clerkId: string): Promise<User | null> {
-    let user = await prisma.user.findUnique({ where: { clerkId } });
-    if (!user) {
-      if (process.env.NODE_ENV !== 'production') {
-        console.warn(`[AccessControl] Creating local user for clerkId ${clerkId}`);
+    try {
+      let user = await prisma.user.findUnique({ where: { clerkId } });
+      if (!user) {
+        if (process.env.NODE_ENV !== 'production') {
+          console.warn(`[AccessControl] Creating local user for clerkId ${clerkId}`);
+        }
+        let imageUrl: string | null = null;
+        try {
+          const clerk = await clerkClient();
+          const cu = await clerk.users.getUser(clerkId);
+          imageUrl = cu?.imageUrl ?? null;
+        } catch {}
+  user = await prisma.user.create({ data: { clerkId, username: `clerk_${clerkId}`, avatarUrl: imageUrl ?? undefined } });
       }
-
-      try {
-        user = await prisma.user.create({ data: { clerkId } });
-      } catch (e: any) {
-        console.error(`[AccessControl] Failed to create user for clerkId ${clerkId}:`, e);
-        return null;
+      return user;
+    } catch (e: any) {
+      // Prisma P1001: database unreachable. Fall back to a minimal session role
+      if (e?.code === 'P1001') {
+        const override = (process.env.ADMIN_OVERRIDE_IDS || '')
+          .split(',')
+          .map((s) => s.trim())
+          .filter(Boolean)
+          .includes(clerkId);
+        console.warn('[AccessControl] DB unavailable (P1001). Falling back to session role:', override ? 'ADMIN (override)' : 'KINGDOM_MEMBER');
+        // Return a minimal shape with only the fields we use downstream
+        const partial: Partial<User> = {
+          id: 'fallback' as any,
+          clerkId,
+          role: override ? UserRole.ADMIN : UserRole.KINGDOM_MEMBER,
+        };
+        return partial as User;
       }
+      console.error('[AccessControl] Unexpected error resolving local user:', e);
+      return null;
     }
-    return user;
   }
 
   // --- HMAC Support for System Requests ---
@@ -121,7 +142,7 @@ export class AccessControlService {
     const { userId } = await auth();
     if (!userId) return null;
 
-    const user = await this.getOrCreateLocalUser(userId);
+  const user = await this.getOrCreateLocalUser(userId);
     if (!user) return null;
 
     if (process.env.NODE_ENV !== 'production') {

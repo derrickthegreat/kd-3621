@@ -40,6 +40,7 @@ enum TroopType {
   LEADERSHIP
   GATHERING
   PEACEKEEPING
+  ATTACK
   CONQUERING
   COMBO
   DEFENSE
@@ -58,6 +59,13 @@ enum Status {
   CLOSED
 }
 
+enum LinkRequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  CANCELED
+}
+
 // --- User Management ------------------------------------
 model User {
   id        String   @id @default(uuid())
@@ -66,8 +74,20 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  // Profile fields
+  username            String    @unique
+  displayName         String?   @unique
+  avatarUrl           String?
+  commanderAvatar     Commander? @relation(name: "CommanderAvatar", fields: [commanderAvatarId], references: [id])
+  commanderAvatarId   String?
+  socials             Json?
+
   @@map("users")
   governors UserPlayer[]
+  linkRequests LinkRequest[]
+  approvedLinks LinkRequest[] @relation("LinkRequestApprovedBy")
+  linkedLinks   LinkRequest[] @relation("LinkRequestLinkedBy")
+  uploadedProofs LinkRequestProof[]
 }
 
 model UserAuditLog {
@@ -135,6 +155,7 @@ model Player {
 
   @@map("players")
   UserPlayers UserPlayer[]
+  linkRequests LinkRequest[]
 }
 
 model PlayerStats {
@@ -171,13 +192,60 @@ model UserPlayer {
   @@map("users_players")
 }
 
+// --- User ↔ Governor Link Requests ----------------------------
+
+model LinkRequest {
+  id           String             @id @default(uuid())
+  user         User               @relation(fields: [userId], references: [id])
+  userId       String
+  player       Player             @relation(fields: [playerId], references: [id])
+  playerId     String
+  status       LinkRequestStatus  @default(PENDING)
+  note         String?
+  decisionNote String?
+  createdAt    DateTime           @default(now())
+  createdBy    String?
+  updatedAt    DateTime           @updatedAt
+  updatedBy    String?
+  approvedAt   DateTime?
+  approvedBy   User?              @relation("LinkRequestApprovedBy", fields: [approvedById], references: [id])
+  approvedById String?
+  linkedAt     DateTime?
+  linkedBy     User?              @relation("LinkRequestLinkedBy", fields: [linkedById], references: [id])
+  linkedById   String?
+  proofs       LinkRequestProof[]
+
+  @@index([userId])
+  @@index([playerId])
+  @@index([status])
+  @@unique([userId, playerId, status])
+  @@map("link_requests")
+}
+
+model LinkRequestProof {
+  id           String       @id @default(uuid())
+  request      LinkRequest  @relation(fields: [requestId], references: [id])
+  requestId    String
+  url          String
+  type         String?
+  caption      String?
+  uploadedAt   DateTime     @default(now())
+  uploadedBy   User?        @relation(fields: [uploadedById], references: [id])
+  uploadedById String?
+
+  @@index([requestId])
+  @@map("link_request_proofs")
+}
+
 // --- Commanders & Assignments ---------------------------------
 
 model Commander {
   id                         String                 @id @default(uuid())
-  name                       String
+  name                       String                 @unique
   iconUrl                    String
+  rarity                     Rarity?
   speciality                 TroopType[]
+  isArchived                 Boolean                @default(false)
   createdAt                  DateTime               @default(now())
   createdBy                  String?
   updatedAt                  DateTime               @updatedAt
@@ -186,6 +254,10 @@ model Commander {
   applications               ApplicationCommander[]
   primaryCommanderPairings   CommanderPairing[]     @relation(name: "PrimaryPairings")
   secondaryCommanderPairings CommanderPairing[]     @relation(name: "SecondaryPairings")
+  skillTrees                 CommanderSkillTree[]
+
+  // Backreference for users choosing this commander as their avatar
+  avatarUsers                User[]                 @relation(name: "CommanderAvatar")
 
   @@map("commanders")
 }
@@ -196,10 +268,15 @@ model CommanderSkillTree {
   rating      Float?
   description String?
   url         String
+  commander   Commander @relation(fields: [commanderId], references: [id])
+  commanderId String
   createdAt   DateTime @default(now())
   createdBy   String?
   updatedAt   DateTime @updatedAt
   updatedBy   String?
+
+  @@index([commanderId])
+  @@unique([commanderId, name])
 }
 
 model CommanderPairing {
@@ -412,6 +489,7 @@ model EventRanking {
   updatedBy     String?
 
   @@unique([eventId, applicationId]) // This is now valid
+  @@unique([eventId, rank]) // Enforce unique rank per event
 }
 
 model ApplicationCommander {

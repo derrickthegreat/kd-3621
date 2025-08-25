@@ -8,7 +8,7 @@ import PageHeader from '@/app/components/PageHeader';
 
 export default function CommanderBuildPage() {
     const { name } = useParams();
-    const commander = commanders.find((c) => c.image.replace('.png', '') === name);
+    const commander = commanders.find((c) => getSlug(c.image) === name);
     const [expandedImage, setExpandedImage] = useState<string | null>(null);
 
     if (!commander) return notFound();
@@ -22,7 +22,7 @@ export default function CommanderBuildPage() {
 
             <div className="flex justify-center mb-6">
                 <Image
-                    src={`/icons/commanders/${commander.image}`}
+                    src={commander.image.startsWith('/') ? commander.image : `/icons/commanders/${commander.image}`}
                     alt={commander.name}
                     width={100}
                     height={100}
@@ -51,12 +51,12 @@ export default function CommanderBuildPage() {
                     <div key={build.name} className="text-center" >
                         <h2 className="text-xl font-semibold mb-4">{build.name}</h2>
                         <Image
-                            src={`/talent-trees/${build.image}`}
+                            src={build.image.startsWith('/') ? build.image : `/talent-trees/${build.image}`}
                             alt={build.name}
                             width={800}
                             height={600}
                             className="rounded shadow border border-gray-700 cursor-zoom-in mx-auto hover:brightness-110 transition"
-                            onClick={() => setExpandedImage(`/talent-trees/${build.image}`)}
+                            onClick={() => setExpandedImage(build.image.startsWith('/') ? build.image : `/talent-trees/${build.image}`)}
                         />
                     </div>
                 ))}
@@ -79,4 +79,9 @@ export default function CommanderBuildPage() {
             }
         </main >
     );
+}
+
+function getSlug(img: string) {
+    const file = img.split('/').pop() || ''
+    return file.replace(/\.[a-zA-Z0-9]+$/, '')
 }

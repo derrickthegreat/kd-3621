@@ -62,61 +62,88 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    const appUserWithPlayers = await prisma.user.findUnique({
-      where: { clerkId: authenticatedUserId },
-      include: {
-        governors: {
-          include: {
-            player: {
-              include: {
-                alliance: {
-                  select: {
-                    id: true,
-                    name: true,
-                    tag: true,
+    let appUserWithPlayers: any | null = null;
+    let dbDown = false;
+    try {
+      appUserWithPlayers = await prisma.user.findUnique({
+        where: { clerkId: authenticatedUserId },
+        include: {
+          governors: {
+            include: {
+              player: {
+                include: {
+                  alliance: {
+                    select: {
+                      id: true,
+                      name: true,
+                      tag: true,
+                    },
                   },
-                },
-                stats: {
-                  select: {
-                    snapshot: true,
-                    killPoints: true,
-                    t4Kills: true,
-                    t5Kills: true,
-                    t45Kills: true,
-                    deaths: true,
-                    power: true,
+                  stats: {
+                    select: {
+                      snapshot: true,
+                      killPoints: true,
+                      t4Kills: true,
+                      t5Kills: true,
+                      t45Kills: true,
+                      deaths: true,
+                      power: true,
+                    },
+                    orderBy: {
+                      snapshot: "desc",
+                    },
+                    take: 1,
                   },
-                  orderBy: {
-                    snapshot: "desc",
-                  },
-                  take: 1,
                 },
               },
             },
           },
         },
-      },
-    });
-
-    if (!appUserWithPlayers) {
-      console.warn(
-        `Application user for Clerk ID ${authenticatedUserId} not found in DB, despite session.`
-      );
-      return NextResponse.json(
-        { message: "User profile not found in application database" },
-        { status: 404 }
-      );
+      });
+    } catch (e: any) {
+      if (e?.code === 'P1001') {
+        dbDown = true;
+      } else {
+        throw e;
+      }
     }
 
-    const players = appUserWithPlayers.governors
-      .map((up) => up.player)
-      .filter(Boolean);
+    if (!appUserWithPlayers) {
+      if (dbDown) {
+        // Graceful fallback when DB is unreachable
+        return NextResponse.json({
+          user: clerkUser,
+          profile: null,
+          governors: [],
+        }, { status: 200 });
+      } else {
+        console.warn(
+          `Application user for Clerk ID ${authenticatedUserId} not found in DB.`
+        );
+        return NextResponse.json(
+          { message: "User profile not found in application database" },
+          { status: 404 }
+        );
+      }
+    }
+
+    const players = (appUserWithPlayers.governors as any[])
+      .map((up: any) => up.player)
+      .filter(Boolean) as any[];
 
     console.log("Retrieved Players count:", players.length);
 
     return NextResponse.json({
       user: clerkUser,
-      governors: players.map((player) => ({
+      profile: {
+        username: (appUserWithPlayers as any).username ?? null,
+        displayName: (appUserWithPlayers as any).displayName ?? null,
+        avatarUrl: (appUserWithPlayers as any).avatarUrl ?? null,
+        commanderAvatarId: (appUserWithPlayers as any).commanderAvatarId ?? null,
+  socials: (appUserWithPlayers as any).socials ?? null,
+  role: (appUserWithPlayers as any).role ?? null,
+      },
+  governors: (players as any[]).map((player: any) => ({
         id: player.id,
         name: player.name,
         rokId: player.rokId,
@@ -285,5 +312,80 @@ export async function POST(req: NextRequest) {
         { status: 500 }
       );
     }
+  }
+}
+
+// Allow authenticated users to update their own app profile fields (username, displayName, avatarUrl/commanderAvatarId, socials)
+const patchAcs = new AccessControlService([
+  UserRole.ADMIN,
+  UserRole.SYSTEM,
+  UserRole.KINGDOM_MEMBER,
+]);
+
+export async function PATCH(req: NextRequest) {
+  const unauthorized = await patchAcs.requireWriteAccess(req);
+  if (unauthorized) return unauthorized;
+
+  const session = await patchAcs.getSessionInfo(req);
+  if (!session?.userId) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    const body = await req.json().catch(() => ({}));
+  const { username, displayName, avatarUrl, commanderAvatarId, socials } = body || {};
+
+    const data: any = {};
+    // username: required, trimmed, no spaces
+    if (username !== undefined) {
+      if (typeof username !== 'string' || !username.trim()) {
+        return NextResponse.json({ message: 'Username is required' }, { status: 400 });
+      }
+      const u = username.trim();
+      if (/\s/.test(u)) {
+        return NextResponse.json({ message: 'Username cannot contain spaces' }, { status: 400 });
+      }
+      data.username = u;
+    }
+    // displayName: optional, trimmed
+    if (displayName !== undefined) {
+      if (displayName === null || displayName === '') {
+        data.displayName = null;
+      } else if (typeof displayName === 'string') {
+        data.displayName = displayName.trim();
+      }
+    }
+    if (avatarUrl === null || typeof avatarUrl === "string") data.avatarUrl = avatarUrl ?? null;
+    // commanderAvatarId acts as an alternative display source; do not unset avatarUrl automatically
+    if (typeof commanderAvatarId === "string") {
+      data.commanderAvatarId = commanderAvatarId.trim() || null;
+    }
+    if (
+      socials === null ||
+      (typeof socials === "object" && socials !== null && !Array.isArray(socials))
+    )
+      data.socials = socials ?? null;
+
+    if (Object.keys(data).length === 0)
+      return NextResponse.json({ message: "No valid fields to update" }, { status: 400 });
+
+    // Uniqueness checks for username and displayName
+    if (data.username) {
+      const exists = await (prisma as any).user.findFirst({ where: { username: data.username, clerkId: { not: session.userId } }, select: { id: true } });
+      if (exists) return NextResponse.json({ message: 'Username is already taken' }, { status: 409 });
+    }
+    if (data.displayName) {
+      const existsDn = await (prisma as any).user.findFirst({ where: { displayName: data.displayName, clerkId: { not: session.userId } }, select: { id: true } });
+      if (existsDn) return NextResponse.json({ message: 'Display name is already taken' }, { status: 409 });
+    }
+
+    await (prisma as any).user.update({ where: { clerkId: session.userId }, data: data as any });
+    return NextResponse.json({ message: 'Profile updated' }, { status: 200 });
+  } catch (error: any) {
+    console.error("PATCH /api/v1/users/me error:", error);
+    return NextResponse.json(
+      { message: "Failed to update profile", error: error?.message },
+      { status: 500 }
+    );
   }
 }
