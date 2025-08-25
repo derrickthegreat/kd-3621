@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import AccessControlService from '@/lib/db/accessControlService';
 import { prisma } from '@/lib/db/prismaUtils';
+import { logUserAction } from '@/lib/db/audit';
 
 /**
  * API Endpoint: /api/events/[id]/close
@@ -36,7 +37,7 @@ export async function POST(
       return NextResponse.json({ message: 'Event already closed' }, { status: 400 });
     }
 
-    const updatedEvent = await prisma.event.update({
+  const updatedEvent = await prisma.event.update({
       where: { id: eventId },
       data: {
         closedAt: new Date(),
@@ -44,6 +45,7 @@ export async function POST(
         updatedBy: session.userId,
       },
     });
+  await logUserAction({ action: `Closed event ${updatedEvent.name} (${updatedEvent.id})`, actorClerkId: session.userId })
 
     return NextResponse.json({ message: 'Event closed', event: updatedEvent }, { status: 200 });
   } catch (error: any) {

@@ -12,7 +12,7 @@ export default function PageHeader({ title }: PageHeaderProps) {
     const isPlayerProfile = /^\/players\/[^/]+$/.test(pathname)
     const isCommanderBuild = /^\/builds\/[^/]+$/.test(pathname)
 
-    const backLabel = isPlayerProfile ? 'Back to Players' : isCommanderBuild ? 'Back to Builds' : 'Back to Home'
+    const backLabel = isPlayerProfile ? 'Back to Governors' : isCommanderBuild ? 'Back to Builds' : 'Back to Home'
     const backHref = isPlayerProfile ? '/players' : isCommanderBuild ? '/builds' : '/'
 
     return (

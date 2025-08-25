@@ -33,10 +33,22 @@ export function AppLayout({ children }: AppLayoutProps) {
 
         const data = await res.json()
         const primaryEmail = data.user?.emailAddresses?.[0]?.emailAddress || ""
+        const displayName = data.profile?.displayName || `${data.user?.firstName ?? ''} ${data.user?.lastName ?? ''}`.trim() || primaryEmail
+        let avatar = data.profile?.avatarUrl || ""
+        if (!avatar && data.profile?.commanderAvatarId) {
+          try {
+            const cmdRes = await fetch(`/api/v1/commander`)
+            const cmds = await cmdRes.json().catch(() => [])
+            const picked = (cmds || []).find((c: any) => c.id === data.profile.commanderAvatarId)
+            avatar = picked?.iconUrl || ""
+          } catch {}
+        }
+        if (!avatar) avatar = data.user?.imageUrl ?? ""
         const user: NavUserProps = {
-          name: `${data.user?.firstName ?? ''} ${data.user?.lastName ?? ''}`.trim(),
+          name: displayName,
           email: primaryEmail,
-          avatar: data.user?.imageUrl ?? ""
+          avatar,
+          username: data.profile?.username || undefined,
         }
         setUser(user);
         if (!res.ok) {

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import access, { AccessControlService } from "@/services/AccessControlService"
 import { prisma } from "@/lib/db/prismaUtils"
+import { logUserAction } from "@/lib/db/audit"
 import { UserRole } from "@prisma/client"
 
 const memberAccess = new AccessControlService([UserRole.ADMIN, UserRole.SYSTEM, UserRole.KINGDOM_MEMBER])
@@ -36,6 +37,7 @@ export async function POST(req: NextRequest) {
   const { playerId, note } = body || {}
   if (!playerId) return NextResponse.json({ message: 'playerId required' }, { status: 400 })
   const created = await prisma.linkRequest.create({ data: { userId, playerId, note, createdBy: userId } })
+  await logUserAction({ action: `Created link request for player ${playerId}`, actorClerkId: userId, targetUserId: created.userId })
   return NextResponse.json({ request: created })
 }
 
@@ -55,14 +57,17 @@ export async function PUT(req: NextRequest) {
 
   if (action === 'APPROVE') {
     const updated = await prisma.linkRequest.update({ where: { id }, data: { status: 'APPROVED', decisionNote, approvedAt: new Date(), approvedById: userId2, updatedBy: userId2 } })
+  await logUserAction({ action: `Approved link request (${id})`, actorClerkId: userId2, targetUserId: updated.userId })
     return NextResponse.json({ request: updated })
   }
   if (action === 'REJECT') {
     const updated = await prisma.linkRequest.update({ where: { id }, data: { status: 'REJECTED', decisionNote, updatedBy: userId2 } })
+  await logUserAction({ action: `Rejected link request (${id})`, actorClerkId: userId2, targetUserId: updated.userId })
     return NextResponse.json({ request: updated })
   }
   if (action === 'CANCEL') {
     const updated = await prisma.linkRequest.update({ where: { id }, data: { status: 'CANCELED', updatedBy: userId2 } })
+  await logUserAction({ action: `Canceled link request (${id})`, actorClerkId: userId2, targetUserId: updated.userId })
     return NextResponse.json({ request: updated })
   }
   if (action === 'LINK') {
@@ -75,6 +80,7 @@ export async function PUT(req: NextRequest) {
       update: {},
     })
     const updated = await prisma.linkRequest.update({ where: { id }, data: { linkedAt: new Date(), linkedById: userId2, updatedBy: userId2 } })
+  await logUserAction({ action: `Linked user to player (${lr.userId} -> ${lr.playerId})`, actorClerkId: userId2, targetUserId: lr.userId })
     return NextResponse.json({ request: updated })
   }
   return NextResponse.json({ message: 'No-op' })

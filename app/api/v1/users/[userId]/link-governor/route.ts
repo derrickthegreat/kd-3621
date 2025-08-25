@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db/prismaUtils";
 import { AccessControlService } from "@/services/AccessControlService";
 import { UserRole } from "@prisma/client";
+import { logUserAction } from "@/lib/db/audit";
 
 const acs = new AccessControlService([UserRole.ADMIN, UserRole.SYSTEM]);
 
@@ -21,11 +22,13 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ use
     if (!player) return NextResponse.json({ message: "Player not found" }, { status: 404 });
 
     // Upsert link
-    await prisma.userPlayer.upsert({
+  await prisma.userPlayer.upsert({
       where: { userId_playerId: { userId: user.id, playerId } },
       create: { userId: user.id, playerId },
       update: {},
     });
+  const actor = await acs.getSessionInfo(req)
+  await logUserAction({ action: `Linked user ${user.clerkId} to player ${player.name} (${player.id})`, actorClerkId: actor?.userId, targetUserId: user.id })
     return NextResponse.json({ message: "Linked" });
   } catch (e) {
     console.error("link-governor failed", e);

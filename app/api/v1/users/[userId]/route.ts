@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { clerkClient } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/db/prismaUtils";
 import { AccessControlService } from "@/services/AccessControlService/index"; // Assuming this path is correct
+import { logUserAction } from "@/lib/db/audit";
 import { UserRole } from "@prisma/client";
 
 // Placeholder types for Clerk's metadata.
@@ -187,8 +188,12 @@ export async function POST(
   const clerk = await clerkClient();
 
   try {
-    const body: UpdatePayload = await req.json();
-    const { firstName, lastName, socials, avatarUrl, publicMetadata } = body;
+  const raw = await req.json();
+  const body: UpdatePayload = raw;
+  const { firstName, lastName, socials, avatarUrl, publicMetadata } = body;
+  const displayName: string | null | undefined = (raw as any).displayName;
+  const username: string | null | undefined = (raw as any).username;
+  const commanderAvatarId: string | null | undefined = (raw as any).commanderAvatarId;
 
     // 1. Validate incoming data types
     if (firstName !== undefined && typeof firstName !== "string") {
@@ -222,6 +227,20 @@ export async function POST(
         { status: 400 }
       );
     }
+    if (displayName !== undefined && displayName !== null && typeof displayName !== 'string') {
+      return NextResponse.json({ message: 'Bad Request: displayName must be a string or null' }, { status: 400 });
+    }
+    if (username !== undefined && username !== null && typeof username !== 'string') {
+      return NextResponse.json({ message: 'Bad Request: username must be a string or null' }, { status: 400 });
+    }
+    if (username !== undefined) {
+      const u = (username || '').trim();
+      if (!u) return NextResponse.json({ message: 'Username is required' }, { status: 400 });
+      if (/\s/.test(u)) return NextResponse.json({ message: 'Username cannot contain spaces' }, { status: 400 });
+    }
+    if (commanderAvatarId !== undefined && commanderAvatarId !== null && typeof commanderAvatarId !== 'string') {
+      return NextResponse.json({ message: 'Bad Request: commanderAvatarId must be a string or null' }, { status: 400 });
+    }
 
     // 2. Fetch the existing Clerk user to merge metadata safely
     let existingClerkUser;
@@ -246,7 +265,7 @@ export async function POST(
     }
 
     // 3. Construct the update payload for Clerk using UserUpdateParams
-    const updatePayload: UpdatePayload = {};
+  const updatePayload: UpdatePayload = {};
     let hasUpdates = false;
 
     // Direct Clerk fields
@@ -262,6 +281,14 @@ export async function POST(
       updatePayload.avatarUrl = avatarUrl;
       hasUpdates = true;
     }
+
+  // App profile updates (DB)
+  let appHasUpdates = false;
+  const appData: any = {};
+  if (displayName !== undefined) { appData.displayName = displayName?.trim() || null; appHasUpdates = true; }
+  if (username !== undefined) { appData.username = (username || '').trim(); appHasUpdates = true; }
+  if (avatarUrl !== undefined) { appData.avatarUrl = avatarUrl; appHasUpdates = true; }
+  if (commanderAvatarId !== undefined) { appData.commanderAvatarId = commanderAvatarId; appHasUpdates = true; }
 
     // Handle unsafeMetadata merging
     const currentUnsafeMetadata: UserUnsafeMetadata =
@@ -315,6 +342,32 @@ export async function POST(
       targetUserId,
       updatePayload
     );
+
+    // Apply app profile updates in our DB
+    if (appHasUpdates) {
+      try {
+        if (appData.username) {
+          const exists = await prisma.user.findFirst({ where: { username: appData.username, clerkId: { not: targetUserId } }, select: { id: true } });
+          if (exists) return NextResponse.json({ message: 'Username is already taken' }, { status: 409 });
+        }
+        if (appData.displayName) {
+          const existsDn = await prisma.user.findFirst({ where: { displayName: appData.displayName, clerkId: { not: targetUserId } }, select: { id: true } });
+          if (existsDn) return NextResponse.json({ message: 'Display name is already taken' }, { status: 409 });
+        }
+        await prisma.user.update({ where: { clerkId: targetUserId }, data: appData });
+      } catch (e: any) {
+        // If DB is down (P1001), still return Clerk update result
+        if (e?.code !== 'P1001') throw e;
+      }
+    }
+
+    // Audit log (actor is the admin/system performing the update, subject is the target user)
+    const session = await postAcs.getSessionInfo(req);
+  await logUserAction({
+      action: `Updated user profile fields (${Object.keys(updatePayload).join(', ')})`,
+      actorClerkId: session?.userId ?? null,
+      targetClerkId: targetUserId,
+    });
 
     // 5. Return the updated user data
     return NextResponse.json(

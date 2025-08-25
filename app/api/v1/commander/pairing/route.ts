@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
 import AccessControlService from '@/lib/db/accessControlService'
-
-const prisma = new PrismaClient()
+import { logUserAction } from '@/lib/db/audit'
+import { prisma } from '@/lib/db/prismaUtils'
 
 // GET /api/v1/commander/pairing
 export async function GET(request: NextRequest) {
@@ -17,8 +16,6 @@ export async function GET(request: NextRequest) {
   } catch (error: any) {
     console.error('GET /commander/pairing error:', error)
     return NextResponse.json({ message: 'Error fetching pairings', error: error.message }, { status: 500 })
-  } finally {
-    await prisma.$disconnect()
   }
 }
 
@@ -44,14 +41,13 @@ export async function POST(request: NextRequest) {
     const existing = await prisma.commanderPairing.findFirst({ where: { primaryid, secondaryid } })
     if (existing) return NextResponse.json({ message: 'Pairing already exists', id: existing.id }, { status: 200 })
 
-    const created = await prisma.commanderPairing.create({ data: { primaryid, secondaryid, createdBy: session.userId } })
+  const created = await prisma.commanderPairing.create({ data: { primaryid, secondaryid, createdBy: session.userId } })
     const withIncludes = await prisma.commanderPairing.findUnique({ where: { id: created.id }, include: { primary: true, secondary: true } })
+  await logUserAction({ action: `Created pairing ${withIncludes?.primary?.name ?? primaryid} + ${withIncludes?.secondary?.name ?? secondaryid}` , actorClerkId: session.userId })
     return NextResponse.json(withIncludes, { status: 200 })
   } catch (error: any) {
     console.error('POST /commander/pairing error:', error)
     return NextResponse.json({ message: 'Failed to create pairing', error: error.message }, { status: 500 })
-  } finally {
-    await prisma.$disconnect()
   }
 }
 
@@ -65,12 +61,12 @@ export async function DELETE(request: NextRequest) {
   if (!id) return NextResponse.json({ message: 'Missing pairing id' }, { status: 400 })
 
   try {
-    await prisma.commanderPairing.delete({ where: { id } })
+  const existing = await prisma.commanderPairing.findUnique({ where: { id }, include: { primary: true, secondary: true } })
+  await prisma.commanderPairing.delete({ where: { id } })
+  await logUserAction({ action: `Deleted pairing ${existing?.primary?.name ?? ''} + ${existing?.secondary?.name ?? ''}` , actorClerkId: session.userId })
     return NextResponse.json({ message: 'Deleted' }, { status: 200 })
   } catch (error: any) {
     console.error('DELETE /commander/pairing error:', error)
     return NextResponse.json({ message: 'Failed to delete pairing', error: error.message }, { status: 500 })
-  } finally {
-    await prisma.$disconnect()
   }
 }

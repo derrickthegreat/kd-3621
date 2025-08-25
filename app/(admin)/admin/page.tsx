@@ -68,7 +68,7 @@ export default function AdminPage() {
                     <>
                                                 <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
                                                     <StatCard label="Users" value={data.counts.users} href="/admin/users" />
-                                                    <StatCard label="Players" value={data.counts.players} href="/admin/players" />
+                                                    <StatCard label="Governors" value={data.counts.players} href="/admin/players" />
                                                     <StatCard label="Alliances" value={data.counts.alliances} href="/admin/alliances" />
                                                     <StatCard label="Pending Links" value={data.counts.pendingLinkRequests} href="/admin/users/verify-governor" badge={data.counts.pendingLinkRequests > 0 && data.counts.pendingLinkRequests} badgeClassName={data.counts.pendingLinkRequests>0? 'bg-amber-100 text-amber-900 dark:bg-amber-900/30 dark:text-amber-300' : undefined} />
                                                     <StatCard label="Upcoming Events" value={data.counts.eventsUpcoming} href="/admin/events" />

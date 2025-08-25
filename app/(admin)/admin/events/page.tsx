@@ -90,9 +90,9 @@ export default function EventListPage() {
         const res = await fetch('/api/v1/users/me', { headers: { Authorization: `Bearer ${token}` } })
         if (!res.ok) return
         const data = await res.json()
-        // Basic heuristic: allow edit if any role-like metadata denotes admin/system; fallback true if service maps it
-        const role = (data?.user?.publicMetadata?.role || data?.role || '').toString().toLowerCase()
-        setCanEdit(role === 'admin' || role === 'system')
+  // Allow edit only if app DB role is ADMIN or SYSTEM
+  const role = (data?.profile?.role || '').toString().toUpperCase()
+  setCanEdit(role === 'ADMIN' || role === 'SYSTEM')
       } catch {}
     }
     loadMe()

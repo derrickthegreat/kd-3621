@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db/prismaUtils';
+import access from '@/services/AccessControlService';
+import { logUserAction } from '@/lib/db/audit';
 
 /**
  * Mock API Endpoint: /api/v1/events
@@ -39,6 +41,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
+    const session = await access.getSessionInfo(request);
     const body = await request.json();
     const event = await prisma.event.create({
       data: {
@@ -47,8 +50,13 @@ export async function POST(request: NextRequest) {
         endDate: body.endDate ? new Date(body.endDate) : null,
         description: body.description || null,
         color: body.color || null,
-        createdBy: body.createdBy || 'system',
+        createdBy: body.createdBy || session?.userId || 'system',
       },
+    });
+    // audit
+    await logUserAction({
+      action: `Created event ${event.name} (${event.id})`,
+      actorClerkId: session?.userId,
     });
     return NextResponse.json(event, { status: 201 });
   } catch (error: any) {
@@ -66,6 +74,7 @@ export async function PUT(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
     if (!id) return NextResponse.json({ message: 'Missing event id' }, { status: 400 });
+  const session = await access.getSessionInfo(request);
     const body = await request.json();
     let updateData: any = {};
     if (typeof body.archived !== 'undefined' || typeof body.isArchived !== 'undefined') {
@@ -84,10 +93,11 @@ export async function PUT(request: NextRequest) {
     if (Object.keys(updateData).length === 0) {
       return NextResponse.json({ message: 'No valid fields to update' }, { status: 400 });
     }
-    const event = await prisma.event.update({
+  const event = await prisma.event.update({
       where: { id },
       data: updateData,
     });
+  await logUserAction({ action: `Updated event ${event.name} (${event.id})`, actorClerkId: session?.userId });
     return NextResponse.json(event, { status: 200 });
   } catch (error: any) {
     console.error('PUT /api/v1/events error:', error);
@@ -104,7 +114,10 @@ export async function DELETE(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
     if (!id) return NextResponse.json({ message: 'Missing event id' }, { status: 400 });
+  const session = await access.getSessionInfo(request);
+  const existing = await prisma.event.findUnique({ where: { id } });
     await prisma.event.delete({ where: { id } });
+  await logUserAction({ action: `Deleted event ${existing?.name ?? id}`, actorClerkId: session?.userId });
     return NextResponse.json({ message: 'Event deleted' }, { status: 200 });
   } catch (error: any) {
     console.error('DELETE /api/v1/events error:', error);

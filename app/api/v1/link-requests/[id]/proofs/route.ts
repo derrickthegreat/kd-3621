@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import access from "@/services/AccessControlService"
 import { prisma } from "@/lib/db/prismaUtils"
+import { logUserAction } from "@/lib/db/audit"
 
 export async function GET(req: NextRequest) {
   const unauthorized = await access.requireReadAccess(req)
@@ -25,5 +26,6 @@ export async function POST(req: NextRequest) {
   if (!proofUrl) return NextResponse.json({ message: 'url required' }, { status: 400 })
 
   const created = await prisma.linkRequestProof.create({ data: { requestId: id, url: String(proofUrl), type, caption, uploadedById: userId } })
+  await logUserAction({ action: `Uploaded link proof for request ${id}: ${created.url}`, actorClerkId: userId })
   return NextResponse.json({ proof: created })
 }

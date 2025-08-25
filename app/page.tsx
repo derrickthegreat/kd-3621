@@ -86,7 +86,7 @@ export default function Home() {
         <div className="grid gap-6 w-full max-w-6xl px-4 sm:px-6 md:px-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
 
           {[
-            { href: '/players', icon: '/icons/player.png', label: 'Players' },
+            { href: '/players', icon: '/icons/player.png', label: 'Governors' },
             { href: '/alliances', icon: '/icons/alliance.png', label: 'Alliances' },
             { href: '/calendar', icon: '/icons/events.png', label: 'Calendar' },
             { href: '/equipments', icon: '/icons/equipment/revival_helmet.png', label: 'Equipments' },

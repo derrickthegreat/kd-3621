@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { Status } from '@prisma/client'
 import AccessControlService from '@/lib/db/accessControlService'
 import { prisma } from '@/lib/db/prismaUtils'
+import { logUserAction } from '@/lib/db/audit'
 
 export async function GET(
   request: NextRequest,
@@ -116,7 +117,8 @@ export async function PATCH(
     event: { include: { EventRanking: true } },
       },
     })
-    return NextResponse.json({ message: 'Status updated', application: updated }, { status: 200 })
+  await logUserAction({ action: `Updated application ${id} status to ${status}` , actorClerkId: session.userId })
+  return NextResponse.json({ message: 'Status updated', application: updated }, { status: 200 })
   } catch (error: any) {
     console.error('PATCH /api/v1/applications/[id] error:', error)
     if (error.code === 'P2025') return NextResponse.json({ message: 'Application not found' }, { status: 404 })

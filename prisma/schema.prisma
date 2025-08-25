@@ -74,6 +74,14 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  // Profile fields
+  username            String    @unique
+  displayName         String?   @unique
+  avatarUrl           String?
+  commanderAvatar     Commander? @relation(name: "CommanderAvatar", fields: [commanderAvatarId], references: [id])
+  commanderAvatarId   String?
+  socials             Json?
+
   @@map("users")
   governors UserPlayer[]
   linkRequests LinkRequest[]
@@ -247,6 +255,9 @@ model Commander {
   primaryCommanderPairings   CommanderPairing[]     @relation(name: "PrimaryPairings")
   secondaryCommanderPairings CommanderPairing[]     @relation(name: "SecondaryPairings")
   skillTrees                 CommanderSkillTree[]
+
+  // Backreference for users choosing this commander as their avatar
+  avatarUsers                User[]                 @relation(name: "CommanderAvatar")
 
   @@map("commanders")
 }

@@ -7,7 +7,7 @@ import { Users, UserCheck, UsersRound, Calendar, ArrowUpRight } from "lucide-rea
 const links: Array<{ label: string; href: string; icon: any; desc?: string }> = [
   { label: 'Manage Users', href: '/admin/users', icon: Users, desc: 'Roles, status, sessions' },
   { label: 'Verify & Link', href: '/admin/users/verify-governor', icon: UserCheck, desc: 'Approve and link governors' },
-  { label: 'Players', href: '/admin/players', icon: UsersRound, desc: 'Roster and profiles' },
+  { label: 'Governors', href: '/admin/players', icon: UsersRound, desc: 'Roster and profiles' },
   { label: 'Events', href: '/admin/events', icon: Calendar, desc: 'Schedule and manage' },
 ]
 

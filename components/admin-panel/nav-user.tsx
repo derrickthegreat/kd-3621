@@ -5,6 +5,8 @@ import {
   ChevronsUpDown,
   LogOut,
 } from "lucide-react"
+import { useState } from "react"
+import dynamic from "next/dynamic"
 
 import {
   Avatar,
@@ -27,6 +29,8 @@ import {
 } from "@/components/ui/sidebar"
 import { SignOutButton } from "@clerk/nextjs"
 
+const UserSettingsDialog = dynamic(() => import("@/app/components/UserSettingsDialog"), { ssr: false })
+
 export function NavUser({
   user,
 }: {
@@ -34,9 +38,11 @@ export function NavUser({
     name: string
     email: string
     avatar: string
+  username?: string
   }
 }) {
   const { isMobile } = useSidebar()
+  const [openSettings, setOpenSettings] = useState(false)
 
 
   return (
@@ -54,7 +60,7 @@ export function NavUser({
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{user.name}</span>
-                <span className="truncate text-xs">{user.email}</span>
+                <span className="truncate text-xs">{user.username ? `@${user.username}` : user.email}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -73,12 +79,12 @@ export function NavUser({
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                  <span className="truncate text-xs">{user.username ? `@${user.username}` : user.email}</span>
                 </div>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-              <DropdownMenuItem>
+        <DropdownMenuItem onSelect={() => setOpenSettings(true)}>
                 <BadgeCheck />
                 Settings
               </DropdownMenuItem>
@@ -91,6 +97,7 @@ export function NavUser({
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
+      <UserSettingsDialog open={openSettings} onOpenChange={setOpenSettings} />
     </SidebarMenu>
   )
 }

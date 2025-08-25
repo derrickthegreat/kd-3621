@@ -18,6 +18,7 @@ export interface NavUserProps {
   name: string
   email: string
   avatar: string
+  username?: string
 }
 
 export interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {

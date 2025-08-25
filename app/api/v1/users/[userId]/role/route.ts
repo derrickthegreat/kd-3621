@@ -3,8 +3,9 @@ import { clerkClient } from "@clerk/nextjs/server";
 import { AccessControlService } from "@/services/AccessControlService";
 import { UserRole } from "@prisma/client";
 import { prisma } from "@/lib/db/prismaUtils";
+import { logUserAction } from "@/lib/db/audit";
 
-// Update user role in app DB via Clerk publicMetadata.role and our DB mirror (if needed later)
+// Update user role in the application DB and mirror it to Clerk publicMetadata.role for UI-only use
 const acs = new AccessControlService([UserRole.ADMIN, UserRole.SYSTEM]);
 
 export async function POST(req: NextRequest, { params }: { params: Promise<{ userId: string }> }) {
@@ -19,10 +20,12 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ use
   }
 
   try {
-    const clerk = await clerkClient();
+  const clerk = await clerkClient();
     const updated = await clerk.users.updateUser(userId, { publicMetadata: { role } });
     // Mirror in application DB
     const appUser = await prisma.user.update({ where: { clerkId: userId }, data: { role: role as UserRole } });
+  const actor = await acs.getSessionInfo(req)
+  await logUserAction({ action: `Changed user role to ${role}`, actorClerkId: actor?.userId, targetClerkId: userId })
     return NextResponse.json({
       message: "Role updated",
       user: { id: updated.id, publicMetadata: updated.publicMetadata, appRole: appUser.role },

@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { PrismaClient, Prisma } from '@prisma/client'
+import { Prisma } from '@prisma/client'
 import AccessControlService from '@/lib/db/accessControlService'
-
-const prisma = new PrismaClient()
+import { logUserAction } from '@/lib/db/audit'
+import { prisma } from '@/lib/db/prismaUtils'
 const HAS_SKILLTREE_REL = !!(Prisma as any)?.dmmf?.datamodel?.models?.some(
   (m: any) => m.name === 'CommanderSkillTree' && m.fields?.some((f: any) => f.name === 'commanderId')
 )
@@ -29,8 +29,6 @@ export async function GET(request: NextRequest) {
   } catch (error: any) {
     console.error('GET /commander/skill-tree error:', error)
     return NextResponse.json({ message: 'Error fetching skill trees', error: error.message }, { status: 500 })
-  } finally {
-    await prisma.$disconnect()
   }
 }
 
@@ -69,13 +67,12 @@ export async function POST(request: NextRequest) {
       saved = await (prisma as any).commanderSkillTree.create({ data: { commanderId, name, url, description, rating, createdBy: session.userId } })
     }
 
-    const withCommander = await (prisma as any).commanderSkillTree.findUnique({ where: { id: saved.id }, include: { commander: true } })
+  const withCommander = await (prisma as any).commanderSkillTree.findUnique({ where: { id: saved.id }, include: { commander: true } })
+  await logUserAction({ action: `${existing ? 'Updated' : 'Created'} skill tree ${name} for commander ${commander.name}`, actorClerkId: session.userId })
     return NextResponse.json(withCommander, { status: 200 })
   } catch (error: any) {
     console.error('POST /commander/skill-tree error:', error)
     return NextResponse.json({ message: 'Failed to save skill tree', error: error.message }, { status: 500 })
-  } finally {
-    await prisma.$disconnect()
   }
 }
 
@@ -118,14 +115,13 @@ export async function PUT(request: NextRequest) {
       if (dup) return NextResponse.json({ message: 'A skill tree with this name already exists for the commander.' }, { status: 409 })
     }
 
-    const updated = await (prisma as any).commanderSkillTree.update({ where: { id }, data: { ...data, updatedBy: session.userId } })
+  const updated = await (prisma as any).commanderSkillTree.update({ where: { id }, data: { ...data, updatedBy: session.userId } })
     const withCommander = await (prisma as any).commanderSkillTree.findUnique({ where: { id: updated.id }, include: { commander: true } })
+  await logUserAction({ action: `Updated skill tree ${withCommander.name} for commander ${withCommander.commander?.name ?? ''}`, actorClerkId: session.userId })
     return NextResponse.json(withCommander, { status: 200 })
   } catch (error: any) {
     console.error('PUT /commander/skill-tree error:', error)
     return NextResponse.json({ message: 'Failed to update skill tree', error: error.message }, { status: 500 })
-  } finally {
-    await prisma.$disconnect()
   }
 }
 
@@ -144,12 +140,12 @@ export async function DELETE(request: NextRequest) {
         { status: 501 }
       )
     }
-    await (prisma as any).commanderSkillTree.delete({ where: { id } })
+  const existing = await (prisma as any).commanderSkillTree.findUnique({ where: { id }, include: { commander: true } })
+  await (prisma as any).commanderSkillTree.delete({ where: { id } })
+  await logUserAction({ action: `Deleted skill tree ${existing?.name ?? id} for commander ${existing?.commander?.name ?? ''}`, actorClerkId: session.userId })
     return NextResponse.json({ message: 'Deleted' }, { status: 200 })
   } catch (error: any) {
     console.error('DELETE /commander/skill-tree error:', error)
     return NextResponse.json({ message: 'Failed to delete skill tree', error: error.message }, { status: 500 })
-  } finally {
-    await prisma.$disconnect()
   }
 }

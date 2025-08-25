@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import AccessControlService from '@/lib/db/accessControlService';
 import { prisma } from '@/lib/db/prismaUtils';
+import { logUserAction } from '@/lib/db/audit';
 
 /**
  * API Endpoint: /api/events/[id]
@@ -59,7 +60,7 @@ export async function POST(
     const data = await request.json();
 
     if (data.archive === true) {
-      const archivedEvent = await prisma.event.update({
+  const archivedEvent = await prisma.event.update({
         where: { id },
         data: {
           isArchived: true,
@@ -67,7 +68,7 @@ export async function POST(
           updatedBy: session.userId,
         },
       });
-
+  await logUserAction({ action: `Archived event ${archivedEvent.name} (${archivedEvent.id})`, actorClerkId: session.userId })
       return NextResponse.json({ message: 'Event archived', event: archivedEvent }, { status: 200 });
     }
 
@@ -90,10 +91,11 @@ export async function POST(
     updateData.updatedAt = new Date();
     updateData.updatedBy = session.userId;
 
-    const updatedEvent = await prisma.event.update({
+  const updatedEvent = await prisma.event.update({
       where: { id },
       data: updateData,
     });
+  await logUserAction({ action: `Updated event ${updatedEvent.name} (${updatedEvent.id})`, actorClerkId: session.userId })
 
     return NextResponse.json({ message: 'Event updated', event: updatedEvent }, { status: 200 });
   } catch (error: any) {

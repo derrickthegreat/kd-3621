@@ -84,7 +84,7 @@ export default function PlayerProfilePage() {
     return (
         <main className="min-h-screen bg-gray-950 text-white font-sans">
             <div className="container mx-auto px-4 py-6">
-                <PageHeader title="Player Profile" />
+                <PageHeader title="Governor Profile" />
 
                 <div className="flex items-center gap-4 mb-4">
                     <div className={`w-14 h-14 rounded-full ${getRandomColor(player.Name)} flex items-center justify-center text-white font-bold text-xl`}>

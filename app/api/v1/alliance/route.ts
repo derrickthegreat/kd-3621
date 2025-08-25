@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
 import AccessControlService from '@/lib/db/accessControlService';
-import { prepareCreateOrUpdate } from '@/lib/db/prismaUtils';
+import { logUserAction } from '@/lib/db/audit';
+import { prisma, prepareCreateOrUpdate } from '@/lib/db/prismaUtils';
 
 /**
  * API Endpoint: /api/alliance
@@ -41,8 +41,6 @@ import { prepareCreateOrUpdate } from '@/lib/db/prismaUtils';
  *      { "id": "uuid456", "tag": "NEWTAG", "name": "Updated Alliance" }
  *    ]
  */
-
-const prisma = new PrismaClient();
 
 export async function GET(request: NextRequest) {
   const unauthorizedResponse = await AccessControlService.requireReadAccess(request);
@@ -106,8 +104,6 @@ export async function GET(request: NextRequest) {
   } catch (error: any) {
     console.error('GET /api/alliance error:', error);
     return NextResponse.json({ message: 'Failed to fetch alliance(s)', error: error.message }, { status: 500 });
-  } finally {
-    await prisma.$disconnect();
   }
 }
 
@@ -125,7 +121,7 @@ export async function POST(request: NextRequest) {
     const alliances = Array.isArray(body) ? body : [body];
     const results = [];
 
-    for (const alliance of alliances) {
+  for (const alliance of alliances) {
       const { id, tag, name } = alliance;
 
       if (!tag || !name) {
@@ -134,12 +130,12 @@ export async function POST(request: NextRequest) {
 
       const payload = { id, tag, name };
 
-      const result = await prepareCreateOrUpdate(prisma.alliance, payload, {
+  const result = await prepareCreateOrUpdate(prisma.alliance, payload, {
         userId: session.userId,
         idField: 'id',
         matchField: 'tag',
       });
-
+  await logUserAction({ action: `${id ? 'Updated' : 'Created'} alliance ${name} (${tag})`, actorClerkId: session.userId });
       results.push(result);
     }
 
@@ -159,7 +155,5 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: 'Alliance tag must be unique' }, { status: 409 });
     }
     return NextResponse.json({ message: 'Failed to create/update alliance(s)', error: error.message }, { status: 500 });
-  } finally {
-    await prisma.$disconnect();
   }
 }

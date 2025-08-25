@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient, TroopType, Rarity, Prisma } from '@prisma/client';
-import AccessControlService from '@/lib/db/accessControlService';
-import { prepareCreateOrUpdate } from '@/lib/db/prismaUtils';
-
-const prisma = new PrismaClient();
+import { TroopType, Rarity, Prisma } from '@prisma/client';
+import { AccessControlService } from '@/services/AccessControlService/index';
+import { UserRole } from '@prisma/client';
+import { prisma } from '@/lib/db/prismaUtils';
+import { logUserAction } from '@/lib/db/audit';
 const HAS_RARITY = !!(Prisma as any)?.dmmf?.datamodel?.models?.some((m: any) => m.name === 'Commander' && m.fields?.some((f: any) => f.name === 'rarity'))
 
 /**
@@ -51,8 +51,14 @@ const HAS_RARITY = !!(Prisma as any)?.dmmf?.datamodel?.models?.some((m: any) => 
  *    ]
  */
 
+const readAcs = new AccessControlService([
+  UserRole.ADMIN,
+  UserRole.SYSTEM,
+  UserRole.KINGDOM_MEMBER,
+]);
+
 export async function GET(request: NextRequest) {
-  const unauthorizedResponse = await AccessControlService.requireReadAccess(request);
+  const unauthorizedResponse = await readAcs.requireReadAccess(request);
   if(unauthorizedResponse) return unauthorizedResponse;
 
   const { searchParams } = new URL(request.url);
@@ -85,19 +91,16 @@ export async function GET(request: NextRequest) {
   } catch (error: any) {
     console.error('GET /api/commander error:', error);
     return NextResponse.json({ message: 'Error fetching commanders', error: error.message }, { status: 500 });
-  } finally {
-    await prisma.$disconnect();
   }
 }
 
+const writeAcs = new AccessControlService([UserRole.ADMIN, UserRole.SYSTEM]);
+
 export async function POST(request: NextRequest) {
-  const session = await AccessControlService.getSessionInfo(request);
-  if(!session) {
-    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
-  }
-  if(!AccessControlService.canWrite(session.role)) {
-    return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
-  }
+  const unauthorized = await writeAcs.requireWriteAccess(request);
+  if (unauthorized) return unauthorized;
+  const session = await writeAcs.getSessionInfo(request);
+  const actorId = session?.userId ?? 'System';
 
   try {
     const body = await request.json();
@@ -150,13 +153,15 @@ export async function POST(request: NextRequest) {
           if (rar && HAS_RARITY) data.rarity = rar;
           result = await prisma.commander.update({ where: { id: existing.id }, data })
         } else {
-          const data: any = { name: normName, iconUrl: normIcon, speciality: valid as TroopType[], createdBy: session.userId };
+          const data: any = { name: normName, iconUrl: normIcon, speciality: valid as TroopType[], createdBy: actorId };
           if (rar && HAS_RARITY) data.rarity = rar;
           result = await prisma.commander.create({ data })
         }
       }
 
-      results.push(result);
+  results.push(result);
+  const verb = commander.id ? 'Updated' : (result?.id ? 'Saved' : 'Created');
+  await logUserAction({ action: `${verb} commander ${result?.name ?? commander.name}`, actorClerkId: actorId });
       } catch (e: any) {
         errors.push({ id: commander.id, name: commander.name, message: e?.message || 'Unknown error' })
       }
@@ -177,15 +182,14 @@ export async function POST(request: NextRequest) {
       { message: 'Failed to save commander(s)', error: error.message },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }
 
 export async function PUT(request: NextRequest) {
-  const session = await AccessControlService.getSessionInfo(request);
-  if (!session) return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
-  if (!AccessControlService.canWrite(session.role)) return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
+  const unauthorized = await writeAcs.requireWriteAccess(request);
+  if (unauthorized) return unauthorized;
+  const session = await writeAcs.getSessionInfo(request);
+  const actorId = session?.userId ?? 'System';
 
   const { searchParams } = new URL(request.url)
   const id = searchParams.get('id')
@@ -206,13 +210,12 @@ export async function PUT(request: NextRequest) {
     if (Object.keys(data).length === 0) {
       return NextResponse.json({ message: 'No valid fields to update' }, { status: 400 })
     }
-    data.updatedBy = session.userId
-    const updated = await prisma.commander.update({ where: { id }, data })
+  data.updatedBy = actorId
+  const updated = await prisma.commander.update({ where: { id }, data })
+  await logUserAction({ action: `Updated commander ${updated.name} (${updated.id})`, actorClerkId: actorId })
     return NextResponse.json(updated, { status: 200 })
   } catch (error: any) {
     console.error('PUT /api/commander error:', error)
     return NextResponse.json({ message: 'Failed to update commander', error: error.message }, { status: 500 })
-  } finally {
-    await prisma.$disconnect()
   }
 }

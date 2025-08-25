@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import AccessControlService from '@/lib/db/accessControlService';
 import { prisma } from '@/lib/db/prismaUtils';
+import { logUserAction } from '@/lib/db/audit';
 
 /**
  * API Endpoint: /api/events/[id]/ranking
@@ -132,7 +133,8 @@ export async function POST(
         },
       });
 
-      results.push(ranking);
+  results.push(ranking);
+  await logUserAction({ action: `Set ranking for application ${applicationId} in event ${id} to #${rank}`, actorClerkId: session.userId })
     }
 
     return NextResponse.json(

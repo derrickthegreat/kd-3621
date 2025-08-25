@@ -3,6 +3,7 @@ import access from "@/services/AccessControlService"
 import { promises as fs } from "fs"
 import path from "path"
 import { randomUUID } from "crypto"
+import { logUserAction } from "@/lib/db/audit"
 
 export const runtime = "nodejs"
 
@@ -50,6 +51,8 @@ export async function POST(req: NextRequest) {
 
   await fs.mkdir(absDir, { recursive: true })
   await fs.writeFile(absPath, buf)
+  const session = await access.getSessionInfo(req)
+  await logUserAction({ action: `Uploaded proof ${relPath}`, actorClerkId: session?.userId })
 
   // Return the public URL path
   return NextResponse.json({ url: `/${relPath}` })

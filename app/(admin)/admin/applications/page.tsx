@@ -91,7 +91,7 @@ export default function ApplicationsPage() {
   const columns = useMemo<ColumnDef<EventApplicationRow>[]>(() => ([
     {
       id: "player",
-      header: "Player",
+      header: "Governor",
       accessorFn: (row) => `${row.player?.name ?? ''}`,
       cell: ({ row }) => {
         const p = row.original.player
@@ -105,7 +105,7 @@ export default function ApplicationsPage() {
         return (
           <div className="flex items-center gap-3">
             <Avatar className="h-7 w-7">
-              <AvatarImage src={avatar} alt={p?.name || 'Player'} />
+              <AvatarImage src={avatar} alt={p?.name || 'Governor'} />
               <AvatarFallback></AvatarFallback>
             </Avatar>
             <div className="flex flex-col">
@@ -217,7 +217,7 @@ export default function ApplicationsPage() {
               pageSize={10}
               searchable
               searchKeys={["player.name", "player.rokId"] as any}
-              searchPlaceholder="Search by player name or ID"
+              searchPlaceholder="Search by governor name or ID"
               excludeFromVisibilityToggle={["actions"]}
               initialSorting={[{ id: "created", desc: true }]}
             />

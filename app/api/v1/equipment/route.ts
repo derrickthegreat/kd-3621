@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient, Rarity, Slot } from '@prisma/client';
+import { Rarity, Slot } from '@prisma/client';
 import AccessControlService from '@/lib/db/accessControlService';
-
-const prisma = new PrismaClient();
+import { logUserAction } from '@/lib/db/audit';
+import { prisma } from '@/lib/db/prismaUtils';
 /**
  * === Equipment API ===
  * Endpoint: /api/equipment
@@ -174,8 +174,6 @@ export async function GET(request: NextRequest) {
   } catch (error: any) {
     console.error('GET /api/equipment error:', error);
     return NextResponse.json({ message: 'Failed to fetch equipment', error: error.message }, { status: 500 });
-  } finally {
-    await prisma.$disconnect();
   }
 }
 
@@ -190,6 +188,7 @@ export async function POST(request: NextRequest) {
   }
   try {
     const data = await request.json();
+    const actorClerkId = session.userId ?? null;
 
     // Normalize input to always be an array for easier processing
     const equipments = Array.isArray(data) ? data : [data];
@@ -303,7 +302,7 @@ export async function POST(request: NextRequest) {
       return out
     }
 
-    async function processOne(equipmentData: any) {
+  async function processOne(equipmentData: any) {
       const {
         id,
         name,
@@ -374,7 +373,7 @@ export async function POST(request: NextRequest) {
           }
         }
 
-        return prisma.equipment.update({
+  const updated = await prisma.equipment.update({
           where: { id },
           data: {
             name,
@@ -386,6 +385,8 @@ export async function POST(request: NextRequest) {
             ...relationUpdates,
           },
         });
+  await logUserAction({ action: `Updated equipment ${updated.name} (${updated.id})`, actorClerkId });
+  return updated;
       } else {
         const existingEquipmentByName = await prisma.equipment.findFirst({ where: { name } });
         if (existingEquipmentByName) {
@@ -432,7 +433,7 @@ export async function POST(request: NextRequest) {
             }
           }
 
-          return prisma.equipment.update({
+          const updatedByName = await prisma.equipment.update({
             where: { id: existingEquipmentByName.id },
             data: {
               slot,
@@ -443,8 +444,10 @@ export async function POST(request: NextRequest) {
               ...relationUpdates,
             },
           });
+          await logUserAction({ action: `Updated equipment ${existingEquipmentByName.name} (${existingEquipmentByName.id})`, actorClerkId });
+          return updatedByName;
         }
-        return prisma.equipment.create({
+        const created = await prisma.equipment.create({
           data: {
             name,
             slot,
@@ -473,6 +476,8 @@ export async function POST(request: NextRequest) {
             },
           },
         });
+  await logUserAction({ action: `Created equipment ${created.name} (${created.id})`, actorClerkId });
+        return created;
       }
     }
 
@@ -499,8 +504,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: 'Equipment name must be unique' }, { status: 409 });
     }
     return NextResponse.json({ message: 'Failed to save equipment', error: error.message }, { status: 500 });
-  } finally {
-    await prisma.$disconnect();
   }
 }
 
@@ -521,7 +524,7 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ message: 'Equipment not found' }, { status: 404 });
     }
 
-    await prisma.$transaction([
+  await prisma.$transaction([
       prisma.equipmentAttribute.deleteMany({ where: { equipmentId: existing.id } }),
       prisma.equipmentIconicAttribute.deleteMany({ where: { equipmentId: existing.id } }),
       prisma.equipmentMaterial.deleteMany({ where: { equipmentId: existing.id } }),
@@ -529,12 +532,11 @@ export async function DELETE(request: NextRequest) {
       prisma.applicationEquipment.deleteMany({ where: { equipmentId: existing.id } }),
       prisma.equipment.delete({ where: { id: existing.id } }),
     ]);
+  await logUserAction({ action: `Deleted equipment ${existing.name} (${existing.id})`, actorClerkId: session.userId });
 
     return NextResponse.json({ message: 'Equipment deleted' }, { status: 200 });
   } catch (error: any) {
     console.error('DELETE /api/equipment error:', error);
     return NextResponse.json({ message: 'Failed to delete equipment', error: error.message }, { status: 500 });
-  } finally {
-    await prisma.$disconnect();
   }
 }

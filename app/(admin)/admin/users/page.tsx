@@ -33,7 +33,14 @@ type UserRow = {
     lastName?: string | null
     fullName?: string | null
     email?: string | null
-    imageUrl?: string | null
+  imageUrl?: string | null
+  // app profile additions
+  displayName?: string | null
+  username?: string | null
+  appAvatarUrl?: string | null
+  commanderAvatarId?: string | null
+  socials?: any
+  effectiveAvatarUrl?: string | null
   publicMetadata?: any
   } | null
 }
@@ -86,21 +93,26 @@ export default function UsersPage() {
       header: 'User',
       cell: ({ row }) => {
         const u = row.original
-        const full = u.profile?.fullName || u.clerkId
+        const full = (u.profile?.displayName || u.profile?.fullName || u.clerkId)
         const initials = (full || '?').split(/\s+/).filter(Boolean).slice(0,2).map(w=>w[0]?.toUpperCase()).join('') || '?'
         return (
           <div className="flex items-center gap-2">
             <Avatar className="h-8 w-8">
-              {u.profile?.imageUrl ? <AvatarImage src={u.profile.imageUrl} alt={full} /> : null}
+              {(u.profile?.effectiveAvatarUrl || u.profile?.imageUrl) ? <AvatarImage src={(u.profile?.effectiveAvatarUrl || u.profile?.imageUrl) as string} alt={full} /> : null}
               <AvatarFallback>{initials}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col">
               <span className="font-medium">{full}</span>
-              <span className="text-xs text-muted-foreground">{u.profile?.email || u.clerkId}</span>
+              <span className="text-xs text-muted-foreground">{u.profile?.username ? `@${u.profile.username}` : (u.profile?.email || u.clerkId)}</span>
             </div>
           </div>
         )
       }
+    },
+    {
+      accessorKey: 'username',
+      header: 'Username',
+      cell: ({ row }) => <span className="text-sm">{row.original.profile?.username || '-'}</span>
     },
     {
       accessorKey: 'role',
@@ -226,8 +238,8 @@ export default function UsersPage() {
               error={error}
               pageSize={10}
               searchable
-              searchKeys={["profile.fullName", "clerkId", "profile.email"]}
-              searchPlaceholder="Search by name or email"
+              searchKeys={["profile.displayName", "profile.fullName", "profile.username", "clerkId", "profile.email"]}
+              searchPlaceholder="Search by name, username or email"
               initialSorting={[{ id: "user", desc: false }]}
             />
           </CardContent>
@@ -318,7 +330,7 @@ function PlayerSearch({ value, onChange }: { value: string; onChange: (v:string)
   },[q, getToken])
   return (
     <div className="space-y-2">
-      <label className="text-sm font-medium">Search Player</label>
+  <label className="text-sm font-medium">Search Governor</label>
       <Input placeholder="Name or RoK ID" value={q} onChange={(e)=>setQ(e.target.value)} />
       <div className="max-h-48 overflow-auto rounded border">
         {loading ? <Skeleton className="h-12 w-full"/> : (
@@ -332,7 +344,7 @@ function PlayerSearch({ value, onChange }: { value: string; onChange: (v:string)
           )
         )}
       </div>
-      {value ? <div className="text-xs text-muted-foreground">Selected player id: {value}</div> : null}
+  {value ? <div className="text-xs text-muted-foreground">Selected governor id: {value}</div> : null}
     </div>
   )
 }
@@ -359,7 +371,7 @@ function UserViewDialog({ open, onOpenChange, user, onAfterAction }: { open: boo
     load(); return ()=>{cancel=true}
   },[open, user, getToken])
 
-  const full = user?.profile?.fullName || user?.clerkId || 'User'
+  const full = (user?.profile?.displayName || user?.profile?.fullName || user?.clerkId || 'User')
   const initials = (full || '?').split(/\s+/).filter(Boolean).slice(0,2).map(w=>w[0]?.toUpperCase()).join('') || '?'
   const deactivated = !!user?.profile?.publicMetadata?.deactivated
 
@@ -433,12 +445,12 @@ function UserViewDialog({ open, onOpenChange, user, onAfterAction }: { open: boo
 
         <div className="flex items-center gap-3">
           <Avatar className="h-12 w-12">
-            {user?.profile?.imageUrl ? <AvatarImage src={user.profile.imageUrl} alt={full}/> : null}
+            {(user?.profile?.effectiveAvatarUrl || user?.profile?.imageUrl) ? <AvatarImage src={(user?.profile?.effectiveAvatarUrl || user?.profile?.imageUrl) as string} alt={full}/> : null}
             <AvatarFallback className="text-lg">{initials}</AvatarFallback>
           </Avatar>
           <div className="flex flex-col">
             <span className="font-semibold text-lg">{full}</span>
-            <span className="text-sm text-muted-foreground">{user?.profile?.email || user?.clerkId}</span>
+            <span className="text-sm text-muted-foreground">{user?.profile?.username ? `@${user.profile.username}` : (user?.profile?.email || user?.clerkId)}</span>
             <div className="flex gap-2 mt-1">
               <span className="text-xs inline-flex items-center rounded-md bg-muted px-2 py-0.5 font-medium">{ROLE_LABELS[user?.role || 'KINGDOM_MEMBER' as Role]}</span>
               <span className={"text-xs inline-flex items-center rounded-md px-2 py-0.5 font-medium " + (deactivated ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700") }>
@@ -449,11 +461,11 @@ function UserViewDialog({ open, onOpenChange, user, onAfterAction }: { open: boo
         </div>
 
         <div className="mt-4">
-          <h4 className="font-semibold">Linked Players</h4>
+          <h4 className="font-semibold">Linked Governors</h4>
           {loading ? <Skeleton className="h-20 w-full"/> : (
             <div className="space-y-1 max-h-48 overflow-auto">
               {(detail?.governors ?? []).length === 0 ? (
-                <p className="text-sm text-muted-foreground">No linked players.</p>
+                <p className="text-sm text-muted-foreground">No linked governors.</p>
               ) : (
                 (detail?.governors ?? []).map((p:any)=> (
                   <div key={p.id} className="flex items-center justify-between text-sm">
@@ -474,7 +486,10 @@ function UserEditDialog({ open, onOpenChange, user, onSaved }: { open:boolean; o
   const { getToken } = useAuth()
   const [firstName, setFirstName] = useState(user?.profile?.firstName || "")
   const [lastName, setLastName] = useState(user?.profile?.lastName || "")
-  const [avatarUrl, setAvatarUrl] = useState(user?.profile?.imageUrl || "")
+  const [avatarUrl, setAvatarUrl] = useState(user?.profile?.appAvatarUrl || user?.profile?.imageUrl || "")
+  const [displayName, setDisplayName] = useState(user?.profile?.displayName || "")
+  const [username, setUsername] = useState(user?.profile?.username || "")
+  const [commanderAvatarId, setCommanderAvatarId] = useState(user?.profile?.commanderAvatarId || "")
   const [profileColor, setProfileColor] = useState("")
   const [socials, setSocials] = useState("{}")
   const [role, setRole] = useState<Role>(user?.role || "KINGDOM_MEMBER")
@@ -482,7 +497,10 @@ function UserEditDialog({ open, onOpenChange, user, onSaved }: { open:boolean; o
   useEffect(()=>{
     setFirstName(user?.profile?.firstName || "")
     setLastName(user?.profile?.lastName || "")
-    setAvatarUrl(user?.profile?.imageUrl || "")
+  setAvatarUrl(user?.profile?.appAvatarUrl || user?.profile?.imageUrl || "")
+  setDisplayName(user?.profile?.displayName || "")
+  setUsername(user?.profile?.username || "")
+  setCommanderAvatarId(user?.profile?.commanderAvatarId || "")
     setRole(user?.role || "KINGDOM_MEMBER")
   },[user, open])
 
@@ -491,7 +509,7 @@ function UserEditDialog({ open, onOpenChange, user, onSaved }: { open:boolean; o
     try{
       const token = await getToken(); if(!token) throw new Error('Unauthorized')
       // Update core fields
-      const body: any = { firstName, lastName, avatarUrl, profileColor }
+  const body: any = { firstName, lastName, avatarUrl, profileColor, displayName, username, commanderAvatarId }
       try { body.socials = JSON.parse(socials || "{}") } catch {}
       const res = await fetch(`/api/v1/users/${encodeURIComponent(user.clerkId)}`, {
         method:'POST', headers:{ 'Content-Type':'application/json', Authorization:`Bearer ${token}` }, body: JSON.stringify(body)
@@ -577,6 +595,18 @@ function UserEditDialog({ open, onOpenChange, user, onSaved }: { open:boolean; o
           <div className="space-y-2 md:col-span-2">
             <label className="text-sm font-medium">Avatar URL</label>
             <Input value={avatarUrl} onChange={(e)=>setAvatarUrl(e.target.value)} />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Display Name</label>
+            <Input value={displayName} onChange={(e)=>setDisplayName(e.target.value)} />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Username</label>
+            <Input value={username} onChange={(e)=>setUsername(e.target.value)} placeholder="no spaces" />
+          </div>
+          <div className="space-y-2 md:col-span-2">
+            <label className="text-sm font-medium">Commander Avatar ID</label>
+            <Input value={commanderAvatarId} onChange={(e)=>setCommanderAvatarId(e.target.value)} placeholder="UUID of commander to use as avatar" />
           </div>
           <div className="space-y-2">
             <label className="text-sm font-medium">Profile Color</label>

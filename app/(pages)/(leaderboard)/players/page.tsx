@@ -132,7 +132,7 @@ export default function PlayersPage() {
         },
         {
             key: 'Name',
-            label: 'Player',
+            label: 'Governor',
             sortable: false,
             icon: '/icons/player.png',
             render: (player) => (
@@ -271,7 +271,7 @@ export default function PlayersPage() {
     return (
         <main className="min-h-screen bg-gray-950 text-white font-sans">
             <div className="container mx-auto px-4 py-6">
-                <PageHeader title="Player Rankings" />
+                <PageHeader title="Governor Rankings" />
 
                 <div className="flex items-center justify-between px-4 py-3 mb-4 bg-gray-900 rounded border border-gray-800 text-sm">
                     <div className="flex flex-wrap items-center gap-2">

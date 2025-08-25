@@ -1,7 +1,7 @@
 import { auth } from '@clerk/nextjs/server';
-import { clerkClient } from '@clerk/nextjs/server'
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
+import { prisma } from './prismaUtils';
 
 const SYSTEM_SECRET = process.env.SYSTEM_API_SECRET!;
 const SIGNATURE_HEADER = 'x-signature';
@@ -73,12 +73,23 @@ export async function getSessionInfo(req: NextRequest): Promise<SessionInfo | nu
   const { userId } = await auth();
   if (!userId) return null;
 
-  const clerk = await clerkClient();
-  const user = await clerk.users.getUser(userId);
-  const role = (user.publicMetadata.role as string).toLowerCase();
-  if (!userId || !role || !isValidRole(role)) return null;
+  // Look up application user by Clerk ID and get role from DB
+  const appUser = await prisma.user.findUnique({ where: { clerkId: userId }, select: { role: true } });
+  if (!appUser) return null;
 
-  return { userId, role };
+  // Map DB enum (ADMIN | KINGDOM_MEMBER | SYSTEM) to internal role shape
+  const mapDbRole = (dbRole: string): Role | null => {
+    switch (dbRole) {
+      case 'ADMIN': return 'admin';
+      case 'KINGDOM_MEMBER': return 'kingdom-member';
+      case 'SYSTEM': return 'system';
+      default: return null;
+    }
+  };
+
+  const mapped = mapDbRole(String(appUser.role));
+  if (!mapped || !isValidRole(mapped)) return null;
+  return { userId, role: mapped };
 }
 
 // ----- Access Enforcement Wrappers -----

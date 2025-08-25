@@ -19,7 +19,7 @@ export const ADMIN_PANEL: NavSectionProps[] = [
         url: "/admin/players",
         icon: Users,
         items: [
-          { title: "Players", url: "/admin/players" },
+          { title: "Governors", url: "/admin/governors" },
           { title: "Alliances", url: "/admin/alliances" },
         ],
       },
@@ -87,7 +87,7 @@ export const ADMIN_PANEL: NavSectionProps[] = [
         url: "#",
         icon: SearchIcon,
         items: [
-          { title: "Find Player", url: "#" },
+          { title: "Find Governor", url: "#" },
           { title: "Find Alliance", url: "#" },
         ],
       },

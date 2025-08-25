@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Status } from '@prisma/client';
 import AccessControlService from '@/lib/db/accessControlService';
 import { prisma } from '@/lib/db/prismaUtils';
+import { logUserAction } from '@/lib/db/audit';
 
 /**
  * API Endpoint: /api/v1/events/[id]/applications
@@ -173,7 +174,7 @@ export async function POST(
       skipDuplicates: true,
     });
 
-    const fullApplication = await prisma.eventApplication.findUnique({
+  const fullApplication = await prisma.eventApplication.findUnique({
       where: { id: application.id },
       include: {
         player: true,
@@ -183,6 +184,7 @@ export async function POST(
         Alliance: true,
       },
     });
+  await logUserAction({ action: `Submitted/updated application for event ${id} (player ${playerId})`, actorClerkId: session.userId })
 
     return NextResponse.json(
       { message: 'Application submitted', application: fullApplication },
