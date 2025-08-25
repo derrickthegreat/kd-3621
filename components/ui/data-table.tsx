@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Skeleton } from "@/components/ui/skeleton"
 
-export interface DataTableProps<TData, TValue = unknown> {
+export interface DataTableProps<TData extends Record<string, unknown>, TValue = unknown> {
   data: TData[]
   columns: ColumnDef<TData, TValue>[]
   loading?: boolean
@@ -32,7 +32,7 @@ export interface DataTableProps<TData, TValue = unknown> {
   extraToolbarActions?: React.ReactNode
 }
 
-export function DataTable<TData, TValue = unknown>({
+export function DataTable<TData extends Record<string, unknown>, TValue = unknown>({
   data,
   columns,
   loading,
