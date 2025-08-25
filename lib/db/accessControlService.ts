@@ -38,7 +38,9 @@ function canWrite(role: Role): boolean {
 
 // ----- HMAC Support for System Requests -----
 async function getRawBody(req: NextRequest): Promise<string> {
-  const reader = req.body?.getReader();
+  // Clone the request to avoid consuming the original body stream
+  const clonedReq = req.clone();
+  const reader = clonedReq.body?.getReader();
   if (!reader) return '';
 
   const chunks: Uint8Array[] = [];
