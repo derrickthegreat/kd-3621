@@ -80,6 +80,7 @@ export async function GET(request: NextRequest) {
         where: id ? { id } : { rokId: rokId! },
         include: {
           stats: true,
+          alliance: true,
           equipment: includeEquipment ? { include: { equipment: true } } : false,
           commanders: includeCommanders ? { include: { commander: true } } : false,
           UserPlayers: { include: { user: true } },
@@ -112,10 +113,10 @@ export async function GET(request: NextRequest) {
     const players = await prisma.player.findMany({
       include: {
         stats: true,
+        alliance: true,
         _count: {
           select: {
-            equipment: true,
-            commanders: true,
+            stats: true,
           },
         },
         UserPlayers: { include: { user: true } },
