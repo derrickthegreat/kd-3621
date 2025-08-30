@@ -59,12 +59,42 @@ export async function GET(request: NextRequest) {
       const alliance = await prisma.alliance.findUnique({
         where: id ? { id } : { tag: tag! },
         include: {
-          players: includePlayers,
-          applications: includeApplications,
+          players: includePlayers ? {
+            include: {
+              stats: {
+                orderBy: { snapshot: 'desc' },
+                take: 1, // Only latest stats for performance
+              },
+              _count: {
+                select: {
+                  stats: true,
+                  commanders: true,
+                  equipment: true,
+                },
+              },
+            },
+          } : false,
+          applications: includeApplications ? {
+            include: {
+              event: true,
+              player: {
+                include: {
+                  alliance: true,
+                },
+              },
+            },
+            orderBy: { createdAt: 'desc' },
+          } : false,
           stats: includeStats
             ? { orderBy: { snapshot: 'desc' } }
             : false,
-          _count: { select: { players: true } },
+          _count: {
+            select: {
+              players: true,
+              stats: true,
+              applications: true,
+            },
+          },
         },
       });
 
@@ -155,5 +185,64 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: 'Alliance tag must be unique' }, { status: 409 });
     }
     return NextResponse.json({ message: 'Failed to create/update alliance(s)', error: error.message }, { status: 500 });
+  }
+}
+
+export async function PUT(request: NextRequest) {
+  const session = await AccessControlService.getSessionInfo(request);
+  if(!session) {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  }
+  if(!AccessControlService.canWrite(session.role)) {
+    return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
+  }
+  
+  try {
+    const { id, tag, name } = await request.json();
+
+    if (!id) {
+      return NextResponse.json({ message: 'Alliance ID is required' }, { status: 400 });
+    }
+
+    if (!tag || !name) {
+      return NextResponse.json({ message: 'Tag and name are required' }, { status: 400 });
+    }
+
+    const updatedAlliance = await prisma.alliance.update({
+      where: { id },
+      data: {
+        tag,
+        name,
+        updatedBy: session.userId,
+      },
+      include: {
+        _count: {
+          select: {
+            players: true,
+            stats: true,
+            applications: true,
+          },
+        },
+      },
+    });
+
+    await logUserAction({ 
+      action: `Updated alliance ${name} (${tag})`, 
+      actorClerkId: session.userId 
+    });
+
+    return NextResponse.json({
+      message: 'Alliance updated successfully',
+      alliance: updatedAlliance,
+    }, { status: 200 });
+  } catch (error: any) {
+    console.error('PUT /api/alliance error:', error);
+    if (error.code === 'P2002') {
+      return NextResponse.json({ message: 'Alliance tag must be unique' }, { status: 409 });
+    }
+    if (error.code === 'P2025') {
+      return NextResponse.json({ message: 'Alliance not found' }, { status: 404 });
+    }
+    return NextResponse.json({ message: 'Failed to update alliance', error: error.message }, { status: 500 });
   }
 }

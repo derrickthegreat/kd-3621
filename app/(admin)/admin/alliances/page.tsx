@@ -13,6 +13,7 @@ import Link from "next/link"
 import { toast, Toaster } from "sonner"
 import { DataTable } from "@/components/ui/data-table"
 import { HeaderActions } from "../(components)/layout/HeaderActions"
+import { format } from "date-fns"
 
 type AllianceListItem = {
   id: string
@@ -27,7 +28,7 @@ type AllianceListItem = {
   }
 }
 
-type AllianceRow = AllianceListItem & { totalPower: number }
+type AllianceRow = AllianceListItem & { totalPower: number; latestSnapshot?: string }
 
 export default function AlliancesPage() {
   const { getToken } = useAuth()
@@ -69,16 +70,24 @@ export default function AlliancesPage() {
   }, [getToken])
 
   const withDerived: AllianceRow[] = useMemo(() => {
-    // compute latest totalPower per alliance
+    // compute latest totalPower and latestSnapshot per alliance
     return data.map((a) => {
       let totalPower = 0
+      let latestSnapshot: string | undefined
+      
       if (a.stats && a.stats.length) {
-        totalPower = a.stats.reduce((max, s) => {
-          const tp = Number(s.totalPower) || 0
-          return tp > max ? tp : max
-        }, 0)
+        // Find the latest stat by snapshot date
+        const latestStat = a.stats.reduce((latest, stat) => {
+          const statDate = new Date(stat.snapshot)
+          const latestDate = new Date(latest.snapshot)
+          return statDate > latestDate ? stat : latest
+        })
+        
+        totalPower = Number(latestStat.totalPower) || 0
+        latestSnapshot = latestStat.snapshot
       }
-      return { ...a, totalPower }
+      
+      return { ...a, totalPower, latestSnapshot }
     })
   }, [data])
 
@@ -109,6 +118,20 @@ export default function AlliancesPage() {
         header: "Applications",
         accessorFn: (row: AllianceRow) => row._count?.applications ?? 0,
         cell: (info) => <span>{(info.getValue<number>() ?? 0).toLocaleString()}</span>,
+      },
+      {
+        accessorKey: "createdAt",
+        header: "Created",
+        cell: (info) => format(new Date(info.getValue<string>()), 'MMM dd, yyyy'),
+      },
+      {
+        id: "lastSnapshot",
+        header: "Last Updated",
+        accessorFn: (row: AllianceRow) => row.latestSnapshot ?? '',
+        cell: (info) => {
+          const value = info.getValue<string>()
+          return value ? format(new Date(value), 'MMM dd, yyyy') : 'Never'
+        },
       },
       {
         id: "actions",
@@ -191,7 +214,7 @@ export default function AlliancesPage() {
             loading={loading}
             error={error}
             pageSize={10}
-            initialSorting={[{ id: "totalPower", desc: true }, { id: "players", desc: true }]}
+            initialSorting={[{ id: "totalPower", desc: true }, { id: "players", desc: true }, { id: "createdAt", desc: true }]}
             searchable
             searchKeys={["name", "tag"]}
             searchPlaceholder="Search by tag or name"
