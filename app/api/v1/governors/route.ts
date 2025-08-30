@@ -50,6 +50,18 @@ import { logUserAction } from '@/lib/db/audit';
  *        "allianceId": "new-alliance-uuid"
  *      }
  *    ]
+ *
+ *  - PUT: Update a governor by 'id' or 'rokId'.
+ *    Required: id or rokId query parameter
+ *    Required body fields: name
+ *    Optional body fields: allianceId
+ *
+ *    Example PUT request:
+ *      PUT /api/v1/governors?id=uuid123
+ *      {
+ *        "name": "Updated Governor Name",
+ *        "allianceId": "new-alliance-uuid"
+ *      }
  */
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -208,5 +220,61 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: 'rokId must be unique' }, { status: 409 });
     }
     return NextResponse.json({ message: 'Failed to save governor(s)', error: error.message }, { status: 500 });
+  }
+}
+
+export async function PUT(request: NextRequest) {
+  // Access Control
+  const session = await AccessControlService.getSessionInfo(request);
+  if (!session) {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  }
+  if (!AccessControlService.canWrite(session.role)) {
+    return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
+  }
+
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+    const rokId = searchParams.get('rokId');
+
+    if (!id && !rokId) {
+      return NextResponse.json({ message: 'Missing id or rokId parameter' }, { status: 400 });
+    }
+
+    const body = await request.json();
+    const { name, allianceId } = body;
+
+    if (!name) {
+      return NextResponse.json({ message: 'Missing required field: name' }, { status: 400 });
+    }
+
+    const updateData: any = { name };
+    if (allianceId !== undefined) {
+      updateData.allianceId = allianceId;
+    }
+
+    const whereClause = id ? { id } : { rokId: rokId! };
+
+    const result = await prisma.player.update({
+      where: whereClause,
+      data: {
+        ...updateData,
+        updatedBy: session.userId,
+      },
+    });
+
+    await logUserAction({
+      action: `Updated governor ${result.name} (${result.rokId})`,
+      actorClerkId: session.userId
+    });
+
+    return NextResponse.json(result, { status: 200 });
+  } catch (error: any) {
+    console.error('PUT /api/governor error:', error);
+    if (error.code === 'P2025') {
+      return NextResponse.json({ message: 'Governor not found' }, { status: 404 });
+    }
+    return NextResponse.json({ message: 'Failed to update governor', error: error.message }, { status: 500 });
   }
 }
