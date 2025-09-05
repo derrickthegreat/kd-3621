@@ -1,0 +1,3627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROK Player Performance Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: rgb(3, 7, 18); /* bg-gray-950 */
+            color: white;
+            min-height: 100vh;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        /* Navigation Bar */
+        .nav {
+            background: rgb(17, 24, 39); /* bg-gray-900 */
+            border-bottom: 1px solid rgb(31, 41, 55); /* border-gray-800 */
+            padding: 0.75rem 0;
+            margin-bottom: 1.5rem;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: rgb(251, 146, 60); /* text-orange-400 */
+        }
+
+        .nav-back {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            color: white;
+            background: rgba(59, 130, 246, 0.1); /* bg-blue-200/10 */
+            border: 1px solid rgba(147, 197, 253, 0.2); /* border-blue-300/20 */
+            border-radius: 0.5rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .nav-back:hover {
+            background: rgba(147, 197, 253, 0.2); /* hover:bg-blue-300/20 */
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .header-top {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .header h1 {
+            font-size: 2.25rem;
+            font-weight: bold;
+            background: linear-gradient(to right, rgb(249, 115, 22), rgb(253, 186, 116)); /* from-orange-500 to-orange-300 */
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* DKP Formula Banner */
+        .dkp-formula {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+            background: rgb(17, 24, 39); /* bg-gray-900 */
+            border: 1px solid rgb(31, 41, 55); /* border-gray-800 */
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .dkp-formula-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dkp-label {
+            color: rgb(245, 158, 11); /* text-amber-500 */
+            font-weight: 500;
+        }
+
+        .dkp-term {
+            display: flex;
+            align-items: center;
+        }
+
+        .dkp-stat {
+            color: rgb(134, 239, 172); /* text-green-300 */
+        }
+
+        .dkp-multiplier {
+            color: rgb(245, 158, 11); /* text-amber-500 */
+            margin-left: 0.25rem;
+        }
+
+        .dkp-plus {
+            color: rgb(74, 222, 128); /* text-green-400 */
+            font-weight: bold;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .controls-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-box {
+            flex: 1;
+            max-width: 24rem;
+            padding: 0.5rem 1rem;
+            background: rgb(31, 41, 55); /* bg-gray-800 */
+            color: white;
+            border: 1px solid rgb(55, 65, 81); /* border-gray-700 */
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-box:focus {
+            border-color: rgb(249, 115, 22); /* focus:border-orange-500 */
+        }
+
+        .search-box::placeholder {
+            color: rgb(156, 163, 175); /* placeholder-gray-400 */
+        }
+
+        .controls-right {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .filter-select {
+            padding: 0.5rem 1rem;
+            background: rgb(31, 41, 55); /* bg-gray-800 */
+            color: white;
+            border: 1px solid rgb(55, 65, 81); /* border-gray-700 */
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            outline: none;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            background: rgb(245, 158, 11); /* bg-amber-500 */
+            color: white;
+            border: none;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background: rgb(217, 119, 6); /* hover:bg-amber-600 */
+        }
+
+        /* Table */
+        .table-container {
+            border-radius: 0.75rem;
+            overflow: hidden;
+            background: rgba(59, 130, 246, 0.05); /* bg-blue-200/5 */
+            border: 1px solid rgba(147, 197, 253, 0.1); /* border-blue-300/10 */
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: white;
+            font-size: 0.875rem;
+        }
+
+        thead {
+            text-transform: uppercase;
+            color: rgb(251, 146, 60); /* text-orange-400 */
+            font-size: 0.75rem;
+            background: rgba(59, 130, 246, 0.1); /* bg-blue-200/10 */
+            border-bottom: 1px solid rgba(147, 197, 253, 0.1); /* border-blue-300/10 */
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        th {
+            padding: 0.75rem;
+            text-align: left;
+            cursor: pointer;
+            user-select: none;
+            font-weight: 600;
+        }
+
+        th:hover {
+            background: rgba(59, 130, 246, 0.15);
+        }
+
+        th .header-content {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        td {
+            padding: 0.75rem;
+            border-bottom: 1px solid rgba(55, 65, 81, 0.3);
+            transition: background-color 0.3s ease;
+        }
+
+        tr:hover td {
+            background: rgba(31, 41, 55, 0.5);
+        }
+
+        .rank-cell {
+            font-weight: bold;
+            text-align: center;
+            width: 60px;
+        }
+
+        .name-cell {
+            font-weight: 600;
+            max-width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .alliance-cell {
+            background: rgb(75, 85, 99); /* bg-gray-600 */
+            border-radius: 0.25rem;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+            text-align: center;
+            max-width: 80px;
+            display: inline-block;
+        }
+
+        /* Center the alliance cell content */
+        td.alliance-cell {
+            text-align: center;
+        }
+
+        .number-cell {
+            text-align: right;
+            font-family: 'Courier New', monospace;
+        }
+
+        .percentage-cell {
+            text-align: right;
+            font-weight: bold;
+        }
+
+        /* Performance indicators */
+        .excellent-performer {
+            background: rgba(34, 197, 94, 0.1); /* green-500 with opacity */
+            border-left: 3px solid rgb(34, 197, 94);
+            color: rgb(229, 231, 235); /* gray-200 */
+        }
+
+        .good-performer {
+            background: rgba(59, 130, 246, 0.1); /* blue-500 with opacity */
+            border-left: 3px solid rgb(59, 130, 246);
+            color: rgb(229, 231, 235); /* gray-200 */
+        }
+
+        .average-performer {
+            background: rgba(245, 158, 11, 0.1); /* amber-500 with opacity */
+            border-left: 3px solid rgb(245, 158, 11);
+            color: rgb(229, 231, 235); /* gray-200 */
+        }
+
+        .poor-performer {
+            background: rgba(239, 68, 68, 0.1); /* red-500 with opacity */
+            border-left: 3px solid rgb(239, 68, 68);
+            color: rgb(156, 163, 175); /* gray-400 */
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: rgba(17, 24, 39, 0.5); /* bg-gray-900/50 */
+            margin-top: 1.5rem;
+            border: 1px solid rgb(31, 41, 55); /* border-gray-800 */
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .pagination-info {
+            color: rgb(156, 163, 175); /* text-gray-400 */
+        }
+
+        .pagination-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .page-btn {
+            padding: 0.5rem;
+            border: none;
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            border-radius: 0.25rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .page-btn:hover:not(:disabled) {
+            background: rgb(31, 41, 55); /* hover:bg-gray-800 */
+        }
+
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .page-btn.active {
+            background: rgb(249, 115, 22); /* bg-orange-500 */
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            font-size: 1.1em;
+            color: rgb(156, 163, 175); /* text-gray-400 */
+        }
+
+        /* Responsive design */
+        @media (min-width: 640px) {
+            .header-top {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .controls {
+                flex-direction: row;
+                align-items: center;
+            }
+
+            .pagination {
+                flex-direction: row;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0.5rem;
+            }
+
+            .header h1 {
+                font-size: 1.875rem;
+            }
+            
+            .dkp-formula-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.25rem;
+            }
+            
+            table {
+                font-size: 0.75rem;
+            }
+            
+            th, td {
+                padding: 0.5rem 0.25rem;
+            }
+
+            .search-box {
+                max-width: 100%;
+            }
+
+            .controls-right {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .filter-select {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="https://kd-3621.vercel.app" class="nav-title">Kingdom 3621</a>
+            <a href="https://kd-3621.vercel.app" class="nav-back">
+                <span>←</span>
+                <span>Back to Home</span>
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-top">
+                <h1>KVK4 - Governor Rankings (Provisional) July 29 to August 30</h1>
+            </div>
+        </div>
+
+        <!-- DKP Formula Banner -->
+        <div class="dkp-formula">
+            <div class="dkp-formula-content">
+                <span class="dkp-label">DKP FORMULA :</span>
+                <span class="dkp-term">
+                    <span class="dkp-stat">T4 KILLS</span>
+                    <span class="dkp-multiplier">×10</span>
+                </span>
+                <span class="dkp-plus">+</span>
+                <span class="dkp-term">
+                    <span class="dkp-stat">T5 KILLS</span>
+                    <span class="dkp-multiplier">×20</span>
+                </span>
+                <span class="dkp-plus">+</span>
+                <span class="dkp-term">
+                    <span class="dkp-stat">DEAD TROOPS</span>
+                    <span class="dkp-multiplier">×30</span>
+                </span>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <div class="controls-row">
+                <input type="text" id="searchInput" class="search-box" placeholder="Search by name or ID...">
+                <div class="controls-right">
+                    <select id="allianceFilter" class="filter-select">
+                        <option value="">All Alliances</option>
+                    </select>
+                    <select id="performanceFilter" class="filter-select">
+                        <option value="">All Performance</option>
+                        <option value="excellent">100%+ (Excellent)</option>
+                        <option value="good">50-100% (Good)</option>
+                        <option value="average">10-50% (Average)</option>
+                        <option value="poor">0-10% (Poor)</option>
+                    </select>
+                    <button class="btn" onclick="copyNames()">Copy Names</button>
+                    <button class="btn" onclick="exportToCSV()">Export Data</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="table-container">
+            <table id="playerTable">
+                <thead>
+                    <tr>
+                        <th onclick="sortTable('rank')" style="width: 60px;">
+                            <div class="header-content">#</div>
+                        </th>
+                        <th onclick="sortTable('name')">
+                            <div class="header-content">Governor</div>
+                        </th>
+                        <th onclick="sortTable('alliance')">
+                            <div class="header-content">Alliance</div>
+                        </th>
+                        <th onclick="sortTable('dkpScore')">
+                            <div class="header-content">Season DKP</div>
+                        </th>
+                        <th onclick="sortTable('dkpGoal')">
+                            <div class="header-content">DKP Goal</div>
+                        </th>
+                        <th onclick="sortTable('reached')">
+                            <div class="header-content">Reached %</div>
+                        </th>
+                        <th onclick="sortTable('basePower')">
+                            <div class="header-content">Power</div>
+                        </th>
+                        <th onclick="sortTable('t4Kills')">
+                            <div class="header-content">T4 Kills</div>
+                        </th>
+                        <th onclick="sortTable('t5Kills')">
+                            <div class="header-content">T5 Kills</div>
+                        </th>
+                        <th onclick="sortTable('allDeads')">
+                            <div class="header-content">Deaths</div>
+                        </th>
+                        <th onclick="sortTable('honorPoints')">
+                            <div class="header-content">Honor Points</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="playerTableBody">
+                    <tr><td colspan="11" class="loading">Loading player data...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination">
+            <span class="pagination-info">Showing <span id="showingFrom">0</span> to <span id="showingTo">0</span> of <span id="totalEntries">0</span> entries</span>
+            <div class="pagination-controls">
+                <button class="page-btn" id="prevBtn" onclick="changePage(currentPage - 1)">&lt;</button>
+                <div id="pageNumbers"></div>
+                <button class="page-btn" id="nextBtn" onclick="changePage(currentPage + 1)">&gt;</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Player data will be loaded here
+        let playerData = [
+  {
+    "Governor ID": 179940560,
+    "Name": "\u1d57\u02b0 ink",
+    "Alliance": "Db-D",
+    "Base Power": 116371772,
+    "T4 Kills": 9072427,
+    "T5 Kills": 14960824,
+    "All Deads": 1487371,
+    "Honor Points": 233846,
+    "DKP Score": 434561880,
+    "DKP Goal": 232743544,
+    "Reached": 187
+  },
+  {
+    "Governor ID": 178909607,
+    "Name": "\uff92 u\u0290u\u028dack\u028f \uff92",
+    "Alliance": "Db-D",
+    "Base Power": 68935124,
+    "T4 Kills": 19947862,
+    "T5 Kills": 10647924,
+    "All Deads": 514805,
+    "Honor Points": 125967,
+    "DKP Score": 427881250,
+    "DKP Goal": 89615661,
+    "Reached": 477
+  },
+  {
+    "Governor ID": 178906352,
+    "Name": "\uff92 MACARON \uff92",
+    "Alliance": "Db-D",
+    "Base Power": 63889396,
+    "T4 Kills": 18550617,
+    "T5 Kills": 7287424,
+    "All Deads": 1113826,
+    "Honor Points": 155632,
+    "DKP Score": 364669430,
+    "DKP Goal": 76667275,
+    "Reached": 476
+  },
+  {
+    "Governor ID": 108101598,
+    "Name": "\u1d38o\u1d5beChase",
+    "Alliance": "LV21",
+    "Base Power": 64842426,
+    "T4 Kills": 9828723,
+    "T5 Kills": 11394269,
+    "All Deads": 1027320,
+    "Honor Points": 86428,
+    "DKP Score": 356992210,
+    "DKP Goal": 77810911,
+    "Reached": 459
+  },
+  {
+    "Governor ID": 179445340,
+    "Name": "\u1d3c\u1dbb Oogway",
+    "Alliance": "Db-D",
+    "Base Power": 90285375,
+    "T4 Kills": 5108673,
+    "T5 Kills": 11984560,
+    "All Deads": 1280374,
+    "Honor Points": 65296,
+    "DKP Score": 329189150,
+    "DKP Goal": 162513675,
+    "Reached": 203
+  },
+  {
+    "Governor ID": 177908156,
+    "Name": "\uff92Su\u012fc\u012fde",
+    "Alliance": "Db-D",
+    "Base Power": 63467195,
+    "T4 Kills": 5788448,
+    "T5 Kills": 8198093,
+    "All Deads": 988505,
+    "Honor Points": 69381,
+    "DKP Score": 251501490,
+    "DKP Goal": 76160634,
+    "Reached": 330
+  },
+  {
+    "Governor ID": 175708761,
+    "Name": "\u5341 Tobi \u5341",
+    "Alliance": "IR22",
+    "Base Power": 59428412,
+    "T4 Kills": 4318618,
+    "T5 Kills": 8023345,
+    "All Deads": 311747,
+    "Honor Points": 181348,
+    "DKP Score": 213005490,
+    "DKP Goal": 65371253,
+    "Reached": 326
+  },
+  {
+    "Governor ID": 179655012,
+    "Name": "\u1d38\u1d5bD\u00d8\u00d8PER",
+    "Alliance": "Db-D",
+    "Base Power": 74260806,
+    "T4 Kills": 3166512,
+    "T5 Kills": 7701787,
+    "All Deads": 645721,
+    "Honor Points": 146107,
+    "DKP Score": 205072490,
+    "DKP Goal": 103965128,
+    "Reached": 197
+  },
+  {
+    "Governor ID": 182514982,
+    "Name": "salmon\u1d56\u1d56ig",
+    "Alliance": "Db-D",
+    "Base Power": 50413505,
+    "T4 Kills": 4031436,
+    "T5 Kills": 6716124,
+    "All Deads": 984515,
+    "Honor Points": 100888,
+    "DKP Score": 204172290,
+    "DKP Goal": 50413505,
+    "Reached": 405
+  },
+  {
+    "Governor ID": 177854395,
+    "Name": "\uff92Kei",
+    "Alliance": "Db-D",
+    "Base Power": 60369908,
+    "T4 Kills": 6854907,
+    "T5 Kills": 5629826,
+    "All Deads": 376560,
+    "Honor Points": 52865,
+    "DKP Score": 192442390,
+    "DKP Goal": 72443889,
+    "Reached": 266
+  },
+  {
+    "Governor ID": 188858506,
+    "Name": "C\u00fachulainn",
+    "Alliance": "LV21",
+    "Base Power": 79725103,
+    "T4 Kills": 2000164,
+    "T5 Kills": 7146701,
+    "All Deads": 766285,
+    "Honor Points": 128369,
+    "DKP Score": 185924210,
+    "DKP Goal": 119587654,
+    "Reached": 155
+  },
+  {
+    "Governor ID": 181308342,
+    "Name": "\u1d38\u1d5bRockSolid",
+    "Alliance": "Db-D",
+    "Base Power": 52734870,
+    "T4 Kills": 4925236,
+    "T5 Kills": 5511076,
+    "All Deads": 839544,
+    "Honor Points": 113011,
+    "DKP Score": 184660200,
+    "DKP Goal": 52734870,
+    "Reached": 350
+  },
+  {
+    "Governor ID": 180060989,
+    "Name": "\u1d38\u1d5bRumRamsey",
+    "Alliance": "LV21",
+    "Base Power": 73657352,
+    "T4 Kills": 5654703,
+    "T5 Kills": 5908706,
+    "All Deads": 42117,
+    "Honor Points": 168451,
+    "DKP Score": 175984660,
+    "DKP Goal": 103120292,
+    "Reached": 171
+  },
+  {
+    "Governor ID": 188241812,
+    "Name": "\u304b\u308f\u3044\u3044Onee\u2093chan",
+    "Alliance": "Db-D",
+    "Base Power": 46393726,
+    "T4 Kills": 6427314,
+    "T5 Kills": 2035782,
+    "All Deads": 2114258,
+    "Honor Points": 104614,
+    "DKP Score": 168416520,
+    "DKP Goal": 41754353,
+    "Reached": 403
+  },
+  {
+    "Governor ID": 185836736,
+    "Name": "LilSis",
+    "Alliance": "LV21",
+    "Base Power": 54765329,
+    "T4 Kills": 2630486,
+    "T5 Kills": 5124083,
+    "All Deads": 429904,
+    "Honor Points": 60561,
+    "DKP Score": 141683640,
+    "DKP Goal": 54765329,
+    "Reached": 259
+  },
+  {
+    "Governor ID": 176028679,
+    "Name": "Ell 1945",
+    "Alliance": "Db-D",
+    "Base Power": 51943971,
+    "T4 Kills": 5014561,
+    "T5 Kills": 3962714,
+    "All Deads": 151511,
+    "Honor Points": 106184,
+    "DKP Score": 133945220,
+    "DKP Goal": 51943971,
+    "Reached": 258
+  },
+  {
+    "Governor ID": 188969478,
+    "Name": "\u1d30\u1d39MePaul",
+    "Alliance": "Db-D",
+    "Base Power": 49140409,
+    "T4 Kills": 5172139,
+    "T5 Kills": 1148846,
+    "All Deads": 1910588,
+    "Honor Points": 48371,
+    "DKP Score": 132015950,
+    "DKP Goal": 44226368,
+    "Reached": 299
+  },
+  {
+    "Governor ID": 189154415,
+    "Name": "MDKMB",
+    "Alliance": "LV21",
+    "Base Power": 37798677,
+    "T4 Kills": 6129169,
+    "T5 Kills": 2067679,
+    "All Deads": 937078,
+    "Honor Points": 95474,
+    "DKP Score": 130757610,
+    "DKP Goal": 26459073,
+    "Reached": 494
+  },
+  {
+    "Governor ID": 186145908,
+    "Name": "\u1d3f\u1d49\u02b8Escanor",
+    "Alliance": "Db-D",
+    "Base Power": 87044529,
+    "T4 Kills": 2805705,
+    "T5 Kills": 4310175,
+    "All Deads": 501649,
+    "Honor Points": 70621,
+    "DKP Score": 129310020,
+    "DKP Goal": 147975699,
+    "Reached": 87
+  },
+  {
+    "Governor ID": 186009654,
+    "Name": "Dooby \u1d3c\u1d3a\u1d31",
+    "Alliance": "Db-D",
+    "Base Power": 63599436,
+    "T4 Kills": 2891248,
+    "T5 Kills": 3151556,
+    "All Deads": 1191348,
+    "Honor Points": 114088,
+    "DKP Score": 127684040,
+    "DKP Goal": 76319323,
+    "Reached": 167
+  },
+  {
+    "Governor ID": 188333348,
+    "Name": "\u1d37\u1d3aLinh",
+    "Alliance": "LV21",
+    "Base Power": 41181005,
+    "T4 Kills": 2112816,
+    "T5 Kills": 1964306,
+    "All Deads": 1779098,
+    "Honor Points": 79636,
+    "DKP Score": 113787220,
+    "DKP Goal": 32944804,
+    "Reached": 345
+  },
+  {
+    "Governor ID": 177886783,
+    "Name": "\uff92Gel",
+    "Alliance": "Db-D",
+    "Base Power": 62958858,
+    "T4 Kills": 5286218,
+    "T5 Kills": 2651440,
+    "All Deads": 239230,
+    "Honor Points": 46508,
+    "DKP Score": 113067880,
+    "DKP Goal": 75550629,
+    "Reached": 150
+  },
+  {
+    "Governor ID": 182305112,
+    "Name": "KyubiROK YT",
+    "Alliance": "Db-D",
+    "Base Power": 36592483,
+    "T4 Kills": 2906266,
+    "T5 Kills": 2590701,
+    "All Deads": 1036819,
+    "Honor Points": 51967,
+    "DKP Score": 111981250,
+    "DKP Goal": 25614738,
+    "Reached": 437
+  },
+  {
+    "Governor ID": 177828969,
+    "Name": "\u4e97BooJee\u1d38\u1d5b",
+    "Alliance": "LV21",
+    "Base Power": 54093107,
+    "T4 Kills": 518666,
+    "T5 Kills": 1575388,
+    "All Deads": 2368418,
+    "Honor Points": 55905,
+    "DKP Score": 107746960,
+    "DKP Goal": 54093107,
+    "Reached": 199
+  },
+  {
+    "Governor ID": 179242135,
+    "Name": "Shadow Pulse UA",
+    "Alliance": "Db-D",
+    "Base Power": 50163218,
+    "T4 Kills": 2532847,
+    "T5 Kills": 747239,
+    "All Deads": 1951378,
+    "Honor Points": 64774,
+    "DKP Score": 98814590,
+    "DKP Goal": 50163218,
+    "Reached": 197
+  },
+  {
+    "Governor ID": 179977300,
+    "Name": "\u1d38\u1d5bTmulla",
+    "Alliance": "no alliance",
+    "Base Power": 63510283,
+    "T4 Kills": 4055461,
+    "T5 Kills": 2577511,
+    "All Deads": 215962,
+    "Honor Points": 6503,
+    "DKP Score": 98583690,
+    "DKP Goal": 76212339,
+    "Reached": 129
+  },
+  {
+    "Governor ID": 181825355,
+    "Name": "\u1d38o\u1d5bePUMA",
+    "Alliance": "LV21",
+    "Base Power": 49339989,
+    "T4 Kills": 1140045,
+    "T5 Kills": 2485456,
+    "All Deads": 1240299,
+    "Honor Points": 75947,
+    "DKP Score": 98318540,
+    "DKP Goal": 44405990,
+    "Reached": 221
+  },
+  {
+    "Governor ID": 188880730,
+    "Name": "\u1d38\u1d5bMarlone",
+    "Alliance": "LV21",
+    "Base Power": 39995305,
+    "T4 Kills": 973432,
+    "T5 Kills": 2003773,
+    "All Deads": 1584218,
+    "Honor Points": 105489,
+    "DKP Score": 97336320,
+    "DKP Goal": 27996713,
+    "Reached": 348
+  },
+  {
+    "Governor ID": 188920797,
+    "Name": "FreyaFullBosom",
+    "Alliance": "Db-D",
+    "Base Power": 49656448,
+    "T4 Kills": 2295315,
+    "T5 Kills": 2556800,
+    "All Deads": 754409,
+    "Honor Points": 113884,
+    "DKP Score": 96721420,
+    "DKP Goal": 44690803,
+    "Reached": 216
+  },
+  {
+    "Governor ID": 188485523,
+    "Name": "\u1d38\u1d5bIMPERADOR",
+    "Alliance": "IR22",
+    "Base Power": 42863671,
+    "T4 Kills": 1829701,
+    "T5 Kills": 2619937,
+    "All Deads": 700502,
+    "Honor Points": 125949,
+    "DKP Score": 91710810,
+    "DKP Goal": 34290936,
+    "Reached": 267
+  },
+  {
+    "Governor ID": 182128406,
+    "Name": "\u4e42SPAMurai\u4e42",
+    "Alliance": "Db-D",
+    "Base Power": 54627560,
+    "T4 Kills": 2646000,
+    "T5 Kills": 2838887,
+    "All Deads": 269016,
+    "Honor Points": 85014,
+    "DKP Score": 91308220,
+    "DKP Goal": 54627560,
+    "Reached": 167
+  },
+  {
+    "Governor ID": 188453555,
+    "Name": "Puyols",
+    "Alliance": "LV21",
+    "Base Power": 29117104,
+    "T4 Kills": 878463,
+    "T5 Kills": 1131659,
+    "All Deads": 1420734,
+    "Honor Points": 109945,
+    "DKP Score": 74039830,
+    "DKP Goal": 14558552,
+    "Reached": 509
+  },
+  {
+    "Governor ID": 178695066,
+    "Name": "SokoDrake",
+    "Alliance": "Db-D",
+    "Base Power": 75075157,
+    "T4 Kills": 725597,
+    "T5 Kills": 1625170,
+    "All Deads": 1129909,
+    "Honor Points": 145981,
+    "DKP Score": 73656640,
+    "DKP Goal": 112612735,
+    "Reached": 65
+  },
+  {
+    "Governor ID": 188826595,
+    "Name": "Saf1974",
+    "Alliance": "LV21",
+    "Base Power": 35551056,
+    "T4 Kills": 875139,
+    "T5 Kills": 1977940,
+    "All Deads": 741256,
+    "Honor Points": 146567,
+    "DKP Score": 70547870,
+    "DKP Goal": 24885739,
+    "Reached": 283
+  },
+  {
+    "Governor ID": 188882878,
+    "Name": "Rtthyr",
+    "Alliance": "LV21",
+    "Base Power": 40895877,
+    "T4 Kills": 1958729,
+    "T5 Kills": 1426000,
+    "All Deads": 689783,
+    "Honor Points": 155915,
+    "DKP Score": 68800780,
+    "DKP Goal": 32716701,
+    "Reached": 210
+  },
+  {
+    "Governor ID": 188451175,
+    "Name": "NotTerra",
+    "Alliance": "Db-D",
+    "Base Power": 33837724,
+    "T4 Kills": 729997,
+    "T5 Kills": 942683,
+    "All Deads": 1410594,
+    "Honor Points": 62155,
+    "DKP Score": 68471450,
+    "DKP Goal": 20302634,
+    "Reached": 337
+  },
+  {
+    "Governor ID": 188293704,
+    "Name": "\u1d38\u1d5bDrMusaab",
+    "Alliance": "IR22",
+    "Base Power": 33238214,
+    "T4 Kills": 200307,
+    "T5 Kills": 563336,
+    "All Deads": 1661243,
+    "Honor Points": 38121,
+    "DKP Score": 63107080,
+    "DKP Goal": 19942928,
+    "Reached": 316
+  },
+  {
+    "Governor ID": 184964288,
+    "Name": "F \u00ee s h b \u00f6 y",
+    "Alliance": "LV21",
+    "Base Power": 62147803,
+    "T4 Kills": 1350322,
+    "T5 Kills": 1449493,
+    "All Deads": 644621,
+    "Honor Points": 98113,
+    "DKP Score": 61831710,
+    "DKP Goal": 74577363,
+    "Reached": 83
+  },
+  {
+    "Governor ID": 182338045,
+    "Name": "\u4e97\u01a7Hi\ua7fbT\u4e97",
+    "Alliance": "LV21",
+    "Base Power": 39045734,
+    "T4 Kills": 893903,
+    "T5 Kills": 1577870,
+    "All Deads": 678282,
+    "Honor Points": 85133,
+    "DKP Score": 60844890,
+    "DKP Goal": 27332013,
+    "Reached": 223
+  },
+  {
+    "Governor ID": 188918989,
+    "Name": "\u1d39\u1d30\u1d37Kaymo",
+    "Alliance": "LV21",
+    "Base Power": 58994589,
+    "T4 Kills": 1413809,
+    "T5 Kills": 920642,
+    "All Deads": 898650,
+    "Honor Points": 45605,
+    "DKP Score": 59510430,
+    "DKP Goal": 64894047,
+    "Reached": 92
+  },
+  {
+    "Governor ID": 189060019,
+    "Name": "Tu\u0161i\u0161",
+    "Alliance": "Db-D",
+    "Base Power": 43722965,
+    "T4 Kills": 1645816,
+    "T5 Kills": 884024,
+    "All Deads": 830661,
+    "Honor Points": 68670,
+    "DKP Score": 59058470,
+    "DKP Goal": 34978372,
+    "Reached": 169
+  },
+  {
+    "Governor ID": 188364390,
+    "Name": "\u1d38\u1d5bLeonPoi",
+    "Alliance": "LV21",
+    "Base Power": 34080796,
+    "T4 Kills": 888601,
+    "T5 Kills": 1644410,
+    "All Deads": 553080,
+    "Honor Points": 76715,
+    "DKP Score": 58366610,
+    "DKP Goal": 20448477,
+    "Reached": 285
+  },
+  {
+    "Governor ID": 180304933,
+    "Name": "LilLy \u1d3f\u1d49\u02b8",
+    "Alliance": "LV21",
+    "Base Power": 74537936,
+    "T4 Kills": 722336,
+    "T5 Kills": 1902168,
+    "All Deads": 415140,
+    "Honor Points": 66327,
+    "DKP Score": 57720920,
+    "DKP Goal": 104353110,
+    "Reached": 55
+  },
+  {
+    "Governor ID": 188543996,
+    "Name": "\u1d38\u1d5bNO\u4e42HOPE",
+    "Alliance": "LV21",
+    "Base Power": 30979722,
+    "T4 Kills": 1037125,
+    "T5 Kills": 171853,
+    "All Deads": 1458481,
+    "Honor Points": 74278,
+    "DKP Score": 57562740,
+    "DKP Goal": 18587833,
+    "Reached": 310
+  },
+  {
+    "Governor ID": 188365363,
+    "Name": "diegokristy",
+    "Alliance": "LV21",
+    "Base Power": 31217196,
+    "T4 Kills": 595232,
+    "T5 Kills": 369900,
+    "All Deads": 1437329,
+    "Honor Points": 5732,
+    "DKP Score": 56470190,
+    "DKP Goal": 18730317,
+    "Reached": 301
+  },
+  {
+    "Governor ID": 188830020,
+    "Name": "\u1d38\u1d5bCharizard",
+    "Alliance": "LV21",
+    "Base Power": 31362756,
+    "T4 Kills": 408107,
+    "T5 Kills": 864903,
+    "All Deads": 1087188,
+    "Honor Points": 91138,
+    "DKP Score": 53994770,
+    "DKP Goal": 18817653,
+    "Reached": 287
+  },
+  {
+    "Governor ID": 188836051,
+    "Name": "Cheops Pyramide",
+    "Alliance": "LV21",
+    "Base Power": 30366242,
+    "T4 Kills": 1886717,
+    "T5 Kills": 526221,
+    "All Deads": 754834,
+    "Honor Points": 93980,
+    "DKP Score": 52036610,
+    "DKP Goal": 18219745,
+    "Reached": 286
+  },
+  {
+    "Governor ID": 186010544,
+    "Name": "Mehmet027",
+    "Alliance": "Db-D",
+    "Base Power": 28462963,
+    "T4 Kills": 352263,
+    "T5 Kills": 224736,
+    "All Deads": 1441863,
+    "Honor Points": 8468,
+    "DKP Score": 51273240,
+    "DKP Goal": 14231481,
+    "Reached": 360
+  },
+  {
+    "Governor ID": 188303104,
+    "Name": "\u1d38\u1d5bHokie",
+    "Alliance": "LV21",
+    "Base Power": 44134175,
+    "T4 Kills": 313684,
+    "T5 Kills": 790431,
+    "All Deads": 1035898,
+    "Honor Points": 33104,
+    "DKP Score": 50022400,
+    "DKP Goal": 35307340,
+    "Reached": 142
+  },
+  {
+    "Governor ID": 186787844,
+    "Name": "ROS\u0130E",
+    "Alliance": "Db-D",
+    "Base Power": 57288101,
+    "T4 Kills": 1371635,
+    "T5 Kills": 1210672,
+    "All Deads": 364140,
+    "Honor Points": 101746,
+    "DKP Score": 48853990,
+    "DKP Goal": 63016911,
+    "Reached": 78
+  },
+  {
+    "Governor ID": 84905552,
+    "Name": "Schwazzier",
+    "Alliance": "LV21",
+    "Base Power": 30245678,
+    "T4 Kills": 189660,
+    "T5 Kills": 237249,
+    "All Deads": 1372466,
+    "Honor Points": 61729,
+    "DKP Score": 47815560,
+    "DKP Goal": 18147406,
+    "Reached": 263
+  },
+  {
+    "Governor ID": 181534760,
+    "Name": "\u1d38\u1d5bSongoku",
+    "Alliance": "LV21",
+    "Base Power": 36048123,
+    "T4 Kills": 207701,
+    "T5 Kills": 74658,
+    "All Deads": 1407859,
+    "Honor Points": 24588,
+    "DKP Score": 45805940,
+    "DKP Goal": 25233686,
+    "Reached": 182
+  },
+  {
+    "Governor ID": 188847278,
+    "Name": "\u1d38\u1d5bQuang",
+    "Alliance": "LV21",
+    "Base Power": 33132753,
+    "T4 Kills": 2019333,
+    "T5 Kills": 298988,
+    "All Deads": 632926,
+    "Honor Points": 65475,
+    "DKP Score": 45160870,
+    "DKP Goal": 19879651,
+    "Reached": 227
+  },
+  {
+    "Governor ID": 188540500,
+    "Name": "ValhallaPyramid",
+    "Alliance": "LV21",
+    "Base Power": 83395897,
+    "T4 Kills": 425656,
+    "T5 Kills": 1417208,
+    "All Deads": 403866,
+    "Honor Points": 33072,
+    "DKP Score": 44716700,
+    "DKP Goal": 133433435,
+    "Reached": 34
+  },
+  {
+    "Governor ID": 188262339,
+    "Name": "Cheshire27",
+    "Alliance": "LV21",
+    "Base Power": 32914917,
+    "T4 Kills": 139074,
+    "T5 Kills": 89333,
+    "All Deads": 1327084,
+    "Honor Points": 34870,
+    "DKP Score": 42989920,
+    "DKP Goal": 19748950,
+    "Reached": 218
+  },
+  {
+    "Governor ID": 185538462,
+    "Name": "UMAYKIZ",
+    "Alliance": "no alliance",
+    "Base Power": 29277262,
+    "T4 Kills": 808740,
+    "T5 Kills": 0,
+    "All Deads": 1163200,
+    "Honor Points": 0,
+    "DKP Score": 42983400,
+    "DKP Goal": 14638631,
+    "Reached": 294
+  },
+  {
+    "Governor ID": 186985518,
+    "Name": "Padm\u00e9\uff92Dr4gon",
+    "Alliance": "LV21",
+    "Base Power": 52617888,
+    "T4 Kills": 1143839,
+    "T5 Kills": 1117492,
+    "All Deads": 303961,
+    "Honor Points": 18063,
+    "DKP Score": 42907060,
+    "DKP Goal": 52617888,
+    "Reached": 82
+  },
+  {
+    "Governor ID": 187423027,
+    "Name": "\u1d38\u1d33PandaFr3d",
+    "Alliance": "LV21",
+    "Base Power": 44190650,
+    "T4 Kills": 2222314,
+    "T5 Kills": 506847,
+    "All Deads": 336795,
+    "Honor Points": 12537,
+    "DKP Score": 42463930,
+    "DKP Goal": 35352520,
+    "Reached": 120
+  },
+  {
+    "Governor ID": 188316323,
+    "Name": "\u1d38\u1d5b SAKURA",
+    "Alliance": "IR22",
+    "Base Power": 33351385,
+    "T4 Kills": 573459,
+    "T5 Kills": 732645,
+    "All Deads": 723519,
+    "Honor Points": 73196,
+    "DKP Score": 42093060,
+    "DKP Goal": 20010831,
+    "Reached": 210
+  },
+  {
+    "Governor ID": 188336265,
+    "Name": "\u1d38\u1d5biGREC",
+    "Alliance": "LV21",
+    "Base Power": 35789396,
+    "T4 Kills": 530934,
+    "T5 Kills": 544501,
+    "All Deads": 857771,
+    "Honor Points": 91712,
+    "DKP Score": 41932490,
+    "DKP Goal": 25052577,
+    "Reached": 167
+  },
+  {
+    "Governor ID": 188501467,
+    "Name": "direraven",
+    "Alliance": "LV21",
+    "Base Power": 37499316,
+    "T4 Kills": 163174,
+    "T5 Kills": 130340,
+    "All Deads": 1244090,
+    "Honor Points": 15368,
+    "DKP Score": 41561240,
+    "DKP Goal": 26249521,
+    "Reached": 158
+  },
+  {
+    "Governor ID": 178213242,
+    "Name": "\u1da6\u02e2LOCOOZ",
+    "Alliance": "J611",
+    "Base Power": 40123789,
+    "T4 Kills": 513215,
+    "T5 Kills": 1473619,
+    "All Deads": 228770,
+    "Honor Points": 48450,
+    "DKP Score": 41467630,
+    "DKP Goal": 32099031,
+    "Reached": 129
+  },
+  {
+    "Governor ID": 188362493,
+    "Name": "\u4e97MrDuck \u30c4",
+    "Alliance": "LV21",
+    "Base Power": 34704006,
+    "T4 Kills": 60344,
+    "T5 Kills": 241918,
+    "All Deads": 1197776,
+    "Honor Points": 50278,
+    "DKP Score": 41375080,
+    "DKP Goal": 20822403,
+    "Reached": 199
+  },
+  {
+    "Governor ID": 196566747,
+    "Name": "Codrin4Valhalla",
+    "Alliance": "LV21",
+    "Base Power": 18450487,
+    "T4 Kills": 249635,
+    "T5 Kills": 325782,
+    "All Deads": 921761,
+    "Honor Points": 52910,
+    "DKP Score": 36664820,
+    "DKP Goal": 5535146,
+    "Reached": 662
+  },
+  {
+    "Governor ID": 189065897,
+    "Name": "W3llsFargo",
+    "Alliance": "LV21",
+    "Base Power": 36268850,
+    "T4 Kills": 1328873,
+    "T5 Kills": 559802,
+    "All Deads": 379928,
+    "Honor Points": 12257,
+    "DKP Score": 35882610,
+    "DKP Goal": 25388195,
+    "Reached": 141
+  },
+  {
+    "Governor ID": 180368631,
+    "Name": "Windfields",
+    "Alliance": "LV21",
+    "Base Power": 40681859,
+    "T4 Kills": 572670,
+    "T5 Kills": 1038342,
+    "All Deads": 258103,
+    "Honor Points": 120033,
+    "DKP Score": 34236630,
+    "DKP Goal": 32545487,
+    "Reached": 105
+  },
+  {
+    "Governor ID": 187503097,
+    "Name": "Ragnakin Sith",
+    "Alliance": "Db-D",
+    "Base Power": 25368219,
+    "T4 Kills": 1486225,
+    "T5 Kills": 476748,
+    "All Deads": 249927,
+    "Honor Points": 38063,
+    "DKP Score": 31895020,
+    "DKP Goal": 12684109,
+    "Reached": 251
+  },
+  {
+    "Governor ID": 188847403,
+    "Name": "Vali188847403",
+    "Alliance": "_NDM",
+    "Base Power": 23190228,
+    "T4 Kills": 42076,
+    "T5 Kills": 71926,
+    "All Deads": 1000169,
+    "Honor Points": 0,
+    "DKP Score": 31864350,
+    "DKP Goal": 9276091,
+    "Reached": 344
+  },
+  {
+    "Governor ID": 190329472,
+    "Name": "F1Quang",
+    "Alliance": "LV21",
+    "Base Power": 18340915,
+    "T4 Kills": 698701,
+    "T5 Kills": 0,
+    "All Deads": 784205,
+    "Honor Points": 0,
+    "DKP Score": 30513160,
+    "DKP Goal": 5502274,
+    "Reached": 555
+  },
+  {
+    "Governor ID": 180560115,
+    "Name": "TripEhh",
+    "Alliance": "LV21",
+    "Base Power": 66305783,
+    "T4 Kills": 464019,
+    "T5 Kills": 1198684,
+    "All Deads": 41339,
+    "Honor Points": 50427,
+    "DKP Score": 29854040,
+    "DKP Goal": 86197517,
+    "Reached": 35
+  },
+  {
+    "Governor ID": 188878343,
+    "Name": "Cheiron City",
+    "Alliance": "21Wh",
+    "Base Power": 17684983,
+    "T4 Kills": 0,
+    "T5 Kills": 30787,
+    "All Deads": 960354,
+    "Honor Points": 0,
+    "DKP Score": 29426360,
+    "DKP Goal": 5305494,
+    "Reached": 555
+  },
+  {
+    "Governor ID": 186841127,
+    "Name": "Anossss",
+    "Alliance": "LV21",
+    "Base Power": 35000048,
+    "T4 Kills": 521169,
+    "T5 Kills": 809165,
+    "All Deads": 232615,
+    "Honor Points": 56272,
+    "DKP Score": 28373440,
+    "DKP Goal": 24500033,
+    "Reached": 116
+  },
+  {
+    "Governor ID": 188833114,
+    "Name": "Quent2",
+    "Alliance": "LV21",
+    "Base Power": 19019125,
+    "T4 Kills": 199207,
+    "T5 Kills": 602111,
+    "All Deads": 435708,
+    "Honor Points": 79436,
+    "DKP Score": 27105530,
+    "DKP Goal": 5705737,
+    "Reached": 475
+  },
+  {
+    "Governor ID": 186043643,
+    "Name": "\u5342\u51e0\u049c\u5342",
+    "Alliance": "LV21",
+    "Base Power": 35003322,
+    "T4 Kills": 102453,
+    "T5 Kills": 411565,
+    "All Deads": 586059,
+    "Honor Points": 80335,
+    "DKP Score": 26837600,
+    "DKP Goal": 24502325,
+    "Reached": 110
+  },
+  {
+    "Governor ID": 189141193,
+    "Name": "\u1d38\u1d5bJankels",
+    "Alliance": "LV21",
+    "Base Power": 28084923,
+    "T4 Kills": 603503,
+    "T5 Kills": 568107,
+    "All Deads": 296010,
+    "Honor Points": 42589,
+    "DKP Score": 26277470,
+    "DKP Goal": 14042461,
+    "Reached": 187
+  },
+  {
+    "Governor ID": 188276623,
+    "Name": "\u1d38\u1d5bArork",
+    "Alliance": "LV21",
+    "Base Power": 38864494,
+    "T4 Kills": 533503,
+    "T5 Kills": 464697,
+    "All Deads": 373206,
+    "Honor Points": 39341,
+    "DKP Score": 25825150,
+    "DKP Goal": 27205145,
+    "Reached": 95
+  },
+  {
+    "Governor ID": 189057248,
+    "Name": "Cekko23",
+    "Alliance": "no alliance",
+    "Base Power": 26010210,
+    "T4 Kills": 178678,
+    "T5 Kills": 308565,
+    "All Deads": 589833,
+    "Honor Points": 62318,
+    "DKP Score": 25653070,
+    "DKP Goal": 13005105,
+    "Reached": 197
+  },
+  {
+    "Governor ID": 186016235,
+    "Name": "\u1d40\u1d3fvShabz",
+    "Alliance": "LV21",
+    "Base Power": 24838011,
+    "T4 Kills": 1271857,
+    "T5 Kills": 70390,
+    "All Deads": 382144,
+    "Honor Points": 9344,
+    "DKP Score": 25590690,
+    "DKP Goal": 9935204,
+    "Reached": 258
+  },
+  {
+    "Governor ID": 189068044,
+    "Name": "Hsotits7",
+    "Alliance": "IR22",
+    "Base Power": 20595373,
+    "T4 Kills": 344485,
+    "T5 Kills": 14846,
+    "All Deads": 728123,
+    "Honor Points": 750,
+    "DKP Score": 25585460,
+    "DKP Goal": 8238149,
+    "Reached": 311
+  },
+  {
+    "Governor ID": 150165925,
+    "Name": "SADEWA CASTILLA",
+    "Alliance": "LV21",
+    "Base Power": 24013329,
+    "T4 Kills": 844259,
+    "T5 Kills": 243424,
+    "All Deads": 389081,
+    "Honor Points": 66720,
+    "DKP Score": 24983500,
+    "DKP Goal": 9605331,
+    "Reached": 260
+  },
+  {
+    "Governor ID": 188483360,
+    "Name": "\u02b7\u1d49\u1d49\u1d48Tryx",
+    "Alliance": "LV21",
+    "Base Power": 42794919,
+    "T4 Kills": 307474,
+    "T5 Kills": 814517,
+    "All Deads": 112159,
+    "Honor Points": 22134,
+    "DKP Score": 22729850,
+    "DKP Goal": 34235935,
+    "Reached": 66
+  },
+  {
+    "Governor ID": 188852900,
+    "Name": "Scorpionking\u4e42",
+    "Alliance": "LV21",
+    "Base Power": 28049102,
+    "T4 Kills": 366485,
+    "T5 Kills": 238418,
+    "All Deads": 452494,
+    "Honor Points": 58102,
+    "DKP Score": 22008030,
+    "DKP Goal": 14024551,
+    "Reached": 157
+  },
+  {
+    "Governor ID": 187029935,
+    "Name": "HolySpirit",
+    "Alliance": "LV21",
+    "Base Power": 35010224,
+    "T4 Kills": 240522,
+    "T5 Kills": 79645,
+    "All Deads": 575891,
+    "Honor Points": 12723,
+    "DKP Score": 21274850,
+    "DKP Goal": 24507156,
+    "Reached": 87
+  },
+  {
+    "Governor ID": 188789684,
+    "Name": "\u1d38\u1d5btMadson",
+    "Alliance": "LV21",
+    "Base Power": 32374094,
+    "T4 Kills": 1638594,
+    "T5 Kills": 163751,
+    "All Deads": 18207,
+    "Honor Points": 73903,
+    "DKP Score": 20207170,
+    "DKP Goal": 19424456,
+    "Reached": 104
+  },
+  {
+    "Governor ID": 188876717,
+    "Name": "AMBATUBASSSS",
+    "Alliance": "Vb-V",
+    "Base Power": 20737260,
+    "T4 Kills": 421404,
+    "T5 Kills": 20837,
+    "All Deads": 488422,
+    "Honor Points": 7411,
+    "DKP Score": 19283440,
+    "DKP Goal": 8294904,
+    "Reached": 232
+  },
+  {
+    "Governor ID": 188912287,
+    "Name": "\u1d38\u1d5bgCoelho",
+    "Alliance": "LV21",
+    "Base Power": 27456738,
+    "T4 Kills": 1470679,
+    "T5 Kills": 99193,
+    "All Deads": 11475,
+    "Honor Points": 60921,
+    "DKP Score": 17034900,
+    "DKP Goal": 13728369,
+    "Reached": 124
+  },
+  {
+    "Governor ID": 188836483,
+    "Name": "REBELDE1533",
+    "Alliance": "J611",
+    "Base Power": 29769401,
+    "T4 Kills": 2350,
+    "T5 Kills": 64287,
+    "All Deads": 510661,
+    "Honor Points": 0,
+    "DKP Score": 16629070,
+    "DKP Goal": 14884700,
+    "Reached": 112
+  },
+  {
+    "Governor ID": 188285810,
+    "Name": "\u1d35\u1d30Jupanu",
+    "Alliance": "LV21",
+    "Base Power": 33943476,
+    "T4 Kills": 249318,
+    "T5 Kills": 286666,
+    "All Deads": 241202,
+    "Honor Points": 61634,
+    "DKP Score": 15462560,
+    "DKP Goal": 20366085,
+    "Reached": 76
+  },
+  {
+    "Governor ID": 178925131,
+    "Name": "MACARON X",
+    "Alliance": "LV21",
+    "Base Power": 26430903,
+    "T4 Kills": 213992,
+    "T5 Kills": 133887,
+    "All Deads": 299749,
+    "Honor Points": 55560,
+    "DKP Score": 13810130,
+    "DKP Goal": 13215451,
+    "Reached": 104
+  },
+  {
+    "Governor ID": 185341770,
+    "Name": "\u1d9c\u1d58Ralfish",
+    "Alliance": "LV21",
+    "Base Power": 36637952,
+    "T4 Kills": 29228,
+    "T5 Kills": 89734,
+    "All Deads": 381640,
+    "Honor Points": 24777,
+    "DKP Score": 13536160,
+    "DKP Goal": 25646566,
+    "Reached": 53
+  },
+  {
+    "Governor ID": 189017405,
+    "Name": "\u1d38\u1d5bmegazard",
+    "Alliance": "LV21",
+    "Base Power": 38021904,
+    "T4 Kills": 328943,
+    "T5 Kills": 388019,
+    "All Deads": 41395,
+    "Honor Points": 79877,
+    "DKP Score": 12291660,
+    "DKP Goal": 26615332,
+    "Reached": 46
+  },
+  {
+    "Governor ID": 188833519,
+    "Name": "JulieLaTueuse\ucd78",
+    "Alliance": "LV21",
+    "Base Power": 35375047,
+    "T4 Kills": 63505,
+    "T5 Kills": 171652,
+    "All Deads": 243639,
+    "Honor Points": 75018,
+    "DKP Score": 11377260,
+    "DKP Goal": 24762532,
+    "Reached": 46
+  },
+  {
+    "Governor ID": 188970345,
+    "Name": "PitBlue",
+    "Alliance": "LV21",
+    "Base Power": 36194357,
+    "T4 Kills": 418644,
+    "T5 Kills": 277009,
+    "All Deads": 22438,
+    "Honor Points": 45829,
+    "DKP Score": 10399760,
+    "DKP Goal": 25336049,
+    "Reached": 41
+  },
+  {
+    "Governor ID": 187016834,
+    "Name": "\u5342\u51e0\u049c\u5342 2",
+    "Alliance": "LR21",
+    "Base Power": 20180006,
+    "T4 Kills": 10307,
+    "T5 Kills": 14161,
+    "All Deads": 312302,
+    "Honor Points": 4722,
+    "DKP Score": 9755350,
+    "DKP Goal": 8072002,
+    "Reached": 121
+  },
+  {
+    "Governor ID": 188769082,
+    "Name": "Mratom",
+    "Alliance": "LV21",
+    "Base Power": 11244413,
+    "T4 Kills": 19464,
+    "T5 Kills": 44467,
+    "All Deads": 287018,
+    "Honor Points": 11074,
+    "DKP Score": 9694520,
+    "DKP Goal": 2248882,
+    "Reached": 431
+  },
+  {
+    "Governor ID": 188790227,
+    "Name": "\u0421\u0423\u041b\u0418\u041c\u0410H",
+    "Alliance": "21Wh",
+    "Base Power": 20903186,
+    "T4 Kills": 0,
+    "T5 Kills": 20110,
+    "All Deads": 302060,
+    "Honor Points": 0,
+    "DKP Score": 9464000,
+    "DKP Goal": 8361274,
+    "Reached": 113
+  },
+  {
+    "Governor ID": 188856535,
+    "Name": "HOIANA",
+    "Alliance": "CoR3",
+    "Base Power": 17415796,
+    "T4 Kills": 13135,
+    "T5 Kills": 0,
+    "All Deads": 304733,
+    "Honor Points": 0,
+    "DKP Score": 9273340,
+    "DKP Goal": 5224738,
+    "Reached": 177
+  },
+  {
+    "Governor ID": 188976136,
+    "Name": "\u1d38\u1d5b MUSE",
+    "Alliance": "LV21",
+    "Base Power": 47332425,
+    "T4 Kills": 177592,
+    "T5 Kills": 323913,
+    "All Deads": 13596,
+    "Honor Points": 82235,
+    "DKP Score": 8662060,
+    "DKP Goal": 42599182,
+    "Reached": 20
+  },
+  {
+    "Governor ID": 186444772,
+    "Name": "HornyDr4gon\u30c4",
+    "Alliance": "no alliance",
+    "Base Power": 37208459,
+    "T4 Kills": 194273,
+    "T5 Kills": 51,
+    "All Deads": 222483,
+    "Honor Points": 18801,
+    "DKP Score": 8618240,
+    "DKP Goal": 26045921,
+    "Reached": 33
+  },
+  {
+    "Governor ID": 188547640,
+    "Name": "Kitty8152",
+    "Alliance": "21LK",
+    "Base Power": 28131986,
+    "T4 Kills": 1659,
+    "T5 Kills": 36178,
+    "All Deads": 224006,
+    "Honor Points": 0,
+    "DKP Score": 7460330,
+    "DKP Goal": 14065993,
+    "Reached": 53
+  },
+  {
+    "Governor ID": 188872694,
+    "Name": "DEL\u0130 \u00dcSTAD",
+    "Alliance": "J611",
+    "Base Power": 27630121,
+    "T4 Kills": 85117,
+    "T5 Kills": 122394,
+    "All Deads": 110032,
+    "Honor Points": 54122,
+    "DKP Score": 6600010,
+    "DKP Goal": 13815060,
+    "Reached": 48
+  },
+  {
+    "Governor ID": 185986678,
+    "Name": "\u5342\u5c3a\u4e02",
+    "Alliance": "LV21",
+    "Base Power": 39484199,
+    "T4 Kills": 186378,
+    "T5 Kills": 138930,
+    "All Deads": 28090,
+    "Honor Points": 38058,
+    "DKP Score": 5485080,
+    "DKP Goal": 27638939,
+    "Reached": 20
+  },
+  {
+    "Governor ID": 189939798,
+    "Name": "MePaul FM",
+    "Alliance": "LV21",
+    "Base Power": 30268701,
+    "T4 Kills": 344567,
+    "T5 Kills": 97849,
+    "All Deads": 168,
+    "Honor Points": 9610,
+    "DKP Score": 5407690,
+    "DKP Goal": 18161220,
+    "Reached": 30
+  },
+  {
+    "Governor ID": 185355768,
+    "Name": "Eren Retired",
+    "Alliance": "no alliance",
+    "Base Power": 48635363,
+    "T4 Kills": 105605,
+    "T5 Kills": 0,
+    "All Deads": 97530,
+    "Honor Points": 0,
+    "DKP Score": 3981950,
+    "DKP Goal": 43771826,
+    "Reached": 9
+  },
+  {
+    "Governor ID": 188490339,
+    "Name": "\u1d38\u1d5bArym",
+    "Alliance": "LV21",
+    "Base Power": 20844849,
+    "T4 Kills": 25580,
+    "T5 Kills": 53972,
+    "All Deads": 85396,
+    "Honor Points": 40457,
+    "DKP Score": 3897120,
+    "DKP Goal": 8337939,
+    "Reached": 47
+  },
+  {
+    "Governor ID": 190874101,
+    "Name": "PutraSlc2",
+    "Alliance": "LR21",
+    "Base Power": 24573769,
+    "T4 Kills": 94787,
+    "T5 Kills": 15902,
+    "All Deads": 77883,
+    "Honor Points": 4813,
+    "DKP Score": 3602400,
+    "DKP Goal": 9829507,
+    "Reached": 37
+  },
+  {
+    "Governor ID": 188884243,
+    "Name": "GomesR",
+    "Alliance": "LLA",
+    "Base Power": 16694053,
+    "T4 Kills": 20454,
+    "T5 Kills": 3991,
+    "All Deads": 108168,
+    "Honor Points": 2873,
+    "DKP Score": 3529400,
+    "DKP Goal": 5008215,
+    "Reached": 70
+  },
+  {
+    "Governor ID": 187726069,
+    "Name": "\u1d40\u1d3fvSpryth",
+    "Alliance": "no alliance",
+    "Base Power": 41801470,
+    "T4 Kills": 47836,
+    "T5 Kills": 97776,
+    "All Deads": 32141,
+    "Honor Points": 14549,
+    "DKP Score": 3398110,
+    "DKP Goal": 33441176,
+    "Reached": 10
+  },
+  {
+    "Governor ID": 188793523,
+    "Name": "FerAmaya",
+    "Alliance": "LV21",
+    "Base Power": 24735681,
+    "T4 Kills": 83722,
+    "T5 Kills": 119691,
+    "All Deads": 3499,
+    "Honor Points": 19632,
+    "DKP Score": 3336010,
+    "DKP Goal": 9894272,
+    "Reached": 34
+  },
+  {
+    "Governor ID": 179816952,
+    "Name": "Hell CAT GTR",
+    "Alliance": "Db-D",
+    "Base Power": 41598766,
+    "T4 Kills": 12074,
+    "T5 Kills": 20665,
+    "All Deads": 91462,
+    "Honor Points": 21989,
+    "DKP Score": 3277900,
+    "DKP Goal": 33279012,
+    "Reached": 10
+  },
+  {
+    "Governor ID": 188876886,
+    "Name": "\u1d38\u1d5bTheanh",
+    "Alliance": "LG21",
+    "Base Power": 33115864,
+    "T4 Kills": 46187,
+    "T5 Kills": 25071,
+    "All Deads": 70781,
+    "Honor Points": 12860,
+    "DKP Score": 3086720,
+    "DKP Goal": 19869518,
+    "Reached": 16
+  },
+  {
+    "Governor ID": 189001955,
+    "Name": "\u1d38\u1d5bTruNguyen",
+    "Alliance": "LV21",
+    "Base Power": 32969762,
+    "T4 Kills": 13977,
+    "T5 Kills": 60176,
+    "All Deads": 53985,
+    "Honor Points": 104603,
+    "DKP Score": 2962840,
+    "DKP Goal": 19781857,
+    "Reached": 15
+  },
+  {
+    "Governor ID": 188806199,
+    "Name": "Petertrolled",
+    "Alliance": "OP1",
+    "Base Power": 19630924,
+    "T4 Kills": 9050,
+    "T5 Kills": 4457,
+    "All Deads": 90034,
+    "Honor Points": 0,
+    "DKP Score": 2880660,
+    "DKP Goal": 5889277,
+    "Reached": 49
+  },
+  {
+    "Governor ID": 188853064,
+    "Name": "TerrorBlade98",
+    "Alliance": "J611",
+    "Base Power": 23309174,
+    "T4 Kills": 59158,
+    "T5 Kills": 11425,
+    "All Deads": 66047,
+    "Honor Points": 1709,
+    "DKP Score": 2801490,
+    "DKP Goal": 9323669,
+    "Reached": 30
+  },
+  {
+    "Governor ID": 188360951,
+    "Name": "AKILES   TC",
+    "Alliance": "21LK",
+    "Base Power": 17242218,
+    "T4 Kills": 6647,
+    "T5 Kills": 13607,
+    "All Deads": 75600,
+    "Honor Points": 0,
+    "DKP Score": 2606610,
+    "DKP Goal": 5172665,
+    "Reached": 50
+  },
+  {
+    "Governor ID": 188903920,
+    "Name": "JoshuaSeil",
+    "Alliance": "LV21",
+    "Base Power": 23614481,
+    "T4 Kills": 76456,
+    "T5 Kills": 68059,
+    "All Deads": 11793,
+    "Honor Points": 48524,
+    "DKP Score": 2479530,
+    "DKP Goal": 9445792,
+    "Reached": 26
+  },
+  {
+    "Governor ID": 181581608,
+    "Name": "\u1d38\u1d5bFledimauz",
+    "Alliance": "LV21",
+    "Base Power": 32075565,
+    "T4 Kills": 192706,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 16803,
+    "DKP Score": 1927060,
+    "DKP Goal": 19245339,
+    "Reached": 10
+  },
+  {
+    "Governor ID": 182317160,
+    "Name": "GOPAR WITH UDIN",
+    "Alliance": "LV21",
+    "Base Power": 33529120,
+    "T4 Kills": 113627,
+    "T5 Kills": 26288,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 1662030,
+    "DKP Goal": 20117472,
+    "Reached": 8
+  },
+  {
+    "Governor ID": 188575943,
+    "Name": "wartrn",
+    "Alliance": "LV21",
+    "Base Power": 25428718,
+    "T4 Kills": 44844,
+    "T5 Kills": 53536,
+    "All Deads": 3230,
+    "Honor Points": 20247,
+    "DKP Score": 1616060,
+    "DKP Goal": 12714359,
+    "Reached": 13
+  },
+  {
+    "Governor ID": 188651684,
+    "Name": "OK Family",
+    "Alliance": "CoR3",
+    "Base Power": 27988993,
+    "T4 Kills": 40075,
+    "T5 Kills": 5416,
+    "All Deads": 29778,
+    "Honor Points": 0,
+    "DKP Score": 1402410,
+    "DKP Goal": 13994496,
+    "Reached": 10
+  },
+  {
+    "Governor ID": 188880486,
+    "Name": "K\u1ef3 tiktok",
+    "Alliance": "LV21",
+    "Base Power": 25787003,
+    "T4 Kills": 207,
+    "T5 Kills": 13375,
+    "All Deads": 35539,
+    "Honor Points": 36186,
+    "DKP Score": 1335740,
+    "DKP Goal": 12893501,
+    "Reached": 10
+  },
+  {
+    "Governor ID": 188944242,
+    "Name": "\u0110\u1ea1t Farming",
+    "Alliance": "LV21",
+    "Base Power": 33933305,
+    "T4 Kills": 9689,
+    "T5 Kills": 54450,
+    "All Deads": 0,
+    "Honor Points": 4071,
+    "DKP Score": 1185890,
+    "DKP Goal": 20359983,
+    "Reached": 6
+  },
+  {
+    "Governor ID": 187880560,
+    "Name": "siuc\u00e1voil\u1ee7i",
+    "Alliance": "no alliance",
+    "Base Power": 16489453,
+    "T4 Kills": 49758,
+    "T5 Kills": 0,
+    "All Deads": 15548,
+    "Honor Points": 0,
+    "DKP Score": 964020,
+    "DKP Goal": 4946835,
+    "Reached": 19
+  },
+  {
+    "Governor ID": 188341936,
+    "Name": "\u1d38\u1d5b OZZY 67",
+    "Alliance": "LG21",
+    "Base Power": 63786479,
+    "T4 Kills": 2344,
+    "T5 Kills": 39274,
+    "All Deads": 0,
+    "Honor Points": 12972,
+    "DKP Score": 808920,
+    "DKP Goal": 76543774,
+    "Reached": 1
+  },
+  {
+    "Governor ID": 182625007,
+    "Name": "UDIN WITH GOPAR",
+    "Alliance": "no alliance",
+    "Base Power": 37595151,
+    "T4 Kills": 2958,
+    "T5 Kills": 38389,
+    "All Deads": 0,
+    "Honor Points": 2441,
+    "DKP Score": 797360,
+    "DKP Goal": 26316605,
+    "Reached": 3
+  },
+  {
+    "Governor ID": 188539042,
+    "Name": "\u1d3f\u1d49\u02b8 Lealia",
+    "Alliance": "no alliance",
+    "Base Power": 23143583,
+    "T4 Kills": 7387,
+    "T5 Kills": 33616,
+    "All Deads": 0,
+    "Honor Points": 7874,
+    "DKP Score": 746190,
+    "DKP Goal": 9257433,
+    "Reached": 8
+  },
+  {
+    "Governor ID": 188969981,
+    "Name": "\u1d78\u1d52Wand0",
+    "Alliance": "no alliance",
+    "Base Power": 36611918,
+    "T4 Kills": 7727,
+    "T5 Kills": 29259,
+    "All Deads": 0,
+    "Honor Points": 382,
+    "DKP Score": 662450,
+    "DKP Goal": 25628342,
+    "Reached": 3
+  },
+  {
+    "Governor ID": 187560016,
+    "Name": "KyubiFlagFiller",
+    "Alliance": "LV21",
+    "Base Power": 15384624,
+    "T4 Kills": 5218,
+    "T5 Kills": 9199,
+    "All Deads": 10636,
+    "Honor Points": 0,
+    "DKP Score": 555240,
+    "DKP Goal": 4615387,
+    "Reached": 12
+  },
+  {
+    "Governor ID": 184819319,
+    "Name": "20 corol",
+    "Alliance": "ER22",
+    "Base Power": 19763991,
+    "T4 Kills": 17038,
+    "T5 Kills": 12338,
+    "All Deads": 0,
+    "Honor Points": 3199,
+    "DKP Score": 417140,
+    "DKP Goal": 5929197,
+    "Reached": 7
+  },
+  {
+    "Governor ID": 188835262,
+    "Name": "vinzsou",
+    "Alliance": "LV21",
+    "Base Power": 27789185,
+    "T4 Kills": 2864,
+    "T5 Kills": 2661,
+    "All Deads": 7423,
+    "Honor Points": 52820,
+    "DKP Score": 304550,
+    "DKP Goal": 13894592,
+    "Reached": 2
+  },
+  {
+    "Governor ID": 174601804,
+    "Name": "\u1d2e\u1d3f\u1d33Nika\u30c4",
+    "Alliance": "no alliance",
+    "Base Power": 22865569,
+    "T4 Kills": 9115,
+    "T5 Kills": 4596,
+    "All Deads": 3605,
+    "Honor Points": 0,
+    "DKP Score": 291220,
+    "DKP Goal": 9146227,
+    "Reached": 3
+  },
+  {
+    "Governor ID": 188878743,
+    "Name": "JannGT",
+    "Alliance": "LG21",
+    "Base Power": 22888663,
+    "T4 Kills": 13055,
+    "T5 Kills": 5116,
+    "All Deads": 0,
+    "Honor Points": 10296,
+    "DKP Score": 232870,
+    "DKP Goal": 9155465,
+    "Reached": 3
+  },
+  {
+    "Governor ID": 188904786,
+    "Name": "Shadow vahalla",
+    "Alliance": "LR21",
+    "Base Power": 16673950,
+    "T4 Kills": 15408,
+    "T5 Kills": 2406,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 202200,
+    "DKP Goal": 5002185,
+    "Reached": 4
+  },
+  {
+    "Governor ID": 188430882,
+    "Name": "JapayuKingBILAT",
+    "Alliance": "RWND",
+    "Base Power": 22657139,
+    "T4 Kills": 17718,
+    "T5 Kills": 175,
+    "All Deads": 0,
+    "Honor Points": 5252,
+    "DKP Score": 180680,
+    "DKP Goal": 9062855,
+    "Reached": 2
+  },
+  {
+    "Governor ID": 188876948,
+    "Name": "Ruberoid",
+    "Alliance": "21If",
+    "Base Power": 23491634,
+    "T4 Kills": 17829,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 4034,
+    "DKP Score": 178290,
+    "DKP Goal": 9396653,
+    "Reached": 2
+  },
+  {
+    "Governor ID": 180027884,
+    "Name": "RumSeyFarm",
+    "Alliance": "LR21",
+    "Base Power": 20468915,
+    "T4 Kills": 0,
+    "T5 Kills": 7003,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 140060,
+    "DKP Goal": 8187566,
+    "Reached": 2
+  },
+  {
+    "Governor ID": 189040679,
+    "Name": "EVIL\u015a",
+    "Alliance": "CoR3",
+    "Base Power": 23220885,
+    "T4 Kills": 12573,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 125730,
+    "DKP Goal": 9288354,
+    "Reached": 1
+  },
+  {
+    "Governor ID": 188844580,
+    "Name": "RedHoodJT",
+    "Alliance": "LR21",
+    "Base Power": 22439569,
+    "T4 Kills": 4486,
+    "T5 Kills": 2674,
+    "All Deads": 0,
+    "Honor Points": 2751,
+    "DKP Score": 98340,
+    "DKP Goal": 8975827,
+    "Reached": 1
+  },
+  {
+    "Governor ID": 184093837,
+    "Name": "\u5c6e Lord Dott",
+    "Alliance": "LG21",
+    "Base Power": 25243150,
+    "T4 Kills": 1298,
+    "T5 Kills": 2452,
+    "All Deads": 0,
+    "Honor Points": 2340,
+    "DKP Score": 62020,
+    "DKP Goal": 12621575,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 184859052,
+    "Name": "\u1d38\u1d5bAHERUS",
+    "Alliance": "LV21",
+    "Base Power": 24083454,
+    "T4 Kills": 273,
+    "T5 Kills": 2793,
+    "All Deads": 0,
+    "Honor Points": 3701,
+    "DKP Score": 58590,
+    "DKP Goal": 9633381,
+    "Reached": 1
+  },
+  {
+    "Governor ID": 195403312,
+    "Name": "m\u00f4ngc\u1ed5",
+    "Alliance": "LV21",
+    "Base Power": 13924900,
+    "T4 Kills": 4608,
+    "T5 Kills": 42,
+    "All Deads": 0,
+    "Honor Points": 55185,
+    "DKP Score": 46920,
+    "DKP Goal": 2784980,
+    "Reached": 2
+  },
+  {
+    "Governor ID": 188884453,
+    "Name": "dm152",
+    "Alliance": "LG21",
+    "Base Power": 21442735,
+    "T4 Kills": 3022,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 3670,
+    "DKP Score": 30220,
+    "DKP Goal": 8577094,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 185282573,
+    "Name": "MasonFarM4",
+    "Alliance": "LV21",
+    "Base Power": 28321053,
+    "T4 Kills": 0,
+    "T5 Kills": 420,
+    "All Deads": 683,
+    "Honor Points": 2795,
+    "DKP Score": 28890,
+    "DKP Goal": 14160526,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188880546,
+    "Name": "Graf000007",
+    "Alliance": "LV21",
+    "Base Power": 26076854,
+    "T4 Kills": 2441,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 15534,
+    "DKP Score": 24410,
+    "DKP Goal": 13038427,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188853241,
+    "Name": "\u0410\u043b\u0451\u043d\u0430\u0430",
+    "Alliance": "no alliance",
+    "Base Power": 30608367,
+    "T4 Kills": 1358,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 1200,
+    "DKP Score": 13580,
+    "DKP Goal": 18365020,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 191454845,
+    "Name": "\u1d38\u1d5bTueAnh",
+    "Alliance": "no alliance",
+    "Base Power": 25120670,
+    "T4 Kills": 724,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 8738,
+    "DKP Score": 7240,
+    "DKP Goal": 12560335,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188232993,
+    "Name": "AKON311",
+    "Alliance": "LG21",
+    "Base Power": 16079604,
+    "T4 Kills": 0,
+    "T5 Kills": 184,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 3680,
+    "DKP Goal": 4823881,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188819819,
+    "Name": "fox77778",
+    "Alliance": "21Wh",
+    "Base Power": 18632174,
+    "T4 Kills": 196,
+    "T5 Kills": 66,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 3280,
+    "DKP Goal": 5589652,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188789133,
+    "Name": "MiniMe",
+    "Alliance": "CoR3",
+    "Base Power": 37142711,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 36,
+    "Honor Points": 0,
+    "DKP Score": 1080,
+    "DKP Goal": 25999897,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 142628224,
+    "Name": "Dae jang goon",
+    "Alliance": "no alliance",
+    "Base Power": 50555074,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 5471,
+    "DKP Score": 0,
+    "DKP Goal": 50555074,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 185282531,
+    "Name": "Ann\u0131\u025b",
+    "Alliance": "no alliance",
+    "Base Power": 39988893,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 27992225,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188352541,
+    "Name": "\u1d3e\u1d3f M\u00e8o\u30c3",
+    "Alliance": "no alliance",
+    "Base Power": 32207761,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 1275,
+    "DKP Score": 0,
+    "DKP Goal": 19324656,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 180150995,
+    "Name": "RumSlave1",
+    "Alliance": "LR21",
+    "Base Power": 32168677,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 19301206,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188651683,
+    "Name": "Sol Aliyaa",
+    "Alliance": "CoR3",
+    "Base Power": 30540674,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 18324404,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188648613,
+    "Name": "K\u00e4nguru\u1d35\u1d30",
+    "Alliance": "no alliance",
+    "Base Power": 29263579,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 14631789,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188436479,
+    "Name": "\u1d3c\u1d38 Loki",
+    "Alliance": "LV21",
+    "Base Power": 28955933,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 14477966,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188294260,
+    "Name": "C\u0426E\u041f\u0418OH",
+    "Alliance": "21Wh",
+    "Base Power": 28767240,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 14383620,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 186709522,
+    "Name": "\u1d38\u1d5b SHERY",
+    "Alliance": "no alliance",
+    "Base Power": 28724075,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 14362037,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188806334,
+    "Name": "Emrah 51",
+    "Alliance": "no alliance",
+    "Base Power": 27863702,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 13931851,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188225231,
+    "Name": "\u1d3e\u1d3fSko0p",
+    "Alliance": "CREW",
+    "Base Power": 27573232,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 13786616,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 186295211,
+    "Name": "\u1da0\u02e1VENDETTA",
+    "Alliance": "Vb-V",
+    "Base Power": 26996381,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 13498190,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188840841,
+    "Name": "\u1d38\u1d5bNotZach",
+    "Alliance": "LV21",
+    "Base Power": 26632573,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 13316286,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 146179581,
+    "Name": "lupepvp",
+    "Alliance": "no alliance",
+    "Base Power": 26570669,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 13285334,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188818127,
+    "Name": "\u1d3f\u1d9d\u98ce\u534e",
+    "Alliance": "LG21",
+    "Base Power": 26245181,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 13122590,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 189236516,
+    "Name": "\u1d3f\u1d9d\u5e74\u534e",
+    "Alliance": "LG21",
+    "Base Power": 25773957,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 12886978,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188891048,
+    "Name": "S2LE100LE\u015e",
+    "Alliance": "LR21",
+    "Base Power": 24556439,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 9822575,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188390528,
+    "Name": "\u1da6\u1da0Akrosh",
+    "Alliance": "21If",
+    "Base Power": 24500868,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 9800347,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 186638535,
+    "Name": "Zd Sebastian",
+    "Alliance": "no alliance",
+    "Base Power": 23906900,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 9562760,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188324838,
+    "Name": "\u0425\u041e\u041d\u0414\u0410",
+    "Alliance": "21Wh",
+    "Base Power": 23109291,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 9243716,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 180155102,
+    "Name": "RumSeyFarm1",
+    "Alliance": "LR21",
+    "Base Power": 23085660,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 9234264,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188337674,
+    "Name": "\u1d35\u1d38Axan",
+    "Alliance": "OP1",
+    "Base Power": 22552232,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 9020892,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188314164,
+    "Name": "valdemarZZ",
+    "Alliance": "LV21",
+    "Base Power": 22233801,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 8893520,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188937309,
+    "Name": "Velikiy Govard",
+    "Alliance": "LG21",
+    "Base Power": 22142607,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 8857042,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188889549,
+    "Name": "\u0421\u0426E\u041f\u0418\u041e\u041d",
+    "Alliance": "21Wh",
+    "Base Power": 21404903,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 8561961,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188900888,
+    "Name": "Taylorxxb",
+    "Alliance": "LR21",
+    "Base Power": 20213191,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 8085276,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188818238,
+    "Name": "PoTaPyh",
+    "Alliance": "21Wh",
+    "Base Power": 19944645,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 5983393,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188836639,
+    "Name": "Ndiaye",
+    "Alliance": "LG21",
+    "Base Power": 19937483,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 5981244,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188994494,
+    "Name": "Snowplow",
+    "Alliance": "LR21",
+    "Base Power": 19715901,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 5914770,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188838663,
+    "Name": "ERON",
+    "Alliance": "no alliance",
+    "Base Power": 19279122,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 5783736,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188825002,
+    "Name": "Namiq Cebrayilo",
+    "Alliance": "LG21",
+    "Base Power": 19076675,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 5723002,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188513738,
+    "Name": "MooS\u00e1ke",
+    "Alliance": "RC21",
+    "Base Power": 18178652,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 5453595,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188585266,
+    "Name": "myballsintheair",
+    "Alliance": "no alliance",
+    "Base Power": 17107845,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 5132353,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188297965,
+    "Name": "\u0174\u014c\u1e3aF",
+    "Alliance": "no alliance",
+    "Base Power": 17076782,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 5123034,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188503741,
+    "Name": "S\u0130YAH KAZ",
+    "Alliance": "no alliance",
+    "Base Power": 17002806,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 5100841,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188852196,
+    "Name": "DarkExecutioner",
+    "Alliance": "TFS:",
+    "Base Power": 16499727,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 4949918,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188444052,
+    "Name": "a l e c t o",
+    "Alliance": "no alliance",
+    "Base Power": 16456439,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 4936931,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188787622,
+    "Name": "MalandrageX",
+    "Alliance": "LG21",
+    "Base Power": 16408018,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 4922405,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188218414,
+    "Name": "\u1d35\u1d9c2pac GGG",
+    "Alliance": "no alliance",
+    "Base Power": 15997193,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 4799157,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188376429,
+    "Name": "\u1d35\u1d9cmySoul",
+    "Alliance": "no alliance",
+    "Base Power": 15934409,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 4780322,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188800436,
+    "Name": "LilPiglet",
+    "Alliance": "LR21",
+    "Base Power": 15654503,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 4696350,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 189182502,
+    "Name": "OZZY 67 f2",
+    "Alliance": "LR21",
+    "Base Power": 15365217,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 4609565,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188796842,
+    "Name": "Menda2137",
+    "Alliance": "LR21",
+    "Base Power": 15298997,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 4589699,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 187078010,
+    "Name": "Dr4gonsFarmer\u30c4",
+    "Alliance": "no alliance",
+    "Base Power": 15019356,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 4505806,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 184843422,
+    "Name": "LionKng",
+    "Alliance": "21IR",
+    "Base Power": 15015480,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 4504644,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 186073361,
+    "Name": "\u5342\u5c3a\u4e02Farm",
+    "Alliance": "no alliance",
+    "Base Power": 14977385,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 2995477,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 189182788,
+    "Name": "OZZY 67 f1",
+    "Alliance": "LR21",
+    "Base Power": 14827468,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 2965493,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188845980,
+    "Name": "Azadi",
+    "Alliance": "I-am",
+    "Base Power": 13986841,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 2797368,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188287771,
+    "Name": "\u115f\u1160\u1160\u1160\u1160\u115f\u1160\u1160\u1160\u1160 \u115f\u1160\u1160",
+    "Alliance": "LG21",
+    "Base Power": 13054544,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 2610908,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188487100,
+    "Name": "Kir8",
+    "Alliance": "21Wh",
+    "Base Power": 12844643,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 2568928,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188292201,
+    "Name": "\ucd78Bear",
+    "Alliance": "no alliance",
+    "Base Power": 12762411,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 2552482,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188217778,
+    "Name": "\u1d35\u1d30King Nemo",
+    "Alliance": "no alliance",
+    "Base Power": 11974922,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 2394984,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 189443468,
+    "Name": "Hubey",
+    "Alliance": "no alliance",
+    "Base Power": 10948714,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 2189742,
+    "Reached": 0
+  },
+  {
+    "Governor ID": 188309795,
+    "Name": "\u1d35\u1d9c TAZIEX",
+    "Alliance": "no alliance",
+    "Base Power": 10844048,
+    "T4 Kills": 0,
+    "T5 Kills": 0,
+    "All Deads": 0,
+    "Honor Points": 0,
+    "DKP Score": 0,
+    "DKP Goal": 2168809,
+    "Reached": 0
+  }
+];
+        let filteredData = [];
+        let currentPage = 1;
+        const playersPerPage = 25;
+        let currentSort = { column: 'dkpScore', direction: 'desc' };
+
+        // Load player data from the sorted JavaScript file
+        function loadPlayerData() {
+            // This is where we'll load the data from our sorted file
+            // For now, we'll create sample data structure
+            const sampleData = `
+"playerData" = [
+    {
+      "Governor ID": 179940560,
+      "Name": "ᵗʰ ink",
+      "Alliance": "Db-D",
+      "Base Power": 116371772,
+      "Current Power": 116403472,
+      "Power Change": 31700,
+      "T4 Kills": 9072427,
+      "T5 Kills": 14960824,
+      "T4+T5 KP": 389940750,
+      "Total Kill Points": 391189380,
+      "All Deads": 1487371,
+      "Honor Points": 233846,
+      "Healed": 0,
+      "Rss Sent": 0,
+      "Troops Power": -259000,
+      "DKP Score": 434561880,
+      "DKP Goal": 232743544,
+      "Dead Goal": 1745576,
+      "Reached": 187
+    }
+]`;
+            
+            // Parse the data and populate the table
+            // This will be replaced with actual file loading
+            processData(); // Using injected data
+        }
+
+        function parsePlayerData(jsContent) {
+            try {
+                // Extract the array content using regex
+                const arrayMatch = jsContent.match(/"playerData"\s*=\s*\[([\s\S]*)\]/);
+                if (!arrayMatch) {
+                    throw new Error('Could not find playerData array');
+                }
+
+                // Parse individual player objects
+                const playerObjects = [];
+                const objectPattern = /{\s*"Governor ID":[^}]+}/g;
+                let match;
+                
+                while ((match = objectPattern.exec(arrayMatch[1])) !== null) {
+                    try {
+                        // Clean up the object string and convert to valid JSON
+                        let objectStr = match[0];
+                        objectStr = objectStr.replace(/(\w+):/g, '"$1":'); // Add quotes around keys
+                        objectStr = objectStr.replace(/:\s*([^",\s\]]+)/g, ': "$1"'); // Add quotes around values
+                        objectStr = objectStr.replace(/:\s*"(\d+)"/g, ': $1'); // Remove quotes from numbers
+                        objectStr = objectStr.replace(/,\s*}/g, '}'); // Remove trailing commas
+                        
+                        const playerObj = JSON.parse(objectStr);
+                        playerObjects.push(playerObj);
+                    } catch (e) {
+                        console.warn('Could not parse player object:', e);
+                    }
+                }
+
+                if (playerObjects.length === 0) {
+                    throw new Error('No player objects found');
+                }
+
+                playerData = playerObjects;
+                processData();
+            } catch (error) {
+                console.error('Error parsing player data:', error);
+                loadSampleData();
+            }
+        }
+
+        function loadSampleData() {
+            // Fallback sample data
+            playerData = [
+                {
+                    "Governor ID": 179940560,
+                    "Name": "ᵗʰ ink",
+                    "Alliance": "Db-D",
+                    "Base Power": 116371772,
+                    "T4 Kills": 9072427,
+                    "T5 Kills": 14960824,
+                    "All Deads": 1487371,
+                    "Honor Points": 233846,
+                    "DKP Score": 434561880,
+                    "DKP Goal": 232743544,
+                    "Reached": 187
+                },
+                {
+                    "Governor ID": 178909607,
+                    "Name": "ﾒ uʐuʍackʏ ﾒ",
+                    "Alliance": "Db-D",
+                    "Base Power": 68935124,
+                    "T4 Kills": 19947862,
+                    "T5 Kills": 10647924,
+                    "All Deads": 514805,
+                    "Honor Points": 125967,
+                    "DKP Score": 427881250,
+                    "DKP Goal": 89615661,
+                    "Reached": 477
+                }
+            ];
+            processData();
+        }
+
+        function processData() {
+            filteredData = [...playerData];
+            updateStatistics();
+            populateFilters();
+            renderTable();
+            renderPagination();
+        }
+
+        function updateStatistics() {
+            const totalPlayers = playerData.length;
+            const activePlayers = playerData.filter(p => p["DKP Score"] > 0).length;
+            const topDkpScore = Math.max(...playerData.map(p => p["DKP Score"]));
+            const avgDkp = Math.round(playerData.reduce((sum, p) => sum + p["DKP Score"], 0) / totalPlayers);
+            const playersAbove100 = playerData.filter(p => p.Reached >= 100).length;
+
+            // Update pagination info instead of stat cards
+            console.log(`Statistics: ${totalPlayers} total, ${activePlayers} active, ${formatNumber(topDkpScore)} top DKP`);
+        }
+
+        function populateFilters() {
+            const alliances = [...new Set(playerData.map(p => p.Alliance))].filter(a => a).sort();
+            const allianceSelect = document.getElementById('allianceFilter');
+            
+            allianceSelect.innerHTML = '<option value="">All Alliances</option>';
+            alliances.forEach(alliance => {
+                const option = document.createElement('option');
+                option.value = alliance;
+                option.textContent = alliance;
+                allianceSelect.appendChild(option);
+            });
+        }
+
+        function formatNumber(num) {
+            if (num >= 1000000) {
+                return (num / 1000000).toFixed(1) + 'M';
+            } else if (num >= 1000) {
+                return (num / 1000).toFixed(1) + 'K';
+            }
+            return num.toLocaleString();
+        }
+
+        function getPerformanceClass(reached) {
+            if (reached >= 100) return 'excellent-performer';
+            if (reached >= 50) return 'good-performer';
+            if (reached >= 10) return 'average-performer';
+            return 'poor-performer';
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('playerTableBody');
+            const start = (currentPage - 1) * playersPerPage;
+            const end = start + playersPerPage;
+            const pageData = filteredData.slice(start, end);
+
+            if (pageData.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="11" class="loading">No players found matching your criteria.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = pageData.map((player, index) => {
+                const rank = start + index + 1;
+                const reachedClass = getPerformanceClass(player.Reached);
+                
+                return `
+                    <tr class="${reachedClass}">
+                        <td class="rank-cell">#${rank}</td>
+                        <td class="name-cell" title="${player.Name}">${player.Name}</td>
+                        <td class="alliance-cell">${player.Alliance || 'N/A'}</td>
+                        <td class="number-cell">${formatNumber(player["DKP Score"])}</td>
+                        <td class="number-cell">${formatNumber(player["DKP Goal"])}</td>
+                        <td class="percentage-cell">${player.Reached}%</td>
+                        <td class="number-cell">${formatNumber(player["Base Power"])}</td>
+                        <td class="number-cell">${formatNumber(player["T4 Kills"])}</td>
+                        <td class="number-cell">${formatNumber(player["T5 Kills"])}</td>
+                        <td class="number-cell">${formatNumber(player["All Deads"])}</td>
+                        <td class="number-cell">${formatNumber(player["Honor Points"])}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function renderPagination() {
+            const totalPages = Math.ceil(filteredData.length / playersPerPage);
+            const pagination = document.getElementById('pagination');
+            
+            if (totalPages <= 1) {
+                pagination.innerHTML = '';
+                return;
+            }
+
+            let paginationHTML = '';
+            
+            // Previous button
+            if (currentPage > 1) {
+                paginationHTML += `<button class="page-btn" onclick="changePage(${currentPage - 1})">← Previous</button>`;
+            }
+            
+            // Page numbers
+            const startPage = Math.max(1, currentPage - 2);
+            const endPage = Math.min(totalPages, currentPage + 2);
+            
+            if (startPage > 1) {
+                paginationHTML += `<button class="page-btn" onclick="changePage(1)">1</button>`;
+                if (startPage > 2) {
+                    paginationHTML += `<span>...</span>`;
+                }
+            }
+            
+            for (let i = startPage; i <= endPage; i++) {
+                const activeClass = i === currentPage ? 'active' : '';
+                paginationHTML += `<button class="page-btn ${activeClass}" onclick="changePage(${i})">${i}</button>`;
+            }
+            
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                    paginationHTML += `<span>...</span>`;
+                }
+                paginationHTML += `<button class="page-btn" onclick="changePage(${totalPages})">${totalPages}</button>`;
+            }
+            
+            // Next button
+            if (currentPage < totalPages) {
+                paginationHTML += `<button class="page-btn" onclick="changePage(${currentPage + 1})">Next →</button>`;
+            }
+            
+            pagination.innerHTML = paginationHTML;
+        }
+
+        function changePage(page) {
+            currentPage = page;
+            renderTable();
+            renderPagination();
+        }
+
+        function sortTable(column) {
+            const direction = (currentSort.column === column && currentSort.direction === 'desc') ? 'asc' : 'desc';
+            currentSort = { column, direction };
+            
+            filteredData.sort((a, b) => {
+                let aVal = a[column] || a[getColumnKey(column)] || 0;
+                let bVal = b[column] || b[getColumnKey(column)] || 0;
+                
+                if (typeof aVal === 'string') {
+                    aVal = aVal.toLowerCase();
+                    bVal = bVal.toLowerCase();
+                }
+                
+                if (direction === 'asc') {
+                    return aVal > bVal ? 1 : -1;
+                } else {
+                    return aVal < bVal ? 1 : -1;
+                }
+            });
+            
+            currentPage = 1;
+            renderTable();
+            renderPagination();
+        }
+
+        function getColumnKey(column) {
+            const keyMap = {
+                'dkpScore': 'DKP Score',
+                'dkpGoal': 'DKP Goal',
+                'basePower': 'Base Power',
+                't4Kills': 'T4 Kills',
+                't5Kills': 'T5 Kills',
+                'allDeads': 'All Deads',
+                'honorPoints': 'Honor Points',
+                'name': 'Name',
+                'alliance': 'Alliance',
+                'reached': 'Reached'
+            };
+            return keyMap[column] || column;
+        }
+
+        function applyFilters() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const allianceFilter = document.getElementById('allianceFilter').value;
+            const performanceFilter = document.getElementById('performanceFilter').value;
+            
+            filteredData = playerData.filter(player => {
+                // Search filter
+                const matchesSearch = !searchTerm || 
+                    player.Name.toLowerCase().includes(searchTerm) ||
+                    (player.Alliance && player.Alliance.toLowerCase().includes(searchTerm));
+                
+                // Alliance filter
+                const matchesAlliance = !allianceFilter || player.Alliance === allianceFilter;
+                
+                // Performance filter
+                let matchesPerformance = true;
+                if (performanceFilter) {
+                    const reached = player.Reached;
+                    switch (performanceFilter) {
+                        case 'excellent':
+                            matchesPerformance = reached >= 100;
+                            break;
+                        case 'good':
+                            matchesPerformance = reached >= 50 && reached < 100;
+                            break;
+                        case 'average':
+                            matchesPerformance = reached >= 10 && reached < 50;
+                            break;
+                        case 'poor':
+                            matchesPerformance = reached >= 0 && reached < 10;
+                            break;
+                    }
+                }
+                
+                return matchesSearch && matchesAlliance && matchesPerformance;
+            });
+            
+            currentPage = 1;
+            renderTable();
+            renderPagination();
+        }
+
+        function exportToCSV() {
+            const headers = ['Rank', 'Name', 'Alliance', 'DKP Score', 'DKP Goal', 'Reached %', 'Base Power', 'T4 Kills', 'T5 Kills', 'All Deads', 'Honor Points'];
+            
+            const csvContent = [
+                headers.join(','),
+                ...filteredData.map((player, index) => [
+                    index + 1,
+                    `"${player.Name}"`,
+                    `"${player.Alliance || 'N/A'}"`,
+                    player["DKP Score"],
+                    player["DKP Goal"],
+                    player.Reached,
+                    player["Base Power"],
+                    player["T4 Kills"],
+                    player["T5 Kills"],
+                    player["All Deads"],
+                    player["Honor Points"]
+                ].join(','))
+            ].join('\n');
+            
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'rok_player_performance.csv';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        function copyNames() {
+            // Create list with ID and Name format
+            const idNameList = filteredData.map(player => 
+                `${player["Governor ID"]} - ${player.Name}`
+            );
+            const copyText = idNameList.join('\n');
+            
+            // Copy to clipboard
+            navigator.clipboard.writeText(copyText).then(() => {
+                showCopyFeedback(idNameList.length, true);
+            }).catch(err => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = copyText;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                showCopyFeedback(idNameList.length, true);
+            });
+        }
+
+        function showCopyFeedback(count, success) {
+            // Create or get feedback element
+            let feedback = document.getElementById('copyFeedback');
+            if (!feedback) {
+                feedback = document.createElement('div');
+                feedback.id = 'copyFeedback';
+                feedback.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    padding: 12px 20px;
+                    border-radius: 8px;
+                    color: white;
+                    font-weight: bold;
+                    z-index: 1000;
+                    transition: all 0.3s ease;
+                    transform: translateX(100%);
+                `;
+                document.body.appendChild(feedback);
+            }
+
+            if (success) {
+                feedback.textContent = `✓ Copied ${count} player IDs and names!`;
+                feedback.style.background = 'rgb(34, 197, 94)'; // green-500
+            } else {
+                feedback.textContent = `✗ Failed to copy names`;
+                feedback.style.background = 'rgb(239, 68, 68)'; // red-500
+            }
+
+            // Show feedback
+            feedback.style.transform = 'translateX(0)';
+            
+            // Hide after 3 seconds
+            setTimeout(() => {
+                feedback.style.transform = 'translateX(100%)';
+            }, 3000);
+        }
+
+        // Event listeners
+        document.getElementById('searchInput').addEventListener('input', applyFilters);
+        document.getElementById('allianceFilter').addEventListener('change', applyFilters);
+        document.getElementById('performanceFilter').addEventListener('change', applyFilters);
+
+        // Initialize the dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            loadPlayerData();
+        });
+    </script>
+</body>
+</html>
