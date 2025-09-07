@@ -2,14 +2,94 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
-import { useState } from 'react';
-import commanders from '@/public/data/commanders.json';
+import { useState, useEffect } from 'react';
 import PageHeader from '@/app/components/PageHeader';
+
+// TypeScript interface for Commander data from API
+interface CommanderBuild {
+    id: string;
+    name: string;
+    image: string;
+    rating?: number;
+    description?: string;
+}
+
+interface Commander {
+    id: string;
+    name: string;
+    image: string;
+    rarity: string;
+    attributes: string[];
+    builds: CommanderBuild[];
+}
 
 export default function CommanderBuildPage() {
     const { name } = useParams();
-    const commander = commanders.find((c) => getSlug(c.image) === name);
+    const [commander, setCommander] = useState<Commander | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const [expandedImage, setExpandedImage] = useState<string | null>(null);
+
+    useEffect(() => {
+        async function fetchCommanders() {
+            try {
+                setLoading(true);
+                setError(null);
+
+                const response = await fetch('/api/v1/public/commanders');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch commanders');
+                }
+
+                const commanders: Commander[] = await response.json();
+                const foundCommander = commanders.find((c) => getSlug(c.image) === name);
+
+                setCommander(foundCommander || null);
+            } catch (error) {
+                console.error('Error fetching commander:', error);
+                setError(error instanceof Error ? error.message : 'An error occurred');
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        if (name) {
+            fetchCommanders();
+        }
+    }, [name]);
+
+    if (loading) {
+        return (
+            <main className="p-6 text-white bg-gray-950 min-h-screen">
+                <PageHeader title="Commander Builds" />
+                <div className="flex justify-center items-center min-h-[400px]">
+                    <div className="text-center">
+                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto mb-4"></div>
+                        <p className="text-gray-400">Loading commander...</p>
+                    </div>
+                </div>
+            </main>
+        );
+    }
+
+    if (error) {
+        return (
+            <main className="p-6 text-white bg-gray-950 min-h-screen">
+                <PageHeader title="Commander Builds" />
+                <div className="flex justify-center items-center min-h-[400px]">
+                    <div className="text-center">
+                        <p className="text-red-400 mb-4">Error loading commander: {error}</p>
+                        <button
+                            onClick={() => window.location.reload()}
+                            className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded transition"
+                        >
+                            Try Again
+                        </button>
+                    </div>
+                </div>
+            </main>
+        );
+    }
 
     if (!commander) return notFound();
 

@@ -1,12 +1,28 @@
 'use client';
 import React, { useState, useRef, useEffect } from 'react';
-import commanders from '@/public/data/commanders.json';
 import PageHeader from '@/app/components/PageHeader';
 import AlphabetSidebar from './components/AlphabetSidebar';
 import CommanderGroup from './components/CommanderGroup';
 
+interface Commander {
+    id: string;
+    name: string;
+    image: string;
+    rarity: string;
+    attributes: string[];
+    builds: {
+        id: string;
+        name: string;
+        image: string;
+        rating?: number;
+        description?: string;
+    }[];
+}
 
 export default function BuildsPage() {
+    const [commanders, setCommanders] = useState<Commander[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const [search, setSearch] = useState('');
     const [expanded, setExpanded] = useState<Record<string, boolean>>({});
     const [activeLetter, setActiveLetter] = useState<string | null>(null);
@@ -16,14 +32,33 @@ export default function BuildsPage() {
     const dropdownButtonRef = useRef<HTMLButtonElement>(null);
     const [showAllDetails, setShowAllDetails] = useState(false);
 
+    // Fetch commanders from API
+    useEffect(() => {
+        const fetchCommanders = async () => {
+            try {
+                setLoading(true);
+                const response = await fetch('/api/v1/public/commanders');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch commanders');
+                }
+                const data = await response.json();
+                setCommanders(data);
+            } catch (err) {
+                setError(err instanceof Error ? err.message : 'An error occurred');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchCommanders();
+    }, []);
+
     const toggleDetails = (name: string) => {
         setExpanded((prev) => ({
             ...prev,
             [name]: !prev[name],
         }));
-    };
-
-    const allAttributes = Array.from(
+    };    const allAttributes = Array.from(
         new Set(
             commanders.flatMap((c) =>
                 (c.attributes ?? []).filter((a) => a && a.trim() !== '')
@@ -47,7 +82,7 @@ export default function BuildsPage() {
         acc[letter] = acc[letter] || [];
         acc[letter].push(c);
         return acc;
-    }, {} as Record<string, typeof commanders>);
+    }, {} as Record<string, Commander[]>);
 
     const sectionRefs = useRef<Record<string, React.RefObject<HTMLDivElement | null>>>({});
 
@@ -87,10 +122,8 @@ export default function BuildsPage() {
                 ref.current.setAttribute('data-letter', letter);
                 observer.observe(ref.current);
             }
-        });
-
-        return () => observer.disconnect();
-    }, [grouped]);
+        });        return () => observer.disconnect();
+    }, [grouped, commanders]);
 
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
@@ -104,21 +137,43 @@ export default function BuildsPage() {
         document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
-
-
     return (
         <main className="text-white bg-gray-950 min-h-screen p-6">
             <PageHeader title="Commanders Builds" />
 
-            <div className="min-h-[80vh] md:grid md:grid-cols-12 gap-6 mt-6">
+            {loading && (
+                <div className="flex justify-center items-center min-h-[50vh]">
+                    <div className="text-center">
+                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto mb-4"></div>
+                        <p className="text-gray-400">Loading commanders...</p>
+                    </div>
+                </div>
+            )}
 
-                <AlphabetSidebar
-                    letters={Object.keys(grouped).sort()}
-                    activeLetter={activeLetter}
-                    onClickLetter={scrollTo}
-                />
+            {error && (
+                <div className="flex justify-center items-center min-h-[50vh]">
+                    <div className="text-center text-red-400">
+                        <p>Error loading commanders: {error}</p>
+                        <button 
+                            onClick={() => window.location.reload()} 
+                            className="mt-4 px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600"
+                        >
+                            Retry
+                        </button>
+                    </div>
+                </div>
+            )}
 
-                <section className="col-span-12 md:col-span-11 space-y-6">
+            {!loading && !error && (
+                <div className="min-h-[80vh] md:grid md:grid-cols-12 gap-6 mt-6">
+
+                    <AlphabetSidebar
+                        letters={Object.keys(grouped).sort()}
+                        activeLetter={activeLetter}
+                        onClickLetter={scrollTo}
+                    />
+
+                    <section className="col-span-12 md:col-span-11 space-y-6">
 
                     <div className="mb-4 flex flex-wrap items-center gap-4">
                         <input
@@ -201,8 +256,6 @@ export default function BuildsPage() {
 
                     </div>
 
-
-
                     {Object.keys(grouped).sort().map((letter) => (
                         <CommanderGroup
                             key={letter}
@@ -215,6 +268,7 @@ export default function BuildsPage() {
                     ))}
                 </section>
             </div>
+            )}
         </main>
     );
 }
