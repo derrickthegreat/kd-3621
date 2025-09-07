@@ -35,6 +35,7 @@ export function AppSidebar({ title, homeUrl, user, navigation = DEFAULT_NAVIGATI
         <Link href={homeUrl}><h1 className="text-sm font-bold text-center">{ title }</h1></Link>
       </SidebarHeader>
       <SidebarContent>
+        {/* Admin/other navigation */}
         {navigation.map((section, id) => {
           const { sectionTitle: title, items } = section;
           return (<NavSection sectionTitle={title} items={items} key={id}/>)

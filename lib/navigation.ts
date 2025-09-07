@@ -1,5 +1,5 @@
 import { NavSectionProps } from "@/components/admin-panel/nav-section";
-import { LayoutDashboard, Users, Calendar, Swords, BarChart3, Settings, Search as SearchIcon, ShieldCheck, Activity } from "lucide-react";
+import { LayoutDashboard, Users, Users2, Calendar, Swords, BarChart3, Settings, Search as SearchIcon, ShieldCheck, Activity } from "lucide-react";
 
 export const ADMIN_PANEL: NavSectionProps[] = [
   {
@@ -99,6 +99,36 @@ export const ADMIN_PANEL: NavSectionProps[] = [
           { title: "Data Repair", url: "#" },
           { title: "Reindex", url: "#" },
         ],
+      },
+    ],
+  },
+  {
+    sectionTitle: "Public Pages",
+    items: [
+      {
+        title: "Governors",
+        url: "/players",
+        icon: Users2,
+      },
+      {
+        title: "Alliances",
+        url: "/alliances",
+        icon: Users,
+      },
+      {
+        title: "Calendar",
+        url: "/calendar",
+        icon: Calendar,
+      },
+      {
+        title: "Equipments",
+        url: "/equipments",
+        icon: Swords,
+      },
+      {
+        title: "Builds",
+        url: "/builds",
+        icon: Swords,
       },
     ],
   },
