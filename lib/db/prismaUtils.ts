@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { getDBClient } from "./clients";
 
 type PrismaDelegate = {
   create: (args: any) => Promise<any>;
@@ -13,6 +14,7 @@ interface CreateOrUpdateOptions {
   idField?: string;         // default: 'id'
   matchField?: string;      // optional: custom unique key like 'tag'
   timestamps?: boolean;     // default: true
+  environment?: 'production' | 'development'; // optional: specify which DB to use
 }
 
 export async function prepareCreateOrUpdate<T extends Record<string, any>>(
@@ -25,6 +27,7 @@ export async function prepareCreateOrUpdate<T extends Record<string, any>>(
     matchField,
     userId,
     timestamps = true,
+    environment = 'production',
   } = options;
 
   const now = new Date();
@@ -38,6 +41,9 @@ export async function prepareCreateOrUpdate<T extends Record<string, any>>(
     ...(timestamps && { createdAt: now }),
     createdBy: userId,
   };
+
+  // Get the appropriate database client
+  const dbClient = getDBClient(environment);
 
   // Prepare update data (never attempt to set the id field on update)
   const { [idField]: _omitId, ...dataWithoutId } = data;
@@ -111,5 +117,9 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 }
 
-export const prisma =  globalForPrisma.prisma ?? new PrismaClient();
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+// Legacy client for backward compatibility - consider using getDBClient instead
+export const legacyPrisma = globalForPrisma.prisma ?? new PrismaClient();
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = legacyPrisma;
+
+// Export as prisma for backward compatibility
+export const prisma = legacyPrisma;
