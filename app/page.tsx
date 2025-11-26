@@ -83,18 +83,29 @@ export default function Home() {
 
         <p className="text-lg sm:text-2xl mb-10">We're building something epic. Stay tuned!</p>
 
-        <div className="grid gap-6 w-full max-w-6xl px-4 sm:px-6 md:px-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
 
+        <div className="grid gap-6 w-full max-w-6xl px-4 sm:px-6 md:px-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
           {[
             { href: '/players', icon: '/icons/player.png', label: 'Governors' },
             { href: '/alliances', icon: '/icons/alliance.png', label: 'Alliances' },
             { href: '/calendar', icon: '/icons/events.png', label: 'Calendar' },
             { href: '/equipments', icon: '/icons/equipment/revival_helmet.png', label: 'Equipments' },
             { href: '/builds', icon: '/icons/commanders/arthur-pendragon.png', label: 'Builds' },
-
           ].map((card) => (
             <HomeCard key={card.href} {...card} />
           ))}
+        </div>
+
+        {/* Recruitment Button */}
+        <div className="w-full flex justify-center mt-10">
+          <a
+            href="https://okrolik.github.io/3621"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl px-4 sm:px-8 py-3 sm:py-4 rounded-full bg-gradient-to-r from-orange-500 to-orange-400 text-white text-base sm:text-lg md:text-xl font-bold shadow-lg hover:scale-105 hover:from-orange-600 hover:to-orange-500 transition-all duration-200 text-center"
+          >
+            Kingdom 3621 is recruiting! Click here
+          </a>
         </div>
       </div>
 
